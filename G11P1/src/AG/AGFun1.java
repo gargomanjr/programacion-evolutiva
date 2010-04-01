@@ -154,7 +154,7 @@ public class AGFun1 extends AlgoritmoGenetico {
 		{
 			prob = aleatorio(); 
 			posSeleccionado = 0;
-			while((prob > pob[posSeleccionado].getPuntuacion_acumulada())&&(posSeleccionado < tamañoPob))
+			while((posSeleccionado < tamañoPob)&&(prob > pob[posSeleccionado].getPuntuacion_neta_acumulada()))
 			{
 				posSeleccionado++;
 			}
@@ -255,7 +255,8 @@ public class AGFun1 extends AlgoritmoGenetico {
 		pob=pobIntermedia;
 		
 	}
-
+	
+	
 
 
 	@Override
@@ -263,6 +264,7 @@ public class AGFun1 extends AlgoritmoGenetico {
 
 		inicializa();
 		evaluarPoblacion();	
+		escalado();
 		while(!terminado())
 		{
 			IncrementoNumIter();
@@ -270,11 +272,44 @@ public class AGFun1 extends AlgoritmoGenetico {
 			reproduccion();
 			mutacion();
 			evaluarPoblacion();
+			escalado();
 			listaElMejor.add(getElMejor().getAptitud());
 			listaMaximoAptitud.add(getMaximoAptitud());
 			listaMedioAptitud.add(getMedioAptitud());		
 		}
 		
+	}
+
+	@Override
+	public void escalado() {
+		
+		double a=a();
+		double b=b();
+		double sumAptitud_neta		= 0;
+		double puntAcumulada_neta	= 0;
+		for(int i=0; i<tamañoPob;i++)
+		{
+			
+			pob[i].escalado(a, b);
+			sumAptitud_neta = sumAptitud_neta + pob[i].getAptitud_neta();
+		}
+		
+		for(int i=0; i<tamañoPob; i++)
+		{
+			pob[i].setPuntuacion_neta(pob[i].getAptitud_neta()/sumAptitud_neta);
+			pob[i].setPuntuacion_neta_acumulada(pob[i].getPuntuacion_neta()+ puntAcumulada_neta);
+			puntAcumulada_neta	= puntAcumulada_neta + pob[i].getPuntuacion();
+		}
+	}
+
+	private double b() {
+		double b_resultado= (1- a())*this.medioAptitud;
+		return b_resultado;
+	}
+
+	private double a() {
+		double a_resultado= ((this.P-1)*this.medioAptitud)/ (this.maximoAptitud - this.medioAptitud); 
+		return a_resultado;
 	}
 
 }

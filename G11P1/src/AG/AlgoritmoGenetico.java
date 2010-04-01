@@ -21,6 +21,7 @@ public abstract class AlgoritmoGenetico {
 	protected int longCrom;
 	protected int numGenes;
 	protected Cromosoma elMejor;
+	protected int P=6;
 	protected static final Logger log = Logger
 			.getLogger("AlgoritmoGenetico.class");
 	
@@ -42,6 +43,8 @@ public abstract class AlgoritmoGenetico {
 	public abstract void mutacion();
 	
 	public abstract void ejecuta();
+	
+	public abstract void escalado();
 	
 	
 	

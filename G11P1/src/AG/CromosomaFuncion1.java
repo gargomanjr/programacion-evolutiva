@@ -98,6 +98,14 @@ public class CromosomaFuncion1 extends Cromosoma {
 		return resultado;
 	}
 
+	@Override
+	public void escalado(double a, double b) {
+		
+			
+		setAptitud_neta(a*aptitud +b);
+		
+	}
+
 	
 
 	

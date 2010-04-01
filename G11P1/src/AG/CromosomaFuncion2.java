@@ -162,5 +162,11 @@ public class CromosomaFuncion2 extends Cromosoma {
 		resultado=21.5 +  x*Math.sin(4*Math.PI*x) + y*Math.sin(20*Math.PI*y);
 		return resultado;
 	}
+
+	@Override
+	public void escalado(double a, double b) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }// FIN CLASE
