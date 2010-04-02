@@ -3,7 +3,7 @@ package AG;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
-public class AGFun1 extends AlgoritmoGenetico {
+public class AGFun3 extends AlgoritmoGenetico {
 
 	/**
 	 * @param args
@@ -43,7 +43,7 @@ public class AGFun1 extends AlgoritmoGenetico {
 
 	//Constructora
 	
-	public AGFun1(int tamañoPob, int numIter , double probCruce , double probMut, double tolerancia, Funcion funcion)
+	public AGFun3(int tamañoPob, int numIter , double probCruce , double probMut, double tolerancia, Funcion funcion)
 	{
 		super( tamañoPob,  numIter ,  probCruce ,  probMut,  tolerancia, funcion);	
 		listaElMejor	=	new ArrayList<Double>();
@@ -57,57 +57,27 @@ public class AGFun1 extends AlgoritmoGenetico {
 		
 		for (int i = 0; i < tamañoPob; i++) {
 			
-			pob[i] = new CromosomaFuncion1(tolerancia);
+			pob[i] = new CromosomaFuncion3(tolerancia);
 			pob[i].inicializaCromosoma();
 			pob[i].setAptitud(pob[i].evalua());
-			longCrom = ((CromosomaFuncion1) pob[0]).getLongCromosoma();
+			longCrom = ((CromosomaFuncion3) pob[0]).getLongCromosoma();
 		}
 		int posMejo = 0;
-		double aptitudMejor = 0;
+		this.revisar_adaptacion_minimiza();
+		double aptitudMejor = Integer.MAX_VALUE;
 		for (int i = 0; i < tamañoPob; i++) {
-			if (pob[i].getAptitud() > aptitudMejor) {
+			if (pob[i].getAptitud() < aptitudMejor) {
 				posMejo = i;
 				aptitudMejor = pob[i].getAptitud();
 			}
 		}
-		elMejor = new CromosomaFuncion1((CromosomaFuncion1) pob[posMejo]);
+		elMejor = new CromosomaFuncion3((CromosomaFuncion3) pob[posMejo]);
 		log.info("Inicializada la poblacion. \n Apitud: " + elMejor.getAptitud() + "  Fenotipo: "
 				+ elMejor.getFenotipo()+"\n");
 		
 	}
 
-	private void inicializaFun2() {
-		for(int i=0; i < tamañoPob ; i++)
-		{
-			pob[i] = new CromosomaFuncion2(tolerancia);
-			pob[i].inicializaCromosoma();
-			pob[i].setAptitud(pob[i].evalua());
-			longCrom= ((CromosomaFuncion2)pob[0]).getLongCromosoma();
-			
-			
-		}
-		int posMejo = 0;
-		double aptitudMejor		= 0;
 	
-		
-		
-		for(int i=0; i<tamañoPob; i++)
-		{
-			
-			if(pob[i].getAptitud()> aptitudMejor )
-			{
-				posMejo	=	i;
-				aptitudMejor = pob[i].getAptitud();
-			}
-		}	
-		
-			elMejor = new CromosomaFuncion2((CromosomaFuncion2)pob[posMejo]);
-			
-		log.info("Inicializada la poblacion: "+elMejor.getAptitud() +" " + elMejor.getFenotipo() );
-		
-		
-	}
-
 
 	public void evaluarPoblacion() 
 	{
@@ -115,15 +85,15 @@ public class AGFun1 extends AlgoritmoGenetico {
 		double puntAcumulada	= 0;
 		double aptitudMejor		= elMejor.getAptitud();
 		double sumAptitud		= 0;
-		double aptitudMejorPob  = 0;
+		double aptitudMejorPob  = Integer.MAX_VALUE;
 		for(int i=0; i<tamañoPob; i++)
 		{
 			sumAptitud = sumAptitud + pob[i].getAptitud();
-			if(pob[i].getAptitud()> aptitudMejorPob )
+			if(pob[i].getAptitud()< aptitudMejorPob )
 			{
 				aptitudMejorPob = pob[i].getAptitud();
 			}
-			if(pob[i].getAptitud()> aptitudMejor )
+			if(pob[i].getAptitud()< aptitudMejor )
 			{
 				posMejo	=	i;
 				aptitudMejor = pob[i].getAptitud();
@@ -135,7 +105,7 @@ public class AGFun1 extends AlgoritmoGenetico {
 			pob[i].setPuntuacion_acumulada(pob[i].getPuntuacion()+ puntAcumulada);
 			puntAcumulada	= puntAcumulada + pob[i].getPuntuacion();
 		}
-		if(aptitudMejor > elMejor.getAptitud() )
+		if(aptitudMejor < elMejor.getAptitud() )
 		{
 		
 				elMejor.copiaCromosoma(pob[posMejo]);
@@ -187,8 +157,8 @@ public class AGFun1 extends AlgoritmoGenetico {
 			numSelecCruce--;
 		Cromosoma hijo1,hijo2;
 		int puntoCruce;
-		hijo1 = new CromosomaFuncion1(tolerancia);
-		hijo2 = new CromosomaFuncion1(tolerancia);
+		hijo1 = new CromosomaFuncion3(tolerancia);
+		hijo2 = new CromosomaFuncion3(tolerancia);
 		puntoCruce = aleatorioPCruce(0,longCrom);
 		for(int i=0; i< numSelecCruce; i=i+2)
 		{
@@ -272,6 +242,7 @@ public class AGFun1 extends AlgoritmoGenetico {
 			seleccionRuleta();
 			reproduccion();
 			mutacion();
+			this.revisar_adaptacion_minimiza();
 			evaluarPoblacion();
 			//escalado();
 			listaElMejor.add(getElMejor().getAptitud());
@@ -313,4 +284,19 @@ public class AGFun1 extends AlgoritmoGenetico {
 		return a_resultado;
 	}
 
+	private void revisar_adaptacion_minimiza (){
+		
+		double Cmax = Integer.MIN_VALUE;
+		for(int i=0; i<tamañoPob; i++)
+		{
+			if (pob[i].getAptitud() > Cmax){
+				Cmax = pob[i].getAptitud();
+			}
+		}
+		Cmax = Cmax * 1.05;
+		for(int i=0; i<tamañoPob; i++)
+		{
+			pob[i].setAptitud(Cmax - pob[i].getAptitud());
+		}
+	}
 }

@@ -46,6 +46,7 @@ public class GUIPrincipalPE extends javax.swing.JFrame {
 	private ArrayList<Double> listaMaximoAptitud2X; 
 	private ArrayList<Double> listaMedioAptitud2Y;
 	private AGFun1 ag1;
+	private AGFun3 ag3;
 	
 	private Funcion fun;
 	private static final Logger log = Logger.getLogger("GUIPrincipalPE.class");
@@ -321,6 +322,14 @@ private void jButton_EjecutarActionPerformed(java.awt.event.ActionEvent evt) thr
 						break;
 			case 2:
 						fun=Funcion.FUNCION_3;
+						ag3 = new AGFun3((Integer) jTextField_TamPob.getValue(),
+								(Integer) jTextField_NumIter.getValue(),
+								(Double) jTextField_ProbCruce.getValue(),
+								(Double) jTextField_ProbMut.getValue(),
+								(Double) jTextField_Tol.getValue(), fun);
+						ag3.ejecuta();
+						jTextArea1.setText("F(x): "+ag3.getElMejor().getAptitud() +"\nX: "+ag3.getElMejor().getFenotipo()+"\n");
+						//jTextArea1.setText("F(x): "+ag3.getElMejor().evalua()+"\nX: "+ag3.getElMejor().getFenotipo()+"\n");
 						break;
 			case 3:
 						fun=Funcion.FUNCION_4;
@@ -356,12 +365,24 @@ private void jButton_RepGraficaActionPerformed(java.awt.event.ActionEvent evt) {
 				
 			}
 		}
-		pintaFun1Funcion();
-		pintaFun1Aptitud();
+		switch(fun)
+		{
+		case FUNCION_1:	
+			pintaFun1Funcion();
+			pintaFun1Aptitud();
+			break;
+		case FUNCION_2:
+			break;
+		case FUNCION_3:			
+			pintaFun3Funcion();
+			pintaFun3Aptitud();
+			break;
+		case FUNCION_4:
+			break;
+		default:
+			break;
 		
-		
-		
-		
+		}
 	
     
         
@@ -412,7 +433,51 @@ private void jButton_RepGraficaActionPerformed(java.awt.event.ActionEvent evt) {
 		// put the PlotPanel in a JFrame like a JPanel
 	
 }
+    private void pintaFun3Funcion() {
+    	
+    	//Plot2DPanel jPanel_Aptitud = new Plot2DPanel();
+	    Plot2DPanel  jPanel_Funcion = new Plot2DPanel();
+		double[] x= new double[ag3.getListaElMejor().size()];
+		double[] y= new double[ag3.getListaElMejor().size()];
+		for(int i= 0; i< ag3.getListaElMejor().size();i++)
+		{
+			x[i]	=	i;
+			y[i]	=	ag3.getListaElMejor().get(i); 
+		}
+		jPanel_Funcion.addLinePlot("Funcion", x,  y);
+		jPanel_Funcion.addLegend("SOUTH");
+ 
+		// add a line plot to the PlotPanel
+		
+		jTabbedPane1.addTab("Funcion",  jPanel_Funcion);
+		// put the PlotPanel in a JFrame like a JPanel
+	
+}
 
+	private void pintaFun3Aptitud() {
+		
+		//Plot2DPanel jPanel_Aptitud = new Plot2DPanel();
+	    Plot2DPanel  jPanel_Funcion = new Plot2DPanel();
+		double[] x= new double[ag3.getListaMedioAptitud().size()];
+		double[] y= new double[ag3.getListaMedioAptitud().size()];
+		double[] z= new double[ag3.getListaMaximoAptitud().size()];
+		for(int i= 0; i< ag3.getListaMedioAptitud().size();i++)
+		{
+			x[i]	=	i;
+			y[i]	=	ag3.getListaMedioAptitud().get(i);
+			z[i]	=  	ag3.getListaMaximoAptitud().get(i);
+			
+		}
+		jPanel_Funcion.addLinePlot("Aptitudes Media", x,  y);
+		jPanel_Funcion.addLinePlot("Aptitudes Maxima", x,  z);
+		jPanel_Funcion.addLegend("SOUTH");
+ 
+		// add a line plot to the PlotPanel
+		
+		jTabbedPane1.addTab("Aptitudes Media y Maxima",  jPanel_Funcion);
+		// put the PlotPanel in a JFrame like a JPanel
+	
+}
 	/**
     * @param args the command line arguments
     */
