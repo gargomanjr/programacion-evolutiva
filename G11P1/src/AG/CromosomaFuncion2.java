@@ -168,5 +168,8 @@ public class CromosomaFuncion2 extends Cromosoma {
 		// TODO Auto-generated method stub
 		
 	}
+	public double evalua2(Cromosoma[] poblacion, int n) {
+		return 0;
+	}
 	
 }// FIN CLASE

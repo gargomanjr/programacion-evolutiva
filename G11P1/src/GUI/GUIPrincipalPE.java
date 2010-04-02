@@ -47,6 +47,7 @@ public class GUIPrincipalPE extends javax.swing.JFrame {
 	private ArrayList<Double> listaMedioAptitud2Y;
 	private AGFun1 ag1;
 	private AGFun3 ag3;
+	private AGFun5 ag5;
 	
 	private Funcion fun;
 	private static final Logger log = Logger.getLogger("GUIPrincipalPE.class");
@@ -336,6 +337,14 @@ private void jButton_EjecutarActionPerformed(java.awt.event.ActionEvent evt) thr
 						break;	
 			default:
 						fun=Funcion.FUNCION_5;
+						ag5 = new AGFun5((Integer) jTextField_TamPob.getValue(),
+								(Integer) jTextField_NumIter.getValue(),
+								(Double) jTextField_ProbCruce.getValue(),
+								(Double) jTextField_ProbMut.getValue(),
+								(Double) jTextField_Tol.getValue(), fun);
+						ag5.ejecuta();
+						jTextArea1.setText("F(x): "+ag5.getElMejor().getAptitud() +"\nX: "+ag5.getElMejor().getFenotipo()+"\n");
+						
 						break;
 			}
 			
@@ -380,6 +389,8 @@ private void jButton_RepGraficaActionPerformed(java.awt.event.ActionEvent evt) {
 		case FUNCION_4:
 			break;
 		default:
+			pintaFun5Funcion();
+			pintaFun5Aptitud();
 			break;
 		
 		}
@@ -466,6 +477,51 @@ private void jButton_RepGraficaActionPerformed(java.awt.event.ActionEvent evt) {
 			x[i]	=	i;
 			y[i]	=	ag3.getListaMedioAptitud().get(i);
 			z[i]	=  	ag3.getListaMaximoAptitud().get(i);
+			
+		}
+		jPanel_Funcion.addLinePlot("Aptitudes Media", x,  y);
+		jPanel_Funcion.addLinePlot("Aptitudes Maxima", x,  z);
+		jPanel_Funcion.addLegend("SOUTH");
+ 
+		// add a line plot to the PlotPanel
+		
+		jTabbedPane1.addTab("Aptitudes Media y Maxima",  jPanel_Funcion);
+		// put the PlotPanel in a JFrame like a JPanel
+	
+}
+private void pintaFun5Funcion() {
+    	
+    	//Plot2DPanel jPanel_Aptitud = new Plot2DPanel();
+	    Plot2DPanel  jPanel_Funcion = new Plot2DPanel();
+		double[] x= new double[ag5.getListaElMejor().size()];
+		double[] y= new double[ag5.getListaElMejor().size()];
+		for(int i= 0; i< ag5.getListaElMejor().size();i++)
+		{
+			x[i]	=	i;
+			y[i]	=	ag5.getListaElMejor().get(i); 
+		}
+		jPanel_Funcion.addLinePlot("Funcion", x,  y);
+		jPanel_Funcion.addLegend("SOUTH");
+ 
+		// add a line plot to the PlotPanel
+		
+		jTabbedPane1.addTab("Funcion",  jPanel_Funcion);
+		// put the PlotPanel in a JFrame like a JPanel
+	
+}
+
+	private void pintaFun5Aptitud() {
+		
+		//Plot2DPanel jPanel_Aptitud = new Plot2DPanel();
+	    Plot2DPanel  jPanel_Funcion = new Plot2DPanel();
+		double[] x= new double[ag5.getListaMedioAptitud().size()];
+		double[] y= new double[ag5.getListaMedioAptitud().size()];
+		double[] z= new double[ag5.getListaMaximoAptitud().size()];
+		for(int i= 0; i< ag5.getListaMedioAptitud().size();i++)
+		{
+			x[i]	=	i;
+			y[i]	=	ag5.getListaMedioAptitud().get(i);
+			z[i]	=  	ag5.getListaMaximoAptitud().get(i);
 			
 		}
 		jPanel_Funcion.addLinePlot("Aptitudes Media", x,  y);

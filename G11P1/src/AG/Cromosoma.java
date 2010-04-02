@@ -30,7 +30,8 @@ public abstract class Cromosoma {
 	
 	// METODOS ABSTRACTOS	
 	public abstract void inicializaCromosoma();
-	public abstract double evalua();
+	public abstract double evalua(); 
+	public abstract double evalua2(Cromosoma[] poblacion,int n); 
 	public abstract void escalado(double a, double b);
 	
 	// METODOS PROTEGIDOS
@@ -134,6 +135,7 @@ public abstract class Cromosoma {
 		 setPuntuacion_acumulada(cr.getPuntuacion_acumulada());
 		
 	}
+
 	
 
 }

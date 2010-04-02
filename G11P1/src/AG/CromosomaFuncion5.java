@@ -4,25 +4,25 @@ import java.util.ArrayList;
 import java.util.Random;
 
 
-public class CromosomaFuncion3 extends Cromosoma {
+public class CromosomaFuncion5 extends Cromosoma {
 
 	private	int Xmin;
-	private int Xmax;
+	private double Xmax;
 	
 		
 	
 
-	public CromosomaFuncion3(double tolerancia)
+	public CromosomaFuncion5(double tolerancia)
 	{
 		super(tolerancia);
-		this.Xmax=25;
+		this.Xmax= Math.PI;
 		this.Xmin=0;
 		this.setLongCromosoma(longitudCrom());
 		iniciaGen(longCromosoma);		
 		
 	}
 	
-	public CromosomaFuncion3(CromosomaFuncion3 cr) {
+	public CromosomaFuncion5(CromosomaFuncion5 cr) {
 				
 		 super(cr);
 		 this.Xmax=1; 
@@ -55,18 +55,28 @@ public class CromosomaFuncion3 extends Cromosoma {
 		return lon;
 	}
 	
-	public double evalua()
+	public double evalua(){
+		return 0;
+		}
+	
+	public double evalua2(Cromosoma[] poblacion,int n)
 	{
 		
-		setFenotipo( fenotipo());
+		setFenotipo( fenotipo(poblacion,n));
 		return f(getFenotipo());
 		
 	}
 
-	private double fenotipo() {
+	private double fenotipo(Cromosoma[] pob,int n) {
 		
-		double valor;
-		valor = Xmin + ( Xmax - Xmin )* binToDec(getGenes(),longCromosoma)/(Math.pow(2, longCromosoma)-1);
+		double valor = 0;
+		double f_aux = 0;
+		for(int i=0; i<n; i++)
+		{
+			f_aux = pob[i].getFenotipo();
+			valor = valor + Math.sin(f_aux) * Math.sin(  ((i+1)*(f_aux * f_aux))/Math.PI      );
+		}
+		valor = - valor;
 		return valor;
 	}
 
@@ -105,10 +115,14 @@ public class CromosomaFuncion3 extends Cromosoma {
 		setAptitud_neta(a*aptitud +b);
 		
 	}
-	public double evalua2(Cromosoma[] poblacion, int n) {
-		return 0;
-	}
 
+	
+
+	
+
+	
+
+	
 	
 	
 }
