@@ -28,7 +28,7 @@ public class CromosomaFuncion5 extends Cromosoma {
 		this.Xmax= Math.PI;
 		this.Xmin=0;
 		this.longitud_de_1_cromosoma = longitudCrom()/this.n ;
-		fenotipo_gen= new double[longitud_de_1_cromosoma - 1];
+		fenotipo_gen= new double[this.n ];
 		this.setLongCromosoma(longitudCrom());
 		iniciaGen(longCromosoma);		
 
@@ -38,12 +38,12 @@ public class CromosomaFuncion5 extends Cromosoma {
 	public CromosomaFuncion5(CromosomaFuncion5 cr) {
 				
 		 super(cr);
-		 this.Xmax=1; 
+		 this.Xmax= Math.PI; 
 		 this.Xmin=0;
 		 this.n = cr.n;
 		 this.longitud_de_1_cromosoma = cr.longitud_de_1_cromosoma;
-		 this.fenotipo_gen= new double[longitud_de_1_cromosoma - 1];
-		 for(int i =0;i<n;i++){
+		 this.fenotipo_gen= new double[longitud_de_1_cromosoma];
+		 for(int i =0;i<this.n;i++){
 			 this.setfenotipo_gen(cr.getfenotipo_gen(i), i);		 
 		 }
 		 
@@ -76,16 +76,24 @@ public class CromosomaFuncion5 extends Cromosoma {
 	
 	public double evalua(){
 		for(int i =0;i< this.n;i++){
-			setfenotipo_gen(fenotipo(i),i);
+			setfenotipo_gen(fenotipo_gen(i),i);
 		}		
 		return f();
 		}
 	
 
 
-	private double fenotipo(int num_gen) {
+	public double fenotipo_gen(int i) {
 		double valor;
-		valor = Xmin + ( Xmax - Xmin )* binToDec(getGenes(),(num_gen*longCromosoma),(num_gen + 1)*longCromosoma)/(Math.pow(2, this.longitud_de_1_cromosoma)-1);
+		//valor = this.getfenotipo_gen(i);
+		valor = Xmin + ( Xmax - Xmin )* binToDec(getGenes(),(i*this.longitud_de_1_cromosoma),(i + 1)*longitud_de_1_cromosoma)/(Math.pow(2, this.longitud_de_1_cromosoma)-1);
+		return valor;
+	}
+	public double[] fenotipo() {
+		double valor[] = new double[this.n];
+		for(int i =0;i<this.n;i++){
+			valor[i] = Xmin + ( Xmax - Xmin )* binToDec(getGenes(),(i*this.longitud_de_1_cromosoma),(i + 1)*longitud_de_1_cromosoma)/(Math.pow(2, this.longitud_de_1_cromosoma)-1);
+		}
 		return valor;
 	}
 

@@ -15,7 +15,11 @@ public class AGFun5 extends AlgoritmoGenetico {
 	private ArrayList<Double> listaElMejor;
 	private ArrayList<Double> listaMedioAptitud;
 	private ArrayList<Double> listaMaximoAptitud; 
+	private int n;
 	
+	public int getn(){
+		return this.n;
+	}
 	//Metodos Accesores y Mutadores de Atributos Propios
 	public ArrayList<Double> getListaElMejor() {
 		return listaElMejor;
@@ -43,12 +47,13 @@ public class AGFun5 extends AlgoritmoGenetico {
 
 	//Constructora
 	
-	public AGFun5(int tamañoPob, int numIter , double probCruce , double probMut, double tolerancia, Funcion funcion)
+	public AGFun5(int tamañoPob, int numIter , double probCruce , double probMut, double tolerancia, Funcion funcion,int n_aux)
 	{
 		super( tamañoPob,  numIter ,  probCruce ,  probMut,  tolerancia, funcion);	
 		listaElMejor	=	new ArrayList<Double>();
     	listaMaximoAptitud	=	new ArrayList<Double>();
     	listaMedioAptitud	=	new ArrayList<Double>();
+    	this.n = n_aux;
 	}
 
 
@@ -57,7 +62,7 @@ public class AGFun5 extends AlgoritmoGenetico {
 		
 		for (int i = 0; i < tamañoPob; i++) {
 			
-			pob[i] = new CromosomaFuncion5(tolerancia,1);
+			pob[i] = new CromosomaFuncion5(tolerancia,this.n);
 			pob[i].inicializaCromosoma();
 			pob[i].setAptitud(pob[i].evalua());
 			longCrom = ((CromosomaFuncion5) pob[0]).getLongCromosoma();
@@ -72,8 +77,12 @@ public class AGFun5 extends AlgoritmoGenetico {
 			}
 		}
 		elMejor = new CromosomaFuncion5((CromosomaFuncion5) pob[posMejo]);
+		double[] resul = new double[this.n];
+		resul = ((CromosomaFuncion5) elMejor).fenotipo();
+		for(int i = 0;i<this.n;i++){
 		log.info("Inicializada la poblacion. \n Apitud: " + elMejor.getAptitud() + "  Fenotipo: "
-				+ elMejor.getFenotipo()+"\n");
+				+ resul[i]+"\n");
+		}
 		
 	}
 
@@ -157,8 +166,8 @@ public class AGFun5 extends AlgoritmoGenetico {
 			numSelecCruce--;
 		Cromosoma hijo1,hijo2;
 		int puntoCruce;
-		hijo1 = new CromosomaFuncion5(tolerancia,1);
-		hijo2 = new CromosomaFuncion5(tolerancia,1);
+		hijo1 = new CromosomaFuncion5(tolerancia,this.n);
+		hijo2 = new CromosomaFuncion5(tolerancia,this.n);
 		puntoCruce = aleatorioPCruce(0,longCrom);
 		for(int i=0; i< numSelecCruce; i=i+2)
 		{

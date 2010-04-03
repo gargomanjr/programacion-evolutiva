@@ -119,6 +119,12 @@ public class GUIPrincipalPE extends javax.swing.JFrame {
         formato_Tol.setMinimum(new Double(0.00000001));
         jTextField_Tol = new javax.swing.JFormattedTextField(formato_Tol);
         valoresPorDefecto();
+        
+        jLabel_Nfun5 = new javax.swing.JLabel();
+        InternationalFormatter formato_NumIter2 = new InternationalFormatter();
+        formato_NumIter2.setMaximum(new Integer(8));
+        formato_NumIter2.setMinimum(new Integer(1));
+        jTextField_Nfun5 = new javax.swing.JFormattedTextField(formato_NumIter2);
        
         jButton_Ejecutar = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JSeparator();
@@ -143,6 +149,8 @@ public class GUIPrincipalPE extends javax.swing.JFrame {
         jLabel_ProbCruce.setText("Probabilidad de Cruce");
 
         jLabel__ProbMut.setText("Probabilidad de Mutacion");
+        
+        jLabel_Nfun5.setText("N func. 5");
 
         jLabel_Tol.setText("Tolerancia");
 
@@ -197,9 +205,13 @@ public class GUIPrincipalPE extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextField_NumIter, javax.swing.GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel_TamPob, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel_TamPob, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField_TamPob, javax.swing.GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE)))
+                        .addComponent(jTextField_TamPob, javax.swing.GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                         .addComponent(jLabel_Nfun5, javax.swing.GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE)
+                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                         .addComponent(jTextField_Nfun5, javax.swing.GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE))   )
                 .addGap(155, 155, 155))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
@@ -220,7 +232,7 @@ public class GUIPrincipalPE extends javax.swing.JFrame {
                 .addContainerGap(171, Short.MAX_VALUE))
         );
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabel_NumIter, jLabel_ProbCruce, jLabel_TamPob, jLabel_Tol, jLabel__ProbMut, jTextField_NumIter, jTextField_ProbCruce, jTextField_ProbMut, jTextField_TamPob, jTextField_Tol});
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabel_NumIter, jLabel_ProbCruce, jLabel_TamPob, jLabel_Tol, jLabel__ProbMut,jLabel_Nfun5, jTextField_NumIter, jTextField_ProbCruce, jTextField_ProbMut, jTextField_TamPob, jTextField_Tol,jTextField_Nfun5});
 
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -240,7 +252,9 @@ public class GUIPrincipalPE extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel__ProbMut, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel_Tol, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabel_Tol, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel_Nfun5, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))                   
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jTextField_TamPob, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -250,7 +264,10 @@ public class GUIPrincipalPE extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextField_ProbMut, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField_Tol, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jTextField_Tol, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)                        
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextField_Nfun5, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addGap(17, 17, 17)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 3, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -271,7 +288,7 @@ public class GUIPrincipalPE extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabel_NumIter, jLabel_ProbCruce, jLabel_TamPob, jLabel_Tol, jLabel__ProbMut, jTextField_NumIter, jTextField_ProbCruce, jTextField_ProbMut, jTextField_TamPob, jTextField_Tol});
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabel_NumIter, jLabel_ProbCruce, jLabel_TamPob, jLabel_Tol, jLabel__ProbMut, jTextField_NumIter, jTextField_ProbCruce, jTextField_ProbMut, jTextField_TamPob, jTextField_Tol ,jTextField_Nfun5});
 
         jTabbedPane1.addTab("Parametros", jPanel1);
 
@@ -341,9 +358,17 @@ private void jButton_EjecutarActionPerformed(java.awt.event.ActionEvent evt) thr
 								(Integer) jTextField_NumIter.getValue(),
 								(Double) jTextField_ProbCruce.getValue(),
 								(Double) jTextField_ProbMut.getValue(),
-								(Double) jTextField_Tol.getValue(), fun);
+								(Double) jTextField_Tol.getValue(), fun,
+								(Integer)jTextField_Nfun5.getValue());
 						ag5.ejecuta();
-						jTextArea1.setText("F(x): "+ag5.getElMejor().getAptitud() +"\nX: "+ag5.getElMejor().getFenotipo()+"\n");
+						double[] resul = new double[ag5.getn()];
+						CromosomaFuncion5 elMejor_aux = new CromosomaFuncion5((CromosomaFuncion5) ag5.getElMejor());
+						resul =  (double[]) elMejor_aux.fenotipo();
+						String sl_fenotipos = "";
+						for(int i=0;i< ag5.getn();i++){
+							sl_fenotipos = sl_fenotipos +"X." + Integer.toString(i)+ " :"+  Double.toString(resul[i]) + "\n";				
+						}
+						jTextArea1.setText("F(x): "+ag5.getElMejor().getAptitud() +"\n"+ sl_fenotipos);
 						
 						break;
 			}
@@ -360,6 +385,7 @@ private void valoresPorDefecto()
 	jTextField_ProbCruce.setValue(40.0);
 	jTextField_ProbMut.setValue(1.0);
 	jTextField_Tol.setValue(0.0001);
+	//jTextField_Nfun5.setValue(1);
 }
     
 private void jButton_RepGraficaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_RepGraficaActionPerformed
@@ -556,6 +582,7 @@ private void pintaFun5Funcion() {
     private javax.swing.JLabel jLabel_Tol;
     private javax.swing.JLabel jLabel__ProbMut;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel jLabel_Nfun5;    
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
@@ -567,6 +594,9 @@ private void pintaFun5Funcion() {
     private javax.swing.JFormattedTextField jTextField_ProbMut;
     private javax.swing.JFormattedTextField jTextField_TamPob;
     private javax.swing.JFormattedTextField jTextField_Tol;
+    private javax.swing.JFormattedTextField jTextField_Nfun5;
+    
+    
     // End of variables declaration//GEN-END:variables
     
     
