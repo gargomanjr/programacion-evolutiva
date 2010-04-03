@@ -105,9 +105,6 @@ public class CromosomaFuncion3 extends Cromosoma {
 		setAptitud_neta(a*aptitud +b);
 		
 	}
-	public double evalua2(Cromosoma[] poblacion, int n) {
-		return 0;
-	}
 
 	
 	

@@ -8,17 +8,30 @@ public class CromosomaFuncion5 extends Cromosoma {
 
 	private	int Xmin;
 	private double Xmax;
+	private int n;
+	private int longitud_de_1_cromosoma;
+	protected double [] fenotipo_gen;
 	
-		
+	
+	public double getfenotipo_gen(int indice){
+		return this.fenotipo_gen[indice];
+	}
+	public void setfenotipo_gen(double valor,int indice){
+		this.fenotipo_gen[indice] = valor;
+	}
 	
 
-	public CromosomaFuncion5(double tolerancia)
+	public CromosomaFuncion5(double tolerancia,int n_aux)
 	{
 		super(tolerancia);
+		this.n = n_aux;
 		this.Xmax= Math.PI;
 		this.Xmin=0;
+		this.longitud_de_1_cromosoma = longitudCrom()/this.n ;
+		fenotipo_gen= new double[longitud_de_1_cromosoma - 1];
 		this.setLongCromosoma(longitudCrom());
 		iniciaGen(longCromosoma);		
+
 		
 	}
 	
@@ -27,6 +40,12 @@ public class CromosomaFuncion5 extends Cromosoma {
 		 super(cr);
 		 this.Xmax=1; 
 		 this.Xmin=0;
+		 this.n = cr.n;
+		 this.longitud_de_1_cromosoma = cr.longitud_de_1_cromosoma;
+		 this.fenotipo_gen= new double[longitud_de_1_cromosoma - 1];
+		 for(int i =0;i<n;i++){
+			 this.setfenotipo_gen(cr.getfenotipo_gen(i), i);		 
+		 }
 		 
 		 
 	}
@@ -52,31 +71,21 @@ public class CromosomaFuncion5 extends Cromosoma {
 	private int longitudCrom() {
 		
 		int lon=(int)Math.ceil(Math.log(1+((this.Xmax-this.Xmin)/this.tolerancia))/Math.log(2));
-		return lon;
+		return lon * this.n;
 	}
 	
 	public double evalua(){
-		return 0;
+		for(int i =0;i< this.n;i++){
+			setfenotipo_gen(fenotipo(i),i);
+		}		
+		return f();
 		}
 	
-	public double evalua2(Cromosoma[] poblacion,int n)
-	{
-		
-		setFenotipo( fenotipo(poblacion,n));
-		return f(getFenotipo());
-		
-	}
 
-	private double fenotipo(Cromosoma[] pob,int n) {
-		
-		double valor = 0;
-		double f_aux = 0;
-		for(int i=0; i<n; i++)
-		{
-			f_aux = pob[i].getFenotipo();
-			valor = valor + Math.sin(f_aux) * Math.sin(  ((i+1)*(f_aux * f_aux))/Math.PI      );
-		}
-		valor = - valor;
+
+	private double fenotipo(int num_gen) {
+		double valor;
+		valor = Xmin + ( Xmax - Xmin )* binToDec(getGenes(),(num_gen*longCromosoma),(num_gen + 1)*longCromosoma)/(Math.pow(2, this.longitud_de_1_cromosoma)-1);
 		return valor;
 	}
 
@@ -101,13 +110,31 @@ public class CromosomaFuncion5 extends Cromosoma {
 		return suma;
 	}
 
-	private double f(double x) {
-		
-		double resultado;
-		resultado= (Math.sin(x))/(1+ Math.sqrt(x)+ (Math.cos(x))/(1+x) );
-		return resultado;
+	private double f() {	
+		double valor = 0;
+		double f_aux = 0;
+		for(int i=0; i<n; i++)
+		{
+			f_aux = this.getfenotipo_gen(i);
+			valor = valor + Math.sin(f_aux) * Math.pow(Math.sin(((i+1)*(f_aux * f_aux))/Math.PI),20);
+		}
+		valor = - valor;
+		return valor;
 	}
+	
+	private int binToDec(boolean[] genes,int inicio, int longCromosoma2) {
 
+		//False = 0
+		//True = 1
+		
+		int suma=0;
+		for(int i=inicio; i< longCromosoma2;i++ )
+		{
+			suma=(int) (suma + (Math.pow(2,longCromosoma2-1-i) * valorBool(genes[i])));	
+		}
+		return suma;
+	}
+	
 	@Override
 	public void escalado(double a, double b) {
 		

@@ -57,10 +57,9 @@ public class AGFun5 extends AlgoritmoGenetico {
 		
 		for (int i = 0; i < tamañoPob; i++) {
 			
-			pob[i] = new CromosomaFuncion5(tolerancia);
+			pob[i] = new CromosomaFuncion5(tolerancia,1);
 			pob[i].inicializaCromosoma();
-			double apt_aux = pob[i].evalua2(pob,i);
-			pob[i].setAptitud(apt_aux);
+			pob[i].setAptitud(pob[i].evalua());
 			longCrom = ((CromosomaFuncion5) pob[0]).getLongCromosoma();
 		}
 		int posMejo = 0;
@@ -158,8 +157,8 @@ public class AGFun5 extends AlgoritmoGenetico {
 			numSelecCruce--;
 		Cromosoma hijo1,hijo2;
 		int puntoCruce;
-		hijo1 = new CromosomaFuncion5(tolerancia);
-		hijo2 = new CromosomaFuncion5(tolerancia);
+		hijo1 = new CromosomaFuncion5(tolerancia,1);
+		hijo2 = new CromosomaFuncion5(tolerancia,1);
 		puntoCruce = aleatorioPCruce(0,longCrom);
 		for(int i=0; i< numSelecCruce; i=i+2)
 		{
@@ -196,8 +195,8 @@ public class AGFun5 extends AlgoritmoGenetico {
 			hijo1.getGenes()[i]= padre2.getGenes()[i];
 			hijo2.getGenes()[i]= padre1.getGenes()[i];
 		}
-		hijo1.setAptitud(hijo1.evalua2( pob,this.tamañoPob));
-		hijo2.setAptitud(hijo2.evalua2( pob,this.tamañoPob));
+		hijo1.setAptitud(hijo1.evalua());
+		hijo2.setAptitud(hijo2.evalua());
 	}
 
 	
@@ -219,7 +218,7 @@ public class AGFun5 extends AlgoritmoGenetico {
 				}
 				if(mutado)
 				{
-					pobIntermedia[i].setAptitud(pobIntermedia[i].evalua2(pob,this.tamañoPob));
+					pobIntermedia[i].setAptitud(pobIntermedia[i].evalua());
 				}
 			}
 			
