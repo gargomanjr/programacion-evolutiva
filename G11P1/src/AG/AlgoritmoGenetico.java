@@ -37,9 +37,6 @@ public abstract class AlgoritmoGenetico {
 
 	public abstract void reproduccion();
 
-	public abstract void cruce(Cromosoma padre1, Cromosoma padre2,
-			Cromosoma hijo1, Cromosoma hijo2, int puntoCruce);
-
 	public abstract void mutacion();
 	
 	public abstract void ejecuta();

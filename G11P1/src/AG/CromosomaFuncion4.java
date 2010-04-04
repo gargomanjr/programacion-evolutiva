@@ -1,78 +1,69 @@
 package AG;
 
-import java.util.ArrayList;
-import java.util.Random;
-
-
-public class CromosomaFuncion2 extends Cromosoma {
+public class CromosomaFuncion4 extends Cromosoma {
 
 	private	double Xmin;
 	private double Xmax;
-	private double Ymin;
-	private double Ymax;
 	
-	public double getGenX() {
-		return genX;
+	public double getGenX1() {
+		return genX1;
 	}
 
-	public void setGenX(double genX) {
-		this.genX = genX;
+	public void setGenX1(double genX) {
+		this.genX1 = genX;
 	}
 
-	public double getGenY() {
-		return genY;
+	public double getGenX2() {
+		return genX2;
 	}
 
-	public void setGenY(double genY) {
-		this.genY = genY;
+	public void setGenX2(double genX2) {
+		this.genX2 = genX2;
 	}
 
-	private double genX;
-	private double genY;
+	private double genX1;
+	private double genX2;
 	
-	private int lonX;
-	public int getLonX() {
-		return lonX;
+	private int lonX1;
+	public int getLonX1() {
+		return lonX1;
 	}
 
-	public void setLonX(int lonX) {
-		this.lonX = lonX;
+	public void setLonX1(int lonX) {
+		this.lonX1 = lonX;
 	}
 
-	public int getLonY() {
-		return lonY;
+	public int getLonX2() {
+		return lonX2;
 	}
 
-	public void setLonY(int lonY) {
-		this.lonY = lonY;
+	public void setLonX2(int lonX2) {
+		this.lonX2 = lonX2;
 	}
 
-	private int lonY;
+	private int lonX2;
 	
 		
 	
 
-	public CromosomaFuncion2(double tolerancia)
+	public CromosomaFuncion4(double tolerancia)
 	{
 		super(tolerancia);
-		this.Xmin=2.0;
-		this.Xmax=12.1;
-		this.Ymin=4.1;
-		this.Ymax=5.8;
+		this.Xmin=-10;
+		this.Xmax=10;
 		this.setLongCromosoma(longitudCrom());
 		iniciaGen(longCromosoma);		
 		
 	}
 	
-	public CromosomaFuncion2(CromosomaFuncion2 cr) {
+	public CromosomaFuncion4(CromosomaFuncion4 cr) {
 				
 		super(cr);
-		genX = cr.getGenX();
-		genY = cr.getGenY();
-		this.Xmin = -3.0;
-		this.Xmax = 12.1;
-		this.Ymin = 4.1;
-		this.Ymax = 5.8;
+		genX1 = cr.getGenX1();
+		genX2 = cr.getGenX2();
+		this.Xmin = -10;
+		this.Xmax = 10;
+		
 		 
 		 
 	}
@@ -94,8 +85,8 @@ public class CromosomaFuncion2 extends Cromosoma {
 		 setFenotipo(cr.getFenotipo());
 		 setPuntuacion(cr.getPuntuacion());
 		 setPuntuacion_acumulada(cr.getPuntuacion_acumulada());
-		 setGenX(((CromosomaFuncion2)cr).getGenX());
-		 setGenY(((CromosomaFuncion2)cr).getGenY());
+		 setGenX1(((CromosomaFuncion4)cr).getGenX1());
+		 setGenX2(((CromosomaFuncion4)cr).getGenX2());
 	}
 	
 	public void inicializaCromosoma()
@@ -108,31 +99,30 @@ public class CromosomaFuncion2 extends Cromosoma {
 
 	private int longitudCrom() {
 		
-		lonX=(int)Math.ceil(Math.log(1+((this.Xmax-this.Xmin)/this.tolerancia))/Math.log(2));
-		lonY=(int)Math.ceil(Math.log(1+((this.Ymax-this.Ymin)/this.tolerancia))/Math.log(2));
-		return lonX+lonY;
+		lonX1=lonX2=(int)Math.ceil(Math.log(1+((this.Xmax-this.Xmin)/this.tolerancia))/Math.log(2));
+		return lonX1+lonX2;
 	}
 	
 	public double evalua()
 	{
 		
-		genY=fenotipoY();
-		genX= fenotipoX();
-		return f(genX,genY);
+		genX1=fenotipoX1();
+		genX2= fenotipoX2();
+		return f(genX1,genX2);
 		
 	}
 
-	public double fenotipoX() {
+	public double fenotipoX1() {
 		
 		double valor;
-		valor = Xmin + ( Xmax - Xmin )* binToDec(getGenes(),0,lonX)/(Math.pow(2, lonX)-1);
+		valor = Xmin + ( Xmax - Xmin )* binToDec(getGenes(),0,lonX1)/(Math.pow(2, lonX1)-1);
 		return valor;
 	}
 	
-	public double fenotipoY() {
+	public double fenotipoX2() {
 		
 		double valor;
-		valor = Ymin + ( Ymax - Ymin )* binToDec(getGenes(),lonX,longCromosoma)/(Math.pow(2, lonY)-1);
+		valor = Xmin + ( Xmax - Xmin )* binToDec(getGenes(),lonX1,longCromosoma)/(Math.pow(2, lonX2)-1);
 		return valor;
 	}
 
@@ -171,9 +161,21 @@ public class CromosomaFuncion2 extends Cromosoma {
 
 	private double f(double x,double y) {
 		
-		double resultado;
-		resultado=21.5 +  x*Math.sin(4*Math.PI*x) + y*Math.sin(20*Math.PI*y);
-		return resultado;
+		
+		double sumX1=0;
+		double sumX2=0;
+		for(int i=1; i<6;i++ )
+		{
+			sumX1=sumX1+ ( i*Math.cos((i+1)*genX1+i));  
+			
+		}
+		for(int i=1; i<6;i++ )
+		{
+			sumX2=sumX2+ ( i*Math.cos((i+1)*genX2+i));  
+			
+		}
+		
+		return sumX1*sumX2;
 	}
 
 	@Override

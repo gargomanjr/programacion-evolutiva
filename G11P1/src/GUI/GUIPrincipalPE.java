@@ -46,7 +46,9 @@ public class GUIPrincipalPE extends javax.swing.JFrame {
 	private ArrayList<Double> listaMaximoAptitud2X; 
 	private ArrayList<Double> listaMedioAptitud2Y;
 	private AGFun1 ag1;
+	private AGFun2 ag2;
 	private AGFun3 ag3;
+	private AGFun4 ag4;
 	private AGFun5 ag5;
 	
 	private Funcion fun;
@@ -336,7 +338,17 @@ private void jButton_EjecutarActionPerformed(java.awt.event.ActionEvent evt) thr
 						jTextArea1.setText("F(x): "+ag1.getElMejor().evalua()+"\nX: "+ag1.getElMejor().getFenotipo()+"\n");
 						break;
 			case 1:
-						fun=Funcion.FUNCION_2;
+						fun = Funcion.FUNCION_2;
+						ag2 = new AGFun2((Integer) jTextField_TamPob.getValue(),
+								(Integer) jTextField_NumIter.getValue(),
+								(Double) jTextField_ProbCruce.getValue(),
+								(Double) jTextField_ProbMut.getValue(),
+								(Double) jTextField_Tol.getValue(), fun);
+						ag2.ejecuta();
+						jTextArea1.setText("F(x,y): " + ag2.getElMejor().getAptitud() + "\nX: "
+								+ ((CromosomaFuncion2) ag2.getElMejor()).getGenX()
+								+ "\nY: "
+								+ ((CromosomaFuncion2) ag2.getElMejor()).getGenY());
 						break;
 			case 2:
 						fun=Funcion.FUNCION_3;
@@ -350,8 +362,18 @@ private void jButton_EjecutarActionPerformed(java.awt.event.ActionEvent evt) thr
 						//jTextArea1.setText("F(x): "+ag3.getElMejor().evalua()+"\nX: "+ag3.getElMejor().getFenotipo()+"\n");
 						break;
 			case 3:
-						fun=Funcion.FUNCION_4;
-						break;	
+						fun = Funcion.FUNCION_4;
+						ag4 = new AGFun4((Integer) jTextField_TamPob.getValue(),
+								(Integer) jTextField_NumIter.getValue(),
+								(Double) jTextField_ProbCruce.getValue(),
+								(Double) jTextField_ProbMut.getValue(),
+								(Double) jTextField_Tol.getValue(), fun);
+						ag4.ejecuta();
+						jTextArea1.setText("F(x1,x2): " + ag4.getElMejor().getAptitud() + "\nX1: "
+								+ ((CromosomaFuncion4) ag4.getElMejor()).getGenX1()
+								+ "\nX2: "
+								+ ((CromosomaFuncion4) ag4.getElMejor()).getGenX2());
+						break;
 			default:
 						fun=Funcion.FUNCION_5;
 						ag5 = new AGFun5((Integer) jTextField_TamPob.getValue(),
@@ -407,6 +429,8 @@ private void jButton_RepGraficaActionPerformed(java.awt.event.ActionEvent evt) {
 			pintaFun1Aptitud();
 			break;
 		case FUNCION_2:
+			pintaFun2Funcion();
+			pintaFun2Aptitud();
 			break;
 		case FUNCION_3:			
 			pintaFun3Funcion();
@@ -445,6 +469,49 @@ private void jButton_RepGraficaActionPerformed(java.awt.event.ActionEvent evt) {
 		// put the PlotPanel in a JFrame like a JPanel
 	
 }
+    
+	private void pintaFun2Funcion() {
+		// Plot2DPanel jPanel_Aptitud = new Plot2DPanel();
+		Plot2DPanel jPanel_Funcion = new Plot2DPanel();
+		double[] x = new double[ag2.getListaElMejor().size()];
+		double[] y = new double[ag2.getListaElMejor().size()];
+		for (int i = 0; i < ag2.getListaElMejor().size(); i++) {
+			x[i] = i;
+			y[i] = ag2.getListaElMejor().get(i);
+		}
+		jPanel_Funcion.addLinePlot("Funcion", x, y);
+		jPanel_Funcion.addLegend("SOUTH");
+
+		// add a line plot to the PlotPanel
+
+		jTabbedPane1.addTab("Funcion", jPanel_Funcion);
+		// put the PlotPanel in a JFrame like a JPanel
+
+		
+	}
+
+	private void pintaFun2Aptitud() {
+		// Plot2DPanel jPanel_Aptitud = new Plot2DPanel();
+		Plot2DPanel jPanel_Funcion = new Plot2DPanel();
+		double[] x = new double[ag2.getListaMedioAptitud().size()];
+		double[] y = new double[ag2.getListaMedioAptitud().size()];
+		double[] z = new double[ag2.getListaMaximoAptitud().size()];
+		for (int i = 0; i < ag2.getListaMedioAptitud().size(); i++) {
+			x[i] = i;
+			y[i] = ag2.getListaMedioAptitud().get(i);
+			z[i] = ag2.getListaMaximoAptitud().get(i);
+
+		}
+		jPanel_Funcion.addLinePlot("Aptitudes Media", x, y);
+		jPanel_Funcion.addLinePlot("Aptitudes Maxima", x, z);
+		jPanel_Funcion.addLegend("SOUTH");
+
+		// add a line plot to the PlotPanel
+
+		jTabbedPane1.addTab("Aptitudes Media y Maxima", jPanel_Funcion);
+		// put the PlotPanel in a JFrame like a JPanel
+		
+	}
 
 	private void pintaFun1Aptitud() {
 		

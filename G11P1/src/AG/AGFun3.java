@@ -235,6 +235,9 @@ public class AGFun3 extends AlgoritmoGenetico {
 
 		inicializa();
 		evaluarPoblacion();	
+		listaElMejor.add(getElMejor().getAptitud());
+		listaMaximoAptitud.add(getMaximoAptitud());
+		listaMedioAptitud.add(getMedioAptitud());
 		//escalado();
 		while(!terminado())
 		{
