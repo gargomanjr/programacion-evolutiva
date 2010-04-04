@@ -5,6 +5,44 @@ public class CromosomaFuncion4 extends Cromosoma {
 	private	double Xmin;
 	private double Xmax;
 	
+	private double f;
+	public double getF() {
+		return f;
+	}
+
+
+
+	public void setF(double f) {
+		this.f = f;
+	}
+
+
+
+	public double getF_punt() {
+		return f_punt;
+	}
+
+
+
+	public void setF_punt(double f_punt) {
+		this.f_punt = f_punt;
+	}
+
+
+
+	public double getF_punt_acum() {
+		return f_punt_acum;
+	}
+
+
+
+	public void setF_punt_acum(double f_punt_acum) {
+		this.f_punt_acum = f_punt_acum;
+	}
+
+	private double f_punt;
+	private double f_punt_acum;
+	
 	public double getGenX1() {
 		return genX1;
 	}
@@ -59,6 +97,9 @@ public class CromosomaFuncion4 extends Cromosoma {
 	public CromosomaFuncion4(CromosomaFuncion4 cr) {
 				
 		super(cr);
+		setF(cr.getF());
+		setF_punt(cr.getF_punt());
+		setF_punt_acum(cr.getF_punt_acum());
 		genX1 = cr.getGenX1();
 		genX2 = cr.getGenX2();
 		this.Xmin = -10;
@@ -78,12 +119,15 @@ public class CromosomaFuncion4 extends Cromosoma {
 		
 	}
 	
-	public void copiaCromosoma(Cromosoma cr) {
+	public void copiaCromosoma(CromosomaFuncion4 cr) {
 		 
 		 setGenes(cr.getGenes());
 		 setAptitud(cr.getAptitud());
 		 setFenotipo(cr.getFenotipo());
 		 setPuntuacion(cr.getPuntuacion());
+		 setF(cr.getF());
+		 setF_punt(cr.getF_punt());
+		 setF_punt_acum(cr.getF_punt_acum());
 		 setPuntuacion_acumulada(cr.getPuntuacion_acumulada());
 		 setGenX1(((CromosomaFuncion4)cr).getGenX1());
 		 setGenX2(((CromosomaFuncion4)cr).getGenX2());

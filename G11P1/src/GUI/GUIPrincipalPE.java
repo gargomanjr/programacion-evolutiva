@@ -39,18 +39,12 @@ import AG.*;
 public class GUIPrincipalPE extends javax.swing.JFrame {
 	
 	
-	
-	private ArrayList<Double> listaElMejor2X;
-	private ArrayList<Double> listaElMejor2Y;
-	private ArrayList<Double> listaMedioAptitud2X;
-	private ArrayList<Double> listaMaximoAptitud2X; 
-	private ArrayList<Double> listaMedioAptitud2Y;
 	private AGFun1 ag1;
 	private AGFun2 ag2;
 	private AGFun3 ag3;
 	private AGFun4 ag4;
 	private AGFun5 ag5;
-	
+
 	private Funcion fun;
 	private static final Logger log = Logger.getLogger("GUIPrincipalPE.class");
 	
@@ -79,12 +73,7 @@ public class GUIPrincipalPE extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 		
-    	listaElMejor2X	=	new ArrayList<Double>();
-    	listaMaximoAptitud2X	=	new ArrayList<Double>();
-    	listaMedioAptitud2X	=	new ArrayList<Double>();
-    	listaElMejor2Y	=	new ArrayList<Double>();
     	
-    	listaMedioAptitud2Y	=	new ArrayList<Double>();
     	
     	jTabbedPane1	= new JTabbedPaneWithCloseIcon();
         jPanel1 = new javax.swing.JPanel();
@@ -120,13 +109,15 @@ public class GUIPrincipalPE extends javax.swing.JFrame {
         formato_Tol.setMaximum(new Double(0.1));
         formato_Tol.setMinimum(new Double(0.00000001));
         jTextField_Tol = new javax.swing.JFormattedTextField(formato_Tol);
-        valoresPorDefecto();
+        
         
         jLabel_Nfun5 = new javax.swing.JLabel();
         InternationalFormatter formato_NumIter2 = new InternationalFormatter();
         formato_NumIter2.setMaximum(new Integer(8));
         formato_NumIter2.setMinimum(new Integer(1));
         jTextField_Nfun5 = new javax.swing.JFormattedTextField(formato_NumIter2);
+        
+        valoresPorDefecto();
        
         jButton_Ejecutar = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JSeparator();
@@ -407,7 +398,7 @@ private void valoresPorDefecto()
 	jTextField_ProbCruce.setValue(40.0);
 	jTextField_ProbMut.setValue(1.0);
 	jTextField_Tol.setValue(0.0001);
-	//jTextField_Nfun5.setValue(1);
+	jTextField_Nfun5.setValue(2);
 }
     
 private void jButton_RepGraficaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_RepGraficaActionPerformed
@@ -437,6 +428,8 @@ private void jButton_RepGraficaActionPerformed(java.awt.event.ActionEvent evt) {
 			pintaFun3Aptitud();
 			break;
 		case FUNCION_4:
+			pintaFun4Funcion();
+			pintaFun4Aptitud();
 			break;
 		default:
 			pintaFun5Funcion();
@@ -449,7 +442,50 @@ private void jButton_RepGraficaActionPerformed(java.awt.event.ActionEvent evt) {
         
 }//GEN-LAST:event_jButton_RepGraficaActionPerformed
 
-    private void pintaFun1Funcion() {
+    private void pintaFun4Funcion() {
+    	//Plot2DPanel jPanel_Aptitud = new Plot2DPanel();
+	    Plot2DPanel  jPanel_Funcion = new Plot2DPanel();
+		double[] x= new double[ag4.getListaElMejor().size()];
+		double[] y= new double[ag4.getListaElMejor().size()];
+		for(int i= 0; i< ag4.getListaElMejor().size();i++)
+		{
+			x[i]	=	i;
+			y[i]	=	ag4.getListaElMejor().get(i); 
+		}
+		jPanel_Funcion.addLinePlot("Funcion", x,  y);
+		jPanel_Funcion.addLegend("SOUTH");
+ 
+		// add a line plot to the PlotPanel
+		
+		jTabbedPane1.addTab("Funcion",  jPanel_Funcion);
+		// put the PlotPanel in a JFrame like a JPanel
+	
+}
+
+	private void pintaFun4Aptitud() {
+		// Plot2DPanel jPanel_Aptitud = new Plot2DPanel();
+		Plot2DPanel jPanel_Funcion = new Plot2DPanel();
+		double[] x = new double[ag4.getListaMedioAptitud().size()];
+		double[] y = new double[ag4.getListaMedioAptitud().size()];
+		double[] z = new double[ag4.getListaMaximoAptitud().size()];
+		for (int i = 0; i < ag4.getListaMedioAptitud().size(); i++) {
+			x[i] = i;
+			y[i] = ag4.getListaMedioAptitud().get(i);
+			z[i] = ag4.getListaMaximoAptitud().get(i);
+
+		}
+		jPanel_Funcion.addLinePlot("Aptitudes Media", x, y);
+		jPanel_Funcion.addLinePlot("Aptitudes Maxima", x, z);
+		jPanel_Funcion.addLegend("SOUTH");
+
+		// add a line plot to the PlotPanel
+
+		jTabbedPane1.addTab("Aptitudes Media y Maxima", jPanel_Funcion);
+		// put the PlotPanel in a JFrame like a JPanel
+	
+}
+
+	private void pintaFun1Funcion() {
 	
     	//Plot2DPanel jPanel_Aptitud = new Plot2DPanel();
 	    Plot2DPanel  jPanel_Funcion = new Plot2DPanel();
@@ -668,136 +704,6 @@ private void pintaFun5Funcion() {
     
     
     
-//    AGFun1 ag	= 	new AGFun1((Integer) jTextField_TamPob.getValue(),(Integer) jTextField_NumIter.getValue(),(Double) jTextField_ProbCruce.getValue(),(Double) jTextField_ProbMut.getValue(),(Double) jTextField_Tol.getValue(),fun);
-//	
-//	//AG
-//	log.info("Algoritmo Genetico ejecutando...\n");
-//	
-//	ag.inicializa();
-//	ag.evaluarPoblacion();
-//	
-//	if(fun.equals(Funcion.FUNCION_1))
-//	{
-//		listaElMejor.add(ag.getElMejor().getAptitud());
-//		listaMaximoAptitud.add((Double)ag.getMaximoAptitud());
-//		listaMedioAptitud.add(ag.getMedioAptitud());
-//	}
-//	else if(fun.equals(Funcion.FUNCION_2))
-//	{
-//		listaElMejor.add(ag.getElMejor().getAptitud());
-////		listaElMejor2X.add(((CromosomaFuncion2)ag.getElMejor()).getAptitud());
-////		listaMaximoAptitud2X.add((Double)ag.getMaximoAptitud());
-////		listaMedioAptitud2X.add(ag.getMedioAptitud());
-////		
-////		listaElMejor2Y.add(ag.getElMejor().getAptitud());
-////		listaMaximoAptitud2Y.add((Double)ag.getMaximoAptitud());
-////		listaMedioAptitud2Y.add(ag.getMedioAptitud());
-//	
-//	
-//	}
-//	else if(fun.equals(Funcion.FUNCION_3))
-//	{
-//		
-//	}
-//	else if(fun.equals(Funcion.FUNCION_4))
-//	{
-//		
-//	}
-//	else if(fun.equals(Funcion.FUNCION_5))
-//	{
-//		
-//	}
-//	else 
-//	{}
-//	
-//	
-//	int j=0;
-//	String traza="";
-//	
-//	//TRAZA Seleccion Ruleta
-//	FileWriter ficheroSel = null;
-//    PrintWriter pwSel = null;
-//    ficheroSel = new FileWriter("./seleccion.txt");
-//    pwSel = new PrintWriter(ficheroSel);
-//    ////////////////////////////
-//    
-//    //TRAZA Reproducion
-//    FileWriter ficheroRep = null;
-//    PrintWriter pwRep = null;
-//    ficheroRep = new FileWriter("./reproduccion.txt");
-//    pwRep = new PrintWriter(ficheroRep);
-//    //////////////////////////////
-//    
-//  //TRAZA Reproducion
-//    FileWriter ficheroPob = null;
-//    PrintWriter pwPob = null;
-//    ficheroPob = new FileWriter("./poblacion.txt");
-//    pwPob = new PrintWriter(ficheroPob);
-//    //////////////////////////////
-//    
-//  //TRAZA ElMejor
-//    FileWriter ficheroElMejor = null;
-//    PrintWriter pwElMejor = null;
-//    ficheroElMejor = new FileWriter("./elMejor.txt");
-//    pwElMejor = new PrintWriter(ficheroElMejor);
-//    //////////////////////////////
-//    
-//    for(int i=0;i<ag.getTamañoPob();i++)
-//	{
-//		traza=traza + new Double(ag.getPob()[i].getFenotipo()).toString()+"  "+ new Double(ag.getPob()[i].getAptitud()).toString()+ "\n";
-//	}
-//	//log.info("Seleccion Ruleta. NUM_ITER: "+j+"  "+ traza +"\n");
-//	pwPob.println("Seleccion Ruleta. NUM_ITER: "+j+"\n"+traza+"\n");
-//    traza="";
-//    pwElMejor.println(listaElMejor.get(0)+"\n");
-//	while(!ag.terminado())
-//	{
-//		ag.IncrementoNumIter();
-//		
-//		ag.seleccionRuleta();
-//		
-//		for(int i=0;i<ag.getTamañoPob();i++)
-//		{
-//			traza=traza + new Double(ag.getPobIntermedia()[i].getFenotipo()).toString()+"  "+ new Double(ag.getPobIntermedia()[i].getAptitud()).toString()+ "\n";
-//		}
-//		//log.info("Seleccion Ruleta. NUM_ITER: "+j+"  "+ traza +"\n");
-//		pwSel.println("Seleccion Ruleta. NUM_ITER: "+j+"\n"+traza+"\n");
-//		ag.reproduccion();
-//		traza="";
-//		for(int i=0;i<ag.getTamañoPob();i++)
-//		{
-//			traza=traza + new Double(ag.getPobIntermedia()[i].getFenotipo()).toString()+"  "+ new Double(ag.getPobIntermedia()[i].getAptitud()).toString()+ "\n";
-//		}
-//		//log.info("Seleccion Ruleta. NUM_ITER: "+j+"  "+ traza +"\n");
-//		pwRep.println("Seleccion Ruleta. NUM_ITER: "+j+"\n"+traza+"\n");
-//		ag.mutacion();
-//		ag.evaluarPoblacion();
-//		traza="";
-//		for(int i=0;i<ag.getTamañoPob();i++)
-//			{
-//				traza=traza + new Double(ag.getPob()[i].getFenotipo()).toString()+"  "+ new Double(ag.getPob()[i].getAptitud()).toString()+ "\n";
-//			}
-//			//log.info("Seleccion Ruleta. NUM_ITER: "+j+"  "+ traza +"\n");
-//			pwPob.println("Seleccion Ruleta. NUM_ITER: "+j+"\n"+traza+"\n");
-//            traza="";
-//		listaElMejor.add(ag.getElMejor().getAptitud());
-//		listaMaximoAptitud.add(ag.getMaximoAptitud());
-//		listaMedioAptitud.add(ag.getMedioAptitud());
-//		pwElMejor.println(listaElMejor.get(j)+"\n");
-//		j++;
-//		
-//			
-//	//	log.info(": "+ag.getElMejor().getFenotipo()+"  "+ag.getElMejor().getAptitud()+"\n");
-//		
-//	}
-//	ficheroSel.close();
-//	ficheroRep.close();
-//	ficheroPob.close();
-//	ficheroElMejor.close();
-//	
-//
-//		
-//	
-//	
+	
 
 }

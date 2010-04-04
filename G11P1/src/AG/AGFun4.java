@@ -10,9 +10,7 @@ public class AGFun4 extends AlgoritmoGenetico {
 	private ArrayList<Double> listaMedioAptitud;
 	private ArrayList<Double> listaMaximoAptitud; 
 	
-	private ArrayList<Double> listaElMejorY;
-	private ArrayList<Double> listaMedioAptitudY;
-	private ArrayList<Double> listaMaximoAptitudY;
+	
 	
 	//Metodos Accesores y Mutadores de Atributos Propios
 	
@@ -51,42 +49,6 @@ public class AGFun4 extends AlgoritmoGenetico {
 	}
 
 
-
-	public ArrayList<Double> getListaElMejorY() {
-		return listaElMejorY;
-	}
-
-
-
-	public void setListaElMejorY(ArrayList<Double> listaElMejorY) {
-		this.listaElMejorY = listaElMejorY;
-	}
-
-
-
-	public ArrayList<Double> getListaMedioAptitudY() {
-		return listaMedioAptitudY;
-	}
-
-
-
-	public void setListaMedioAptitudY(ArrayList<Double> listaMedioAptitudY) {
-		this.listaMedioAptitudY = listaMedioAptitudY;
-	}
-
-
-
-	public ArrayList<Double> getListaMaximoAptitudY() {
-		return listaMaximoAptitudY;
-	}
-
-
-
-	public void setListaMaximoAptitudY(ArrayList<Double> listaMaximoAptitudY) {
-		this.listaMaximoAptitudY = listaMaximoAptitudY;
-	}
-
-
 	//Constructora
 
 	public AGFun4(int tamañoPob, int numIter , double probCruce , double probMut, double tolerancia, Funcion funcion)
@@ -113,17 +75,18 @@ public class AGFun4 extends AlgoritmoGenetico {
 			
 		}
 		int posMejo = 0;
-		double aptitudMejor		= 0;
+		this.revisar_adaptacion_minimiza();
+		double aptitudMejor = 0;
 	
 		
 		
 		for(int i=0; i<tamañoPob; i++)
 		{
 			
-			if(pob[i].getAptitud()> aptitudMejor )
+			if(((CromosomaFuncion4)pob[i]).getF()> aptitudMejor )
 			{
 				posMejo	=	i;
-				aptitudMejor = pob[i].getAptitud();
+				aptitudMejor = ((CromosomaFuncion4)pob[i]).getF();
 			}
 		}	
 		
@@ -139,17 +102,21 @@ public class AGFun4 extends AlgoritmoGenetico {
 	{
 		int posMejo = 0; 
 		double puntAcumulada	= 0;
-		double aptitudMejor		= elMejor.getAptitud();
+		double fMejor		= ((CromosomaFuncion4)elMejor).getF();
 		double sumAptitud		= 0;
 		double aptitudMejorPob  = 0;
+		double fMejorPob=0;
+		double aptitudMejor		= elMejor.getAptitud();
+		double sumF=0;
 		for(int i=0; i<tamañoPob; i++)
 		{
+			sumF = sumF + ((CromosomaFuncion4)pob[i]).getF();
 			sumAptitud = sumAptitud + pob[i].getAptitud();
-			if(pob[i].getAptitud()> aptitudMejorPob )
+			if(pob[i].getAptitud()< aptitudMejorPob )
 			{
 				aptitudMejorPob = pob[i].getAptitud();
 			}
-			if(pob[i].getAptitud()> aptitudMejor )
+			if(aptitudMejor > pob[i].getAptitud())
 			{
 				posMejo	=	i;
 				aptitudMejor = pob[i].getAptitud();
@@ -157,11 +124,13 @@ public class AGFun4 extends AlgoritmoGenetico {
 		}	
 		for(int i=0; i<tamañoPob; i++)
 		{
-			pob[i].setPuntuacion(pob[i].getAptitud()/sumAptitud);
-			pob[i].setPuntuacion_acumulada(pob[i].getPuntuacion()+ puntAcumulada);
-			puntAcumulada	= puntAcumulada + pob[i].getPuntuacion();
+			
+			
+			((CromosomaFuncion4)pob[i]).setF_punt(((CromosomaFuncion4)pob[i]).getF()/sumF);
+			((CromosomaFuncion4)pob[i]).setF_punt_acum(((CromosomaFuncion4)pob[i]).getF_punt()+puntAcumulada);
+			puntAcumulada	= puntAcumulada + ((CromosomaFuncion4)pob[i]).getF_punt();
 		}
-		if(aptitudMejor > elMejor.getAptitud() )
+		if(aptitudMejor < elMejor.getAptitud() )
 		{
 		
 				elMejor.copiaCromosoma(pob[posMejo]);
@@ -181,7 +150,7 @@ public class AGFun4 extends AlgoritmoGenetico {
 			prob = aleatorio(); 
 			posSeleccionado = 0;
 			//while((posSeleccionado < tamañoPob)&&(prob > pob[posSeleccionado].getPuntuacion_neta_acumulada()))
-			while((posSeleccionado < tamañoPob)&&(prob > pob[posSeleccionado].getPuntuacion_acumulada()))
+			while((posSeleccionado < tamañoPob)&&(prob > ((CromosomaFuncion4)pob[posSeleccionado]).getF_punt_acum()))
 			{
 				posSeleccionado++;
 			}
@@ -305,6 +274,7 @@ public class AGFun4 extends AlgoritmoGenetico {
 			seleccionRuleta();
 			reproduccion();
 			mutacion();
+			this.revisar_adaptacion_minimiza();
 			evaluarPoblacion();
 			//escalado();
 			listaElMejor.add(getElMejor().getAptitud());
@@ -344,6 +314,22 @@ public class AGFun4 extends AlgoritmoGenetico {
 	private double a() {
 		double a_resultado= ((this.P-1)*this.medioAptitud)/ (this.maximoAptitud - this.medioAptitud); 
 		return a_resultado;
+	}
+	
+	private void revisar_adaptacion_minimiza (){
+		
+		double Cmax = Integer.MIN_VALUE;
+		for(int i=0; i<tamañoPob; i++)
+		{
+			if (pob[i].getAptitud() > Cmax){
+				Cmax = pob[i].getAptitud();
+			}
+		}
+		Cmax = Cmax * 1.05;
+		for(int i=0; i<tamañoPob; i++)
+		{
+			((CromosomaFuncion4)pob[i]).setF(Cmax - pob[i].getAptitud());
+		}
 	}
 
 }
