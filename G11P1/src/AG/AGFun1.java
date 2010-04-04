@@ -62,6 +62,7 @@ public class AGFun1 extends AlgoritmoGenetico {
 			pob[i].setAptitud(pob[i].evalua());
 			longCrom = ((CromosomaFuncion1) pob[0]).getLongCromosoma();
 		}
+		//revisar_adaptacion_minimiza();
 		int posMejo = 0;
 		double aptitudMejor = 0;
 		for (int i = 0; i < tamañoPob; i++) {
@@ -123,8 +124,8 @@ public class AGFun1 extends AlgoritmoGenetico {
 		{
 			prob = aleatorio(); 
 			posSeleccionado = 0;
-			//while((posSeleccionado < tamañoPob)&&(prob > pob[posSeleccionado].getPuntuacion_neta_acumulada()))
-			while((posSeleccionado < tamañoPob)&&(prob > pob[posSeleccionado].getPuntuacion_acumulada()))
+			while((posSeleccionado < tamañoPob -1)&&(prob > pob[posSeleccionado].getPuntuacion_neta_acumulada()))
+			//while((posSeleccionado < tamañoPob)&&(prob > pob[posSeleccionado].getPuntuacion_acumulada()))
 			{
 				posSeleccionado++;
 			}
@@ -132,6 +133,7 @@ public class AGFun1 extends AlgoritmoGenetico {
 		}
 		for(int i=0; i< tamañoPob; i++)
 		{
+			System.out.println(seleccion[i]);
 			pobIntermedia[i]= pob[seleccion[i]];
 		}
 	}
@@ -218,6 +220,7 @@ public class AGFun1 extends AlgoritmoGenetico {
 				if(mutado)
 				{
 					pobIntermedia[i].setAptitud(pobIntermedia[i].evalua());
+					
 				}
 			}
 			
@@ -237,15 +240,16 @@ public class AGFun1 extends AlgoritmoGenetico {
 		listaElMejor.add(getElMejor().getAptitud());
 		listaMaximoAptitud.add(getMaximoAptitud());
 		listaMedioAptitud.add(getMedioAptitud());
-		//escalado();
+		escalado();
 		while(!terminado())
 		{
 			IncrementoNumIter();
 			seleccionRuleta();
 			reproduccion();
 			mutacion();
+			//revisar_adaptacion_minimiza();
 			evaluarPoblacion();
-			//escalado();
+			escalado();
 			listaElMejor.add(getElMejor().getAptitud());
 			listaMaximoAptitud.add(getMaximoAptitud());
 			listaMedioAptitud.add(getMedioAptitud());		
@@ -261,8 +265,7 @@ public class AGFun1 extends AlgoritmoGenetico {
 		double sumAptitud_neta		= 0;
 		double puntAcumulada_neta	= 0;
 		for(int i=0; i<tamañoPob;i++)
-		{
-			
+		{		
 			pob[i].escalado(a, b);
 			sumAptitud_neta = sumAptitud_neta + pob[i].getAptitud_neta();
 		}
@@ -281,8 +284,28 @@ public class AGFun1 extends AlgoritmoGenetico {
 	}
 
 	private double a() {
-		double a_resultado= ((this.P-1)*this.medioAptitud)/ (this.maximoAptitud - this.medioAptitud); 
+		double P_aux = this.elMejor.getAptitud()/this.medioAptitud;
+		//double P_aux = this.P;
+		//double P_aux = 4;
+		System.out.println(this.medioAptitud);
+		System.out.println(this.maximoAptitud);
+		double a_resultado= ((P_aux-1)*this.medioAptitud)/ (this.maximoAptitud - this.medioAptitud); 
 		return a_resultado;
+	}
+    private void revisar_adaptacion_minimiza (){
+		
+		double Cmax = Integer.MIN_VALUE;
+		for(int i=0; i<tamañoPob; i++)
+		{
+			if (pob[i].getAptitud() > Cmax){
+				Cmax = pob[i].getAptitud();
+			}
+		}
+		Cmax = Cmax * 1.05;
+		for(int i=0; i<tamañoPob; i++)
+		{
+			pob[i].setAptitud(Cmax - pob[i].getAptitud());
+		}
 	}
 
 }

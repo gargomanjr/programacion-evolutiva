@@ -134,7 +134,7 @@ public class AGFun5 extends AlgoritmoGenetico {
 			prob = aleatorio(); 
 			posSeleccionado = 0;
 			//while((posSeleccionado < tamañoPob)&&(prob > pob[posSeleccionado].getPuntuacion_neta_acumulada()))
-			while((posSeleccionado < tamañoPob)&&(prob > pob[posSeleccionado].getPuntuacion_acumulada()))
+			while((posSeleccionado < tamañoPob -1)&&(prob > pob[posSeleccionado].getPuntuacion_acumulada()))
 			{
 				posSeleccionado++;
 			}
@@ -168,10 +168,14 @@ public class AGFun5 extends AlgoritmoGenetico {
 		int puntoCruce;
 		hijo1 = new CromosomaFuncion5(tolerancia,this.n);
 		hijo2 = new CromosomaFuncion5(tolerancia,this.n);
-		puntoCruce = aleatorioPCruce(0,longCrom);
+		int[] puntosCruce = new int[this.n];
+		for(int i=0;i<this.n;i++){
+			puntoCruce = aleatorioPCruce(0,longCrom/this.n);
+			puntosCruce[i]= puntoCruce;
+		}
 		for(int i=0; i< numSelecCruce; i=i+2)
 		{
-			cruce(pobIntermedia[seleccionCruce[i]],pobIntermedia[seleccionCruce[i+1]],hijo1,hijo2,puntoCruce);
+			cruce(pobIntermedia[seleccionCruce[i]],pobIntermedia[seleccionCruce[i+1]],hijo1,hijo2,puntosCruce);
 			pobIntermedia[seleccionCruce[i]]= hijo1;
 			pobIntermedia[seleccionCruce[i+1]]= hijo2;
 		}
@@ -190,19 +194,21 @@ public class AGFun5 extends AlgoritmoGenetico {
 	}
 
 	public void cruce(Cromosoma padre1, Cromosoma padre2,
-			Cromosoma hijo1, Cromosoma hijo2, int puntoCruce)
+			Cromosoma hijo1, Cromosoma hijo2, int[] puntosCruce)
 	{
 		
-		
-		for(int i=0; i< puntoCruce; i++)
-		{
-			hijo1.getGenes()[i]= padre1.getGenes()[i];
-			hijo2.getGenes()[i]= padre2.getGenes()[i];
-		}
-		for(int i=puntoCruce; i< longCrom; i++)
-		{
-			hijo1.getGenes()[i]= padre2.getGenes()[i];
-			hijo2.getGenes()[i]= padre1.getGenes()[i];
+		for(int j=0; j< this.n; j++){	
+			
+			for(int i=(this.longCrom/this.n)*j; i< (this.longCrom/this.n)*j+puntosCruce[j]; i++)
+			{
+				hijo1.getGenes()[i]= padre1.getGenes()[i];
+				hijo2.getGenes()[i]= padre2.getGenes()[i];
+			}
+			for(int i=(this.longCrom/this.n)*j+puntosCruce[j]; i< ((this.longCrom/this.n)+1)*j; i++)
+			{
+				hijo1.getGenes()[i]= padre2.getGenes()[i];
+				hijo2.getGenes()[i]= padre1.getGenes()[i];
+			}
 		}
 		hijo1.setAptitud(hijo1.evalua());
 		hijo2.setAptitud(hijo2.evalua());
@@ -247,7 +253,7 @@ public class AGFun5 extends AlgoritmoGenetico {
 		listaElMejor.add(getElMejor().getAptitud());
 		listaMaximoAptitud.add(getMaximoAptitud());
 		listaMedioAptitud.add(getMedioAptitud());
-		//escalado();
+		escalado();
 		while(!terminado())
 		{
 			IncrementoNumIter();
@@ -256,7 +262,7 @@ public class AGFun5 extends AlgoritmoGenetico {
 			mutacion();
 			this.revisar_adaptacion_minimiza();
 			evaluarPoblacion();
-			//escalado();
+			escalado();
 			listaElMejor.add(getElMejor().getAptitud());
 			listaMaximoAptitud.add(getMaximoAptitud());
 			listaMedioAptitud.add(getMedioAptitud());		
@@ -292,7 +298,9 @@ public class AGFun5 extends AlgoritmoGenetico {
 	}
 
 	private double a() {
-		double a_resultado= ((this.P-1)*this.medioAptitud)/ (this.maximoAptitud - this.medioAptitud); 
+		double P_aux = this.elMejor.getAptitud()/this.medioAptitud;
+		//double P_aux = this.P;
+		double a_resultado= ((P_aux-1)*this.medioAptitud)/ (this.maximoAptitud - this.medioAptitud); 
 		return a_resultado;
 	}
 

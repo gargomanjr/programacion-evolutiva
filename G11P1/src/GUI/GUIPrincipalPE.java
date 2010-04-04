@@ -326,7 +326,7 @@ private void jButton_EjecutarActionPerformed(java.awt.event.ActionEvent evt) thr
 								(Double) jTextField_ProbMut.getValue(),
 								(Double) jTextField_Tol.getValue(), fun);
 						ag1.ejecuta();
-						jTextArea1.setText("F(x): "+ag1.getElMejor().evalua()+"\nX: "+ag1.getElMejor().getFenotipo()+"\n");
+						jTextArea1.setText("F(x): "+ag1.getElMejor().getAptitud()+"\nX: "+ag1.getElMejor().getFenotipo()+"\n");
 						break;
 			case 1:
 						fun = Funcion.FUNCION_2;

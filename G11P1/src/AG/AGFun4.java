@@ -149,8 +149,8 @@ public class AGFun4 extends AlgoritmoGenetico {
 		{
 			prob = aleatorio(); 
 			posSeleccionado = 0;
-			//while((posSeleccionado < tamañoPob)&&(prob > pob[posSeleccionado].getPuntuacion_neta_acumulada()))
-			while((posSeleccionado < tamañoPob)&&(prob > ((CromosomaFuncion4)pob[posSeleccionado]).getF_punt_acum()))
+			while((posSeleccionado < tamañoPob-1)&&(prob > pob[posSeleccionado].getPuntuacion_neta_acumulada()))
+			//while((posSeleccionado < tamañoPob)&&(prob > ((CromosomaFuncion4)pob[posSeleccionado]).getF_punt_acum()))
 			{
 				posSeleccionado++;
 			}
@@ -267,7 +267,7 @@ public class AGFun4 extends AlgoritmoGenetico {
 		listaElMejor.add(getElMejor().getAptitud());
 		listaMaximoAptitud.add(getMaximoAptitud());
 		listaMedioAptitud.add(getMedioAptitud());
-		//escalado();
+		escalado();
 		while(!terminado())
 		{
 			IncrementoNumIter();
@@ -276,7 +276,7 @@ public class AGFun4 extends AlgoritmoGenetico {
 			mutacion();
 			this.revisar_adaptacion_minimiza();
 			evaluarPoblacion();
-			//escalado();
+			escalado();
 			listaElMejor.add(getElMejor().getAptitud());
 			listaMaximoAptitud.add(getMaximoAptitud());
 			listaMedioAptitud.add(getMedioAptitud());		
@@ -312,7 +312,10 @@ public class AGFun4 extends AlgoritmoGenetico {
 	}
 
 	private double a() {
-		double a_resultado= ((this.P-1)*this.medioAptitud)/ (this.maximoAptitud - this.medioAptitud); 
+		
+		double P_aux = this.elMejor.getAptitud()/this.medioAptitud;
+		//double P_aux = this.P;
+		double a_resultado= ((P_aux-1)*this.medioAptitud)/ (this.maximoAptitud - this.medioAptitud); 
 		return a_resultado;
 	}
 	

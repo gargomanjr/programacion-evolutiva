@@ -302,7 +302,7 @@ public class AGFun2 extends AlgoritmoGenetico{
 		listaElMejor.add(getElMejor().getAptitud());
 		listaMaximoAptitud.add(getMaximoAptitud());
 		listaMedioAptitud.add(getMedioAptitud());
-		//escalado();
+		escalado();
 		while(!terminado())
 		{
 			IncrementoNumIter();
@@ -310,7 +310,7 @@ public class AGFun2 extends AlgoritmoGenetico{
 			reproduccion();
 			mutacion();
 			evaluarPoblacion();
-			//escalado();
+			escalado();
 			listaElMejor.add(getElMejor().getAptitud());
 			listaMaximoAptitud.add(getMaximoAptitud());
 			listaMedioAptitud.add(getMedioAptitud());		
@@ -346,7 +346,9 @@ public class AGFun2 extends AlgoritmoGenetico{
 	}
 
 	private double a() {
-		double a_resultado= ((this.P-1)*this.medioAptitud)/ (this.maximoAptitud - this.medioAptitud); 
+		double P_aux = this.elMejor.getAptitud()/this.medioAptitud;
+		//double P_aux = this.P;
+		double a_resultado= ((P_aux-1)*this.medioAptitud)/ (this.maximoAptitud - this.medioAptitud); 
 		return a_resultado;
 	}
 

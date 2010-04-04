@@ -12,6 +12,8 @@ public abstract class Cromosoma {
 	protected double aptitud_neta;
 	protected double puntuacion_neta;
 	protected double puntuacion_neta_acumulada;
+	
+	
 	public double getAptitud_neta() {
 		return aptitud_neta;
 	}
@@ -119,10 +121,10 @@ public abstract class Cromosoma {
 	}
 	
 	public double getPuntuacion_neta() {
-		return aptitud_neta;
+		return puntuacion_neta;
 	}
 	public void setPuntuacion_neta(double puntuacion_neta) {
-		this.aptitud_neta = puntuacion_neta;
+		this.puntuacion_neta = puntuacion_neta;
 	}
 	
 	public void copiaCromosoma(Cromosoma cr) {
