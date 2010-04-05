@@ -100,7 +100,9 @@ public class CromosomaFuncion1 extends Cromosoma {
 
 	@Override
 	public void escalado(double a, double b) {
-		
+		/*if(((a*aptitud) +b) <0){
+			System.out.println("no molaaaaaaaaaaaaaar");
+		}*/
 		setAptitud_neta((a*aptitud) +b);
 		
 	}

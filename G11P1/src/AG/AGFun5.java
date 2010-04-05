@@ -134,8 +134,8 @@ public class AGFun5 extends AlgoritmoGenetico {
 		{
 			prob = aleatorio(); 
 			posSeleccionado = 0;
-			//while((posSeleccionado < tamañoPob)&&(prob > pob[posSeleccionado].getPuntuacion_neta_acumulada()))
-			while((posSeleccionado < tamañoPob -1)&&(prob > pob[posSeleccionado].getPuntuacion_acumulada()))
+			while((posSeleccionado < tamañoPob - 1)&&(prob > pob[posSeleccionado].getPuntuacion_neta_acumulada()))
+			//while((posSeleccionado < tamañoPob -1)&&(prob > pob[posSeleccionado].getPuntuacion_acumulada()))
 			{
 				posSeleccionado++;
 			}
@@ -302,7 +302,8 @@ public class AGFun5 extends AlgoritmoGenetico {
 		//double P_aux = this.elMejor.getAptitud()/this.medioAptitud;
 		//double P_aux = this.P;
 		double P_aux = 0.01;
-		double a_resultado= ((P_aux-1)*this.medioAptitud)/ (this.maximoAptitud - this.medioAptitud); 
+		double a_resultado= (this.medioAptitud)/ (this.medioAptitud - this.getMaximaadaptacion()); 
+		//double a_resultado= ((P_aux-1)*this.medioAptitud)/ (this.maximoAptitud - this.medioAptitud); 
 		return a_resultado;
 	}
 

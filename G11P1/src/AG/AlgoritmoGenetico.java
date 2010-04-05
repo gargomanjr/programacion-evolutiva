@@ -188,7 +188,7 @@ public abstract class AlgoritmoGenetico {
 		return (int)(Math.random()*(max-min))+min;
 	}
 
-    private double getMinimaadaptacion(){
+    public double getMinimaadaptacion(){
     	double peoradaptacion = Integer.MAX_VALUE;
     	for(int i=0; i<tamañoPob; i++)
 		{
@@ -198,7 +198,7 @@ public abstract class AlgoritmoGenetico {
 		}
     	return peoradaptacion;
     }
-    private double getMaximaadaptacion(){
+    public double getMaximaadaptacion(){
     	double peoradaptacion = Integer.MIN_VALUE;
     	for(int i=0; i<tamañoPob; i++)
 		{

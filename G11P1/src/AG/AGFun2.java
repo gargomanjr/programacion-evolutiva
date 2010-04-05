@@ -350,7 +350,8 @@ public class AGFun2 extends AlgoritmoGenetico{
 		//double P_aux = this.elMejor.getAptitud()/this.medioAptitud;
 		//double P_aux = this.P;
 		double P_aux = 0.01;
-		double a_resultado= ((P_aux-1)*this.medioAptitud)/ (this.maximoAptitud - this.medioAptitud); 
+		//double a_resultado= ((P_aux-1)*this.medioAptitud)/ (this.maximoAptitud - this.medioAptitud); 
+		double a_resultado= (this.medioAptitud)/ (this.medioAptitud - this.getMinimaadaptacion()); 
 		return a_resultado;
 	}
 	

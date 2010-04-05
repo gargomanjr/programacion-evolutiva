@@ -134,7 +134,7 @@ public class AGFun1 extends AlgoritmoGenetico {
 		}
 		for(int i=0; i< tamañoPob - this.getNum_pob_elite() ; i++)
 		{
-			System.out.println(seleccion[i]);
+		//	System.out.println(seleccion[i]);
 			pobIntermedia[i]= pob[seleccion[i]];
 		}
 	}
@@ -313,10 +313,10 @@ public class AGFun1 extends AlgoritmoGenetico {
 		//double P_aux = this.P;
 		double P_aux = 0.01;
 		//double P_aux = 4;
-		System.out.println(this.medioAptitud);
-		System.out.println(this.maximoAptitud);
+		//System.out.println(this.medioAptitud);
+		//System.out.println(this.maximoAptitud);
+		double a_resultado= (this.medioAptitud)/ (this.medioAptitud - this.getMinimaadaptacion()); 
 		//double a_resultado= ((P_aux-1)*this.medioAptitud)/ (this.maximoAptitud - this.medioAptitud); 
-		double a_resultado= ((P_aux-1)*this.medioAptitud)/ (this.maximoAptitud - this.medioAptitud); 
 		return a_resultado;
 	}
     private void revisar_adaptacion_minimiza (){

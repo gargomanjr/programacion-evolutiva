@@ -117,6 +117,12 @@ public class GUIPrincipalPE extends javax.swing.JFrame {
         formato_NumIter2.setMinimum(new Integer(1));
         jTextField_Nfun5 = new javax.swing.JFormattedTextField(formato_NumIter2);
         
+        jLabel_Elitismo = new javax.swing.JLabel();
+        InternationalFormatter formato_Elitismo = new InternationalFormatter();
+        formato_Elitismo.setMaximum(new Double(0.99));
+        formato_Elitismo.setMinimum(new Double(0.00000001));
+        jTextField_Elitismo = new javax.swing.JFormattedTextField(formato_Elitismo);
+        
         valoresPorDefecto();
        
         jButton_Ejecutar = new javax.swing.JButton();
@@ -146,6 +152,9 @@ public class GUIPrincipalPE extends javax.swing.JFrame {
         jLabel_Nfun5.setText("N func. 5");
 
         jLabel_Tol.setText("Tolerancia");
+        
+        jLabel_Elitismo.setText("Elitismo");
+
 
         jButton_Ejecutar.setText("Ejecutar");
         jButton_Ejecutar.addActionListener(new java.awt.event.ActionListener() {
@@ -204,7 +213,11 @@ public class GUIPrincipalPE extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                          .addComponent(jLabel_Nfun5, javax.swing.GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE)
                          .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                         .addComponent(jTextField_Nfun5, javax.swing.GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE))   )
+                         .addComponent(jTextField_Nfun5, javax.swing.GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE))
+                     .addGroup(jPanel1Layout.createSequentialGroup()
+                         .addComponent(jLabel_Elitismo , javax.swing.GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE)
+                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                         .addComponent(jTextField_Elitismo, javax.swing.GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE)) )
                 .addGap(155, 155, 155))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
@@ -225,7 +238,7 @@ public class GUIPrincipalPE extends javax.swing.JFrame {
                 .addContainerGap(171, Short.MAX_VALUE))
         );
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabel_NumIter, jLabel_ProbCruce, jLabel_TamPob, jLabel_Tol, jLabel__ProbMut,jLabel_Nfun5, jTextField_NumIter, jTextField_ProbCruce, jTextField_ProbMut, jTextField_TamPob, jTextField_Tol,jTextField_Nfun5});
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabel_NumIter, jLabel_ProbCruce, jLabel_TamPob, jLabel_Tol, jLabel__ProbMut,jLabel_Nfun5, jLabel_Elitismo ,jTextField_NumIter, jTextField_ProbCruce, jTextField_ProbMut, jTextField_TamPob, jTextField_Tol,jTextField_Nfun5,jTextField_Elitismo});
 
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -247,7 +260,9 @@ public class GUIPrincipalPE extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel_Tol, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel_Nfun5, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))                   
+                        .addComponent(jLabel_Nfun5, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel_Elitismo , javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))                   
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jTextField_TamPob, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -260,6 +275,8 @@ public class GUIPrincipalPE extends javax.swing.JFrame {
                         .addComponent(jTextField_Tol, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)                        
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextField_Nfun5, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextField_Elitismo, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addGap(17, 17, 17)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 3, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -274,9 +291,9 @@ public class GUIPrincipalPE extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton_Ejecutar)
                         .addGap(39, 39, 39)))
-                .addGap(18, 18, 18)
+                //.addGap(18, 18, 18)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                //.addGap(18, 18, 18)
                 .addComponent(jButton_RepGrafica)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -312,7 +329,6 @@ public class GUIPrincipalPE extends javax.swing.JFrame {
 private void jButton_EjecutarActionPerformed(java.awt.event.ActionEvent evt) throws IOException {//GEN-FIRST:event_jButton_RepGraficaActionPerformed
 
 			
-			double elitismo= 0.2;
 			jTextArea1.setText("");
 			
 			//Seleccionamos la funcion a tratar
@@ -325,7 +341,7 @@ private void jButton_EjecutarActionPerformed(java.awt.event.ActionEvent evt) thr
 								(Double) jTextField_ProbCruce.getValue(),
 								(Double) jTextField_ProbMut.getValue(),
 								(Double) jTextField_Tol.getValue(), fun,
-								elitismo);
+								(Double)jTextField_Elitismo.getValue());
 						ag1.ejecuta();
 						jTextArea1.setText("F(x): "+ag1.getElMejor().getAptitud()+"\nX: "+ag1.getElMejor().getFenotipo()+"\n");
 						break;
@@ -336,7 +352,7 @@ private void jButton_EjecutarActionPerformed(java.awt.event.ActionEvent evt) thr
 								(Double) jTextField_ProbCruce.getValue(),
 								(Double) jTextField_ProbMut.getValue(),
 								(Double) jTextField_Tol.getValue(), fun,
-								elitismo);
+								(Double)jTextField_Elitismo.getValue());
 						ag2.ejecuta();
 						jTextArea1.setText("F(x,y): " + ag2.getElMejor().getAptitud() + "\nX: "
 								+ ((CromosomaFuncion2) ag2.getElMejor()).getGenX()
@@ -350,7 +366,7 @@ private void jButton_EjecutarActionPerformed(java.awt.event.ActionEvent evt) thr
 								(Double) jTextField_ProbCruce.getValue(),
 								(Double) jTextField_ProbMut.getValue(),
 								(Double) jTextField_Tol.getValue(), fun,
-								elitismo);
+								(Double)jTextField_Elitismo.getValue());
 						ag3.ejecuta();
 						jTextArea1.setText("F(x): "+ag3.getElMejor().getAptitud() +"\nX: "+ag3.getElMejor().getFenotipo()+"\n");
 						//jTextArea1.setText("F(x): "+ag3.getElMejor().evalua()+"\nX: "+ag3.getElMejor().getFenotipo()+"\n");
@@ -362,7 +378,7 @@ private void jButton_EjecutarActionPerformed(java.awt.event.ActionEvent evt) thr
 								(Double) jTextField_ProbCruce.getValue(),
 								(Double) jTextField_ProbMut.getValue(),
 								(Double) jTextField_Tol.getValue(), fun,
-								elitismo);
+								(Double)jTextField_Elitismo.getValue());
 						ag4.ejecuta();
 						jTextArea1.setText("F(x1,x2): " + ag4.getElMejor().getAptitud() + "\nX1: "
 								+ ((CromosomaFuncion4) ag4.getElMejor()).getGenX1()
@@ -376,7 +392,7 @@ private void jButton_EjecutarActionPerformed(java.awt.event.ActionEvent evt) thr
 								(Double) jTextField_ProbCruce.getValue(),
 								(Double) jTextField_ProbMut.getValue(),
 								(Double) jTextField_Tol.getValue(), fun,
-								(Integer)jTextField_Nfun5.getValue(),elitismo);
+								(Integer)jTextField_Nfun5.getValue(),(Double)jTextField_Elitismo.getValue());
 						ag5.ejecuta();
 						double[] resul = new double[ag5.getn()];
 						CromosomaFuncion5 elMejor_aux = new CromosomaFuncion5((CromosomaFuncion5) ag5.getElMejor());
@@ -403,6 +419,7 @@ private void valoresPorDefecto()
 	jTextField_ProbMut.setValue(1.0);
 	jTextField_Tol.setValue(0.0001);
 	jTextField_Nfun5.setValue(2);
+	jTextField_Elitismo.setValue(0.2);
 }
     
 private void jButton_RepGraficaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_RepGraficaActionPerformed
@@ -688,6 +705,7 @@ private void pintaFun5Funcion() {
     private javax.swing.JLabel jLabel_TamPob;
     private javax.swing.JLabel jLabel_Tol;
     private javax.swing.JLabel jLabel__ProbMut;
+    private javax.swing.JLabel jLabel_Elitismo ;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel jLabel_Nfun5;    
     private javax.swing.JScrollPane jScrollPane1;
@@ -702,6 +720,7 @@ private void pintaFun5Funcion() {
     private javax.swing.JFormattedTextField jTextField_TamPob;
     private javax.swing.JFormattedTextField jTextField_Tol;
     private javax.swing.JFormattedTextField jTextField_Nfun5;
+    private javax.swing.JFormattedTextField jTextField_Elitismo;
     
     
     // End of variables declaration//GEN-END:variables
