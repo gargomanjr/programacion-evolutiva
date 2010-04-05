@@ -51,9 +51,9 @@ public class AGFun4 extends AlgoritmoGenetico {
 
 	//Constructora
 
-	public AGFun4(int tamañoPob, int numIter , double probCruce , double probMut, double tolerancia, Funcion funcion)
+	public AGFun4(int tamañoPob, int numIter , double probCruce , double probMut, double tolerancia, Funcion funcion,double elitismo)
 	{
-		super( tamañoPob,  numIter ,  probCruce ,  probMut,  tolerancia, funcion);	
+		super( tamañoPob,  numIter ,  probCruce ,  probMut,  tolerancia, funcion,elitismo);	
 		listaElMejor	=	new ArrayList<Double>();
     	listaMaximoAptitud	=	new ArrayList<Double>();
     	listaMedioAptitud	=	new ArrayList<Double>();
@@ -144,8 +144,9 @@ public class AGFun4 extends AlgoritmoGenetico {
 		
 		int[] seleccion= new int[tamañoPob];
 		double prob;
+		this.selecciona_peores();
 		int posSeleccionado;
-		for(int i=0; i< tamañoPob; i++)
+		for(int i=0; i< tamañoPob -this.getNum_pob_elite() ; i++)
 		{
 			prob = aleatorio(); 
 			posSeleccionado = 0;
@@ -156,7 +157,7 @@ public class AGFun4 extends AlgoritmoGenetico {
 			}
 			seleccion[i]= posSeleccionado;
 		}
-		for(int i=0; i< tamañoPob; i++)
+		for(int i=0; i< tamañoPob -this.getNum_pob_elite(); i++)
 		{
 			pobIntermedia[i]= pob[seleccion[i]];
 		}
@@ -165,11 +166,11 @@ public class AGFun4 extends AlgoritmoGenetico {
 	public void reproduccion()
 	{
 		
-		int[] seleccionCruce= new int[tamañoPob];
+		int[] seleccionCruce= new int[tamañoPob -this.getNum_pob_elite()];
 		int numSelecCruce=0;
 		double prob;
 		
-		for(int i=0; i< tamañoPob; i++)
+		for(int i=0; i< tamañoPob -this.getNum_pob_elite(); i++)
 		{
 			prob=aleatorio()*100;
 			if(prob < probCruce)
@@ -234,7 +235,7 @@ public class AGFun4 extends AlgoritmoGenetico {
 	{
 		boolean mutado;
 		double prob;
-		for(int i=0; i< tamañoPob; i++)
+		for(int i=0; i< tamañoPob -this.getNum_pob_elite(); i++)
 		{
 			mutado= false;
 			for(int j=0; j< longCrom; j++)
@@ -313,8 +314,9 @@ public class AGFun4 extends AlgoritmoGenetico {
 
 	private double a() {
 		
-		double P_aux = this.elMejor.getAptitud()/this.medioAptitud;
+		//double P_aux = this.elMejor.getAptitud()/this.medioAptitud;
 		//double P_aux = this.P;
+		double P_aux = 0.01;
 		double a_resultado= ((P_aux-1)*this.medioAptitud)/ (this.maximoAptitud - this.medioAptitud); 
 		return a_resultado;
 	}
@@ -334,5 +336,25 @@ public class AGFun4 extends AlgoritmoGenetico {
 			((CromosomaFuncion4)pob[i]).setF(Cmax - pob[i].getAptitud());
 		}
 	}
-
+	private void selecciona_peores() {
+		ArrayList <Integer> indices_seleccionados = new ArrayList();
+		int mayor = 0;
+		double mayor_aptitud = Integer.MAX_VALUE;
+		for(int i =0; i< this.getNum_pob_elite() ; i++)
+		{
+			mayor_aptitud = Integer.MAX_VALUE;
+			mayor = 0;
+			for(int j=0; j< tamañoPob ; j++)
+			{
+				if(pob[j].getAptitud() < mayor_aptitud && indices_seleccionados.contains(j)==false ){
+					mayor = j;
+					mayor_aptitud = pob[j].getAptitud();
+				}
+			}
+			indices_seleccionados.add(mayor);
+		}
+		for(int i=0 ; i< this.getNum_pob_elite() ; i++){
+			this.pobIntermedia[i + tamañoPob - this.getNum_pob_elite()]= pob[indices_seleccionados.get(i)];
+		}		
+	}
 }

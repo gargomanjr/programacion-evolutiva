@@ -312,7 +312,7 @@ public class GUIPrincipalPE extends javax.swing.JFrame {
 private void jButton_EjecutarActionPerformed(java.awt.event.ActionEvent evt) throws IOException {//GEN-FIRST:event_jButton_RepGraficaActionPerformed
 
 			
-			
+			double elitismo= 0.2;
 			jTextArea1.setText("");
 			
 			//Seleccionamos la funcion a tratar
@@ -324,7 +324,8 @@ private void jButton_EjecutarActionPerformed(java.awt.event.ActionEvent evt) thr
 								(Integer) jTextField_NumIter.getValue(),
 								(Double) jTextField_ProbCruce.getValue(),
 								(Double) jTextField_ProbMut.getValue(),
-								(Double) jTextField_Tol.getValue(), fun);
+								(Double) jTextField_Tol.getValue(), fun,
+								elitismo);
 						ag1.ejecuta();
 						jTextArea1.setText("F(x): "+ag1.getElMejor().getAptitud()+"\nX: "+ag1.getElMejor().getFenotipo()+"\n");
 						break;
@@ -334,7 +335,8 @@ private void jButton_EjecutarActionPerformed(java.awt.event.ActionEvent evt) thr
 								(Integer) jTextField_NumIter.getValue(),
 								(Double) jTextField_ProbCruce.getValue(),
 								(Double) jTextField_ProbMut.getValue(),
-								(Double) jTextField_Tol.getValue(), fun);
+								(Double) jTextField_Tol.getValue(), fun,
+								elitismo);
 						ag2.ejecuta();
 						jTextArea1.setText("F(x,y): " + ag2.getElMejor().getAptitud() + "\nX: "
 								+ ((CromosomaFuncion2) ag2.getElMejor()).getGenX()
@@ -347,7 +349,8 @@ private void jButton_EjecutarActionPerformed(java.awt.event.ActionEvent evt) thr
 								(Integer) jTextField_NumIter.getValue(),
 								(Double) jTextField_ProbCruce.getValue(),
 								(Double) jTextField_ProbMut.getValue(),
-								(Double) jTextField_Tol.getValue(), fun);
+								(Double) jTextField_Tol.getValue(), fun,
+								elitismo);
 						ag3.ejecuta();
 						jTextArea1.setText("F(x): "+ag3.getElMejor().getAptitud() +"\nX: "+ag3.getElMejor().getFenotipo()+"\n");
 						//jTextArea1.setText("F(x): "+ag3.getElMejor().evalua()+"\nX: "+ag3.getElMejor().getFenotipo()+"\n");
@@ -358,7 +361,8 @@ private void jButton_EjecutarActionPerformed(java.awt.event.ActionEvent evt) thr
 								(Integer) jTextField_NumIter.getValue(),
 								(Double) jTextField_ProbCruce.getValue(),
 								(Double) jTextField_ProbMut.getValue(),
-								(Double) jTextField_Tol.getValue(), fun);
+								(Double) jTextField_Tol.getValue(), fun,
+								elitismo);
 						ag4.ejecuta();
 						jTextArea1.setText("F(x1,x2): " + ag4.getElMejor().getAptitud() + "\nX1: "
 								+ ((CromosomaFuncion4) ag4.getElMejor()).getGenX1()
@@ -372,7 +376,7 @@ private void jButton_EjecutarActionPerformed(java.awt.event.ActionEvent evt) thr
 								(Double) jTextField_ProbCruce.getValue(),
 								(Double) jTextField_ProbMut.getValue(),
 								(Double) jTextField_Tol.getValue(), fun,
-								(Integer)jTextField_Nfun5.getValue());
+								(Integer)jTextField_Nfun5.getValue(),elitismo);
 						ag5.ejecuta();
 						double[] resul = new double[ag5.getn()];
 						CromosomaFuncion5 elMejor_aux = new CromosomaFuncion5((CromosomaFuncion5) ag5.getElMejor());

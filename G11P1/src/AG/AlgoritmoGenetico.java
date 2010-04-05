@@ -21,7 +21,9 @@ public abstract class AlgoritmoGenetico {
 	protected int longCrom;
 	protected int numGenes;
 	protected Cromosoma elMejor;
-	protected int P=6;
+	//protected int P=6;
+	protected double elitismo;
+	protected int num_pob_elite;
 	protected static final Logger log = Logger
 			.getLogger("AlgoritmoGenetico.class");
 	
@@ -137,7 +139,7 @@ public abstract class AlgoritmoGenetico {
 	
 	//Constructora
 	
-	public AlgoritmoGenetico(int tamañoPob, int numIter , double probCruce , double probMut, double tolerancia, Funcion funcion)
+	public AlgoritmoGenetico(int tamañoPob, int numIter , double probCruce , double probMut, double tolerancia, Funcion funcion,double elitismo_in)
 	{
 		this.tamañoPob 			= tamañoPob;
 		this.numIter 			= numIter;
@@ -149,12 +151,21 @@ public abstract class AlgoritmoGenetico {
 		this.pobIntermedia		= new Cromosoma[tamañoPob];
 		this.setMaximoAptitud(0);
 		this.setMedioAptitud(0);
-		
+		this.elitismo = elitismo_in;
+		this.num_pob_elite = (int) (this.tamañoPob * this.elitismo);
 		
 	}
 
 	//Metodos Auxiliares
 	
+	public int getNum_pob_elite() {
+		return num_pob_elite;
+	}
+
+	public void setNum_pob_elite(int numPobElite) {
+		num_pob_elite = numPobElite;
+	}
+
 	protected boolean terminado() {
 		
 		return numIter==0;
@@ -177,7 +188,26 @@ public abstract class AlgoritmoGenetico {
 		return (int)(Math.random()*(max-min))+min;
 	}
 
-	
+    private double getMinimaadaptacion(){
+    	double peoradaptacion = Integer.MAX_VALUE;
+    	for(int i=0; i<tamañoPob; i++)
+		{
+    		if (pob[i].getAptitud() < peoradaptacion){
+    			peoradaptacion = pob[i].getAptitud();
+    		}
+		}
+    	return peoradaptacion;
+    }
+    private double getMaximaadaptacion(){
+    	double peoradaptacion = Integer.MIN_VALUE;
+    	for(int i=0; i<tamañoPob; i++)
+		{
+    		if (pob[i].getAptitud() > peoradaptacion){
+    			peoradaptacion = pob[i].getAptitud();
+    		}
+		}
+    	return peoradaptacion;
+    }
 
 	
 
