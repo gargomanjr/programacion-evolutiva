@@ -88,7 +88,7 @@ public class GUIPrincipalPE extends javax.swing.JFrame {
         
         jLabel_NumIter = new javax.swing.JLabel();
         InternationalFormatter formato_NumIter = new InternationalFormatter();
-        formato_NumIter.setMaximum(new Integer(175));
+        formato_NumIter.setMaximum(new Integer(1500));
         formato_NumIter.setMinimum(new Integer(1));
         jTextField_NumIter = new javax.swing.JFormattedTextField(formato_NumIter);
         
@@ -413,13 +413,13 @@ private void jButton_EjecutarActionPerformed(java.awt.event.ActionEvent evt) thr
 
 private void valoresPorDefecto()
 {
-	jTextField_TamPob.setValue(30);
-	jTextField_NumIter.setValue(50);
-	jTextField_ProbCruce.setValue(40.0);
-	jTextField_ProbMut.setValue(1.0);
+	jTextField_TamPob.setValue(100);
+	jTextField_NumIter.setValue(100);
+	jTextField_ProbCruce.setValue(60.0);
+	jTextField_ProbMut.setValue(5.0);
 	jTextField_Tol.setValue(0.0001);
 	jTextField_Nfun5.setValue(2);
-	jTextField_Elitismo.setValue(0.2);
+	jTextField_Elitismo.setValue(0.02);
 }
     
 private void jButton_RepGraficaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_RepGraficaActionPerformed

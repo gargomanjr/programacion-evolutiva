@@ -55,7 +55,7 @@ public class CromosomaFuncion2 extends Cromosoma {
 	public CromosomaFuncion2(double tolerancia)
 	{
 		super(tolerancia);
-		this.Xmin=2.0;
+		this.Xmin=-3.0;
 		this.Xmax=12.1;
 		this.Ymin=4.1;
 		this.Ymax=5.8;
@@ -66,14 +66,15 @@ public class CromosomaFuncion2 extends Cromosoma {
 	
 	public CromosomaFuncion2(CromosomaFuncion2 cr) {
 				
-		super(cr);
-		genX = cr.getGenX();
-		genY = cr.getGenY();
+		super(cr); 
+		this.setGenX(cr.getGenX());
+		this.setGenY(cr.getGenY());
 		this.Xmin = -3.0;
 		this.Xmax = 12.1;
 		this.Ymin = 4.1;
 		this.Ymax = 5.8;
-		 
+		this.setLongCromosoma(this.longitudCrom());
+		
 		 
 	}
 
@@ -91,11 +92,20 @@ public class CromosomaFuncion2 extends Cromosoma {
 		 
 		 setGenes(cr.getGenes());
 		 setAptitud(cr.getAptitud());
-		 setFenotipo(cr.getFenotipo());
 		 setPuntuacion(cr.getPuntuacion());
 		 setPuntuacion_acumulada(cr.getPuntuacion_acumulada());
+		 setLongCromosoma(cr.getLongCromosoma());
+		 setAptitud_neta(cr.getAptitud_neta());
+		 setPuntuacion_neta(cr.getPuntuacion_neta());
+		 setPuntuacion_neta_acumulada(cr.getPuntuacion_neta_acumulada());
+		 setTolerancia(cr.getTolerancia());
 		 setGenX(((CromosomaFuncion2)cr).getGenX());
 		 setGenY(((CromosomaFuncion2)cr).getGenY());
+		 this.Xmin = -3.0;
+		 this.Xmax = 12.1;
+		 this.Ymin = 4.1;
+		 this.Ymax = 5.8;
+		 setLongCromosoma(this.longitudCrom());
 	}
 	
 	public void inicializaCromosoma()

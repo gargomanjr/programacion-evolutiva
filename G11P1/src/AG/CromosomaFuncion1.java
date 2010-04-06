@@ -63,7 +63,7 @@ public class CromosomaFuncion1 extends Cromosoma {
 		
 	}
 
-	private double fenotipo() {
+	public double fenotipo() {
 		
 		double valor;
 		valor = Xmin + ( Xmax - Xmin )* binToDec(getGenes(),longCromosoma)/(Math.pow(2, longCromosoma)-1);

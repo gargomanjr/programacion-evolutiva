@@ -60,7 +60,9 @@ public abstract class Cromosoma {
 		 setAptitud_neta(cr.getAptitud_neta());
 		 setPuntuacion_neta(cr.getPuntuacion_neta());
 		 setPuntuacion_neta_acumulada(cr.getPuntuacion_neta_acumulada());
+		 setTolerancia(cr.getTolerancia());
 	}
+
 	public double getFenotipo() {
 		return fenotipo;
 	}
@@ -101,6 +103,9 @@ public abstract class Cromosoma {
 	public void setGenes(boolean[] genes) {
 		this.genes = genes;
 	}
+	public void setGenesi(boolean valor,int i) {
+		this.genes[i] = valor;
+		}
 	public boolean[] getGenes() {
 		return genes;
 	}
@@ -129,11 +134,22 @@ public abstract class Cromosoma {
 	
 	public void copiaCromosoma(Cromosoma cr) {
 		 
+	/*	 setGenes(cr.getGenes());
+		 setAptitud(cr.getAptitud());
+		 setFenotipo(cr.getFenotipo());
+		 setPuntuacion(cr.getPuntuacion());
+		 setPuntuacion_acumulada(cr.getPuntuacion_acumulada());*/
+		 
 		 setGenes(cr.getGenes());
 		 setAptitud(cr.getAptitud());
 		 setFenotipo(cr.getFenotipo());
 		 setPuntuacion(cr.getPuntuacion());
 		 setPuntuacion_acumulada(cr.getPuntuacion_acumulada());
+		 setLongCromosoma(cr.getLongCromosoma());
+		 setAptitud_neta(cr.getAptitud_neta());
+		 setPuntuacion_neta(cr.getPuntuacion_neta());
+		 setPuntuacion_neta_acumulada(cr.getPuntuacion_neta_acumulada());
+		 setTolerancia(cr.getTolerancia());
 		
 	}
 

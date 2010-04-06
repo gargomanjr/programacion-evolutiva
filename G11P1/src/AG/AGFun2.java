@@ -185,8 +185,8 @@ public class AGFun2 extends AlgoritmoGenetico{
 		{
 			prob = aleatorio(); 
 			posSeleccionado = 0;
-			while((posSeleccionado < tamañoPob - 1)&&(prob > pob[posSeleccionado].getPuntuacion_neta_acumulada()))
-			//while((posSeleccionado < tamañoPob - 1)&&(prob > pob[posSeleccionado].getPuntuacion_acumulada()))
+			//while((posSeleccionado < tamañoPob - 1)&&(prob > pob[posSeleccionado].getPuntuacion_neta_acumulada()))
+			while((posSeleccionado < tamañoPob - 1)&&(prob > pob[posSeleccionado].getPuntuacion_acumulada()))
 			{
 				posSeleccionado++;
 			}
@@ -194,7 +194,8 @@ public class AGFun2 extends AlgoritmoGenetico{
 		}
 		for(int i=0; i< tamañoPob - this.getNum_pob_elite(); i++)
 		{
-			pobIntermedia[i]= pob[seleccion[i]];
+			//pobIntermedia[i]= pob[seleccion[i]];
+			pobIntermedia[i] = new CromosomaFuncion2((CromosomaFuncion2)pob[seleccion[i]]);
 		}
 	}
 
@@ -241,27 +242,40 @@ public class AGFun2 extends AlgoritmoGenetico{
 		
 		for(int i=0; i< puntoCruceX; i++)
 		{
-			hijo1.getGenes()[i]= padre1.getGenes()[i];
-			hijo2.getGenes()[i]= padre2.getGenes()[i];
+			//hijo1.getGenes()[i]= padre1.getGenes()[i];
+			//hijo2.getGenes()[i]= padre2.getGenes()[i];
+			hijo1.setGenesi(padre1.getGenes()[i], i);
+			hijo2.setGenesi(padre2.getGenes()[i], i);
 		}
 		for(int i=puntoCruceX; i<((CromosomaFuncion2) hijo1).getLonX(); i++)
 		{
-			hijo1.getGenes()[i]= padre2.getGenes()[i];
-			hijo2.getGenes()[i]= padre1.getGenes()[i];
+			//hijo1.getGenes()[i]= padre2.getGenes()[i];
+			//hijo2.getGenes()[i]= padre1.getGenes()[i];
+			hijo1.setGenesi(padre1.getGenes()[i], i);
+			hijo2.setGenesi(padre2.getGenes()[i], i);
 		}
 		
 		for(int i=((CromosomaFuncion2) hijo1).getLonX(); i< puntoCruceY; i++)
 		{
-			hijo1.getGenes()[i]= padre1.getGenes()[i];
-			hijo2.getGenes()[i]= padre2.getGenes()[i];
+			//hijo1.getGenes()[i]= padre1.getGenes()[i];
+			//hijo2.getGenes()[i]= padre2.getGenes()[i];
+			hijo1.setGenesi(padre1.getGenes()[i], i);
+			hijo2.setGenesi(padre2.getGenes()[i], i);
 		}
 		for(int i=puntoCruceY; i<((CromosomaFuncion2) hijo1).getLongCromosoma(); i++)
 		{
-			hijo1.getGenes()[i]= padre2.getGenes()[i];
-			hijo2.getGenes()[i]= padre1.getGenes()[i];
+			//hijo1.getGenes()[i]= padre2.getGenes()[i];
+			//hijo2.getGenes()[i]= padre1.getGenes()[i];
+			hijo1.setGenesi(padre1.getGenes()[i], i);
+			hijo2.setGenesi(padre2.getGenes()[i], i);
 		}
+		((CromosomaFuncion2) hijo1).setGenX(((CromosomaFuncion2) hijo1).fenotipoX());
+		((CromosomaFuncion2) hijo2).setGenX(((CromosomaFuncion2) hijo2).fenotipoX());
+		((CromosomaFuncion2) hijo1).setGenY(((CromosomaFuncion2) hijo1).fenotipoY());
+		((CromosomaFuncion2) hijo2).setGenY(((CromosomaFuncion2) hijo2).fenotipoY());
 		hijo1.setAptitud(hijo1.evalua());
 		hijo2.setAptitud(hijo2.evalua());
+
 	}
 
 	
@@ -278,18 +292,25 @@ public class AGFun2 extends AlgoritmoGenetico{
 				prob= aleatorio()*100;
 				if(prob < probMut)
 				{
-					pobIntermedia[i].getGenes()[j]= !(pobIntermedia[i].getGenes()[j]);
+					//pobIntermedia[i].getGenes()[j]= !(pobIntermedia[i].getGenes()[j]);
+					pobIntermedia[i].setGenesi(!(pobIntermedia[i].getGenes()[j]),j);
 					mutado=true;
 				}
 				if(mutado)
 				{
+					((CromosomaFuncion2) pobIntermedia[i]).setGenX(((CromosomaFuncion2) pobIntermedia[i]).fenotipoX());
+					((CromosomaFuncion2) pobIntermedia[i]).setGenY(((CromosomaFuncion2) pobIntermedia[i]).fenotipoY());
 					pobIntermedia[i].setAptitud(pobIntermedia[i].evalua());
 				}
 			}
 			
 		}
 		pob=pobIntermedia;
-		
+		/*for(int i=0; i< tamañoPob; i++)
+		{
+			//pobIntermedia[i]= pob[seleccion[i]];
+			pob[i] = new CromosomaFuncion2((CromosomaFuncion2)pobIntermedia[i]);
+		}*/
 	}
 	
 	
@@ -303,7 +324,7 @@ public class AGFun2 extends AlgoritmoGenetico{
 		listaElMejor.add(getElMejor().getAptitud());
 		listaMaximoAptitud.add(getMaximoAptitud());
 		listaMedioAptitud.add(getMedioAptitud());
-		escalado();
+		//escalado();
 		while(!terminado())
 		{
 			IncrementoNumIter();
@@ -311,7 +332,7 @@ public class AGFun2 extends AlgoritmoGenetico{
 			reproduccion();
 			mutacion();
 			evaluarPoblacion();
-			escalado();
+			//escalado();
 			listaElMejor.add(getElMejor().getAptitud());
 			listaMaximoAptitud.add(getMaximoAptitud());
 			listaMedioAptitud.add(getMedioAptitud());		
@@ -373,7 +394,8 @@ public class AGFun2 extends AlgoritmoGenetico{
 			indices_seleccionados.add(mayor);
 		}
 		for(int i=0 ; i< this.getNum_pob_elite() ; i++){
-			this.pobIntermedia[i + tamañoPob - this.getNum_pob_elite()]= pob[indices_seleccionados.get(i)];
+			//this.pobIntermedia[i + tamañoPob - this.getNum_pob_elite()]= pob[indices_seleccionados.get(i)];
+			pobIntermedia[i + tamañoPob - this.getNum_pob_elite()] = new CromosomaFuncion2((CromosomaFuncion2)pob[indices_seleccionados.get(i)]);
 		}		
 	}
 
