@@ -104,7 +104,9 @@ public class CromosomaFuncion4 extends Cromosoma {
 		genX2 = cr.getGenX2();
 		this.Xmin = -10;
 		this.Xmax = 10;
-		
+	//    setGenX1(((CromosomaFuncion4)cr).getGenX1());
+	//	setGenX2(((CromosomaFuncion4)cr).getGenX2());
+		this.setLongCromosoma(longitudCrom());
 		 
 		 
 	}
@@ -131,6 +133,9 @@ public class CromosomaFuncion4 extends Cromosoma {
 		 setPuntuacion_acumulada(cr.getPuntuacion_acumulada());
 		 setGenX1(((CromosomaFuncion4)cr).getGenX1());
 		 setGenX2(((CromosomaFuncion4)cr).getGenX2());
+		 this.Xmin = -10;
+		 this.Xmax = 10;
+		 this.setLongCromosoma(longitudCrom());
 	}
 	
 	public void inicializaCromosoma()
