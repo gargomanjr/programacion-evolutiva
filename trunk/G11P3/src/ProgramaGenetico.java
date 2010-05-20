@@ -3,6 +3,7 @@ import java.util.ArrayList;
 
 
 
+
 public class ProgramaGenetico {
 	
 	private Cromosoma[] pob,pobIntermedia;
@@ -31,6 +32,7 @@ public class ProgramaGenetico {
 	private double minimoAptitudNeta;
 	private double maximoAptitudNeta;
 	private int metodoseleccion;
+	private int metodomutacion;
 	
 	public Cromosoma[] getPob() {
 		return pob;
@@ -216,7 +218,8 @@ public class ProgramaGenetico {
 		this.maximoAptitudNeta = maximoAptitudNeta;
 	}
 	
-	public ProgramaGenetico(int profMax,int tamPob,boolean in_admite_if,int in_metodoseleccion)
+	public ProgramaGenetico(int profMax,int tamPob,boolean in_admite_if,int in_metodoseleccion,
+			int ai_numIter,double ad_prob_cruce,double ad_prob_mut,double elitismo_in,int mutacion)
 	{
 		ProfMaxima		= profMax;
 		tamañoPob		= tamPob;
@@ -224,6 +227,32 @@ public class ProgramaGenetico {
 		pobIntermedia	= new Cromosoma[tamañoPob];
 		this.admite_if  = in_admite_if;
 		this.metodoseleccion = in_metodoseleccion;
+		
+
+		this.numIter 			= ai_numIter;
+		this.probCruce 			= ad_prob_cruce;
+		this.probMut 			= ad_prob_mut;
+
+		this.maximoAptitud 		= 0;
+		this.medioAptitud		= 0;
+		this.listaElMejor      	=	new ArrayList<Double>();
+    	this.listaMaximoAptitud	=	new ArrayList<Double>();
+    	this.listaMedioAptitud	=	new ArrayList<Double>();
+    	
+    	this.elitismo           = elitismo_in;
+    	this.num_pob_elite      = (int) (this.tamañoPob * this.elitismo);
+    	this.metodomutacion = mutacion;
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	}
 	
 
@@ -767,12 +796,46 @@ public class ProgramaGenetico {
 				return medioAptitudNeta/(medioAptitudNeta-minimoAptitudNeta);
 			}
 			
+			
+			
+			
+			public  void mutacionTerminalSimple()
+			{
+				boolean mutado=false;
+				double prob;
+				int punto1,punto2,aux;
+				int PuntosInserccion = 4;
+				int seleccion;
+				int valor = 0;
+				for(int i=0; i< tamañoPob - this.getNum_pob_elite(); i++)
+				{
+					prob= aleatorio()*100;
+						if(prob < probMut)
+						{	
+							int intRand = aleatorioPCruce(0,pobIntermedia[i].getCjtoTerminales().length);
+							String TerminalNuevo = pobIntermedia[i].getCjtoTerminales()[intRand];
+							int numNodos = pobIntermedia[i].getArbol().getNumNodos();
+							
+							
+
+						}
+					
+					
+					pobIntermedia[i].setAptitud(pobIntermedia[i].evalua());
+
+				}
+				for(int i=0; i< tamañoPob; i++)
+				{
+					pob[i].copiaCromosoma(pobIntermedia[i]);
+				}
+				
+			}
 	public static void main(String[] args) {
 		
 		//En properties-> run/debug->ProgramaGenetico( dobleclick) hay puedes cambiar 
 		// los parametros de entrada colocando con espacios los valores paran o tener  k usar interfaz de momento
 		//ProgramaGenetico pg=new ProgramaGenetico(Integer.parseInt(args[0]),Integer.parseInt(args[1]));
-		ProgramaGenetico pg=new ProgramaGenetico(4,50,false,2);
+		ProgramaGenetico pg=new ProgramaGenetico(4,50,false,2,300,0.5,0.2,0.02,1);
 		pg.ejecuta();
 
 	}

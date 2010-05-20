@@ -122,7 +122,7 @@ public class Arbol {
 			    numNodos = 1;
 			    if ((rnd) || (profundidad + 1 == hmax))
 			    {
-			      int intRand = aleatorioInt2(0,cjtoTerms.length-1);
+			      int intRand = aleatorioInt2(0,cjtoTerms.length);
 			      nombre = cjtoTerms[intRand];
 			      hoja = true;
 			    }
@@ -205,16 +205,16 @@ public class Arbol {
 	private void preorden(Arbol a)
 	{
 	  if (a != null) {
-		//if(a.getHoja()== false){
+		if(a.getHoja()== false){
 			lista.add("(");
-		//}
+		}
 	    tratar(a);          //Realiza una operación en nodo
 	    preorden(a.getHi());
 	    preorden(a.getHc());
 	    preorden(a.getHd());
-		//if(a.getHoja()== false){
+		if(a.getHoja()== false){
 			lista.add(")");
-		//}
+		}
 	  }
 	}
 	private void tratar(Arbol a) {
