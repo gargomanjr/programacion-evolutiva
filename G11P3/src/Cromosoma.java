@@ -385,15 +385,10 @@ public void cruce(Cromosoma padre2, Cromosoma hijo1, Cromosoma hijo2,
 			String argumento3 = reducir.get(0);
 			
 			if(argumento1 == "false"){
-				resultado = "false";
+				resultado = argumento3;
 			}
 			else{
-				if(argumento2 == "false"){
-					resultado = "false";
-				}
-				else{
-					resultado = argumento3;
-				}
+				resultado = argumento2;			
 			}
 		}
 	
