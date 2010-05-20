@@ -799,7 +799,7 @@ public class ProgramaGenetico {
 			
 			
 			
-			public  void mutacionTerminalSimple()
+			/*public  void mutacionTerminalSimple()
 			{
 				boolean mutado=false;
 				double prob;
@@ -829,13 +829,13 @@ public class ProgramaGenetico {
 					pob[i].copiaCromosoma(pobIntermedia[i]);
 				}
 				
-			}
+			}*/
 	public static void main(String[] args) {
 		
 		//En properties-> run/debug->ProgramaGenetico( dobleclick) hay puedes cambiar 
 		// los parametros de entrada colocando con espacios los valores paran o tener  k usar interfaz de momento
 		//ProgramaGenetico pg=new ProgramaGenetico(Integer.parseInt(args[0]),Integer.parseInt(args[1]));
-		ProgramaGenetico pg=new ProgramaGenetico(4,50,false,2,300,0.5,0.2,0.02,1);
+		ProgramaGenetico pg=new ProgramaGenetico(4,50,true,2,300,0.5,0.2,0.02,1);
 		pg.ejecuta();
 
 	}
