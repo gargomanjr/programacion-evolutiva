@@ -10,7 +10,9 @@ public class Arbol {
 	 private Arbol hd;
 	 private Arbol padre;
 	 private int profundidad;
-	 private int numNodos;
+
+
+	private int numNodos;
 	 private boolean hoja;
 	 private boolean raiz;
 	 private boolean esHi;
@@ -26,6 +28,12 @@ public class Arbol {
 	}
 	public String getNombre() {
 		return nombre;
+	}
+	 public int getPos() {
+			return pos;
+		}
+	public void setPos(int pos) {
+		this.pos = pos;
 	}
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
@@ -108,18 +116,20 @@ public class Arbol {
 	//----------------------------------------------------------------
 
 	public Arbol(String[] cjtoFuns,  String[] cjtoTerms,
-			  int hmax, int prof, Arbol pater, boolean esHizq, boolean esRaiz,boolean in_admite_if){
+			  int hmax, int prof, Arbol pater, boolean esHizq, boolean esRaiz,boolean in_admite_if,int posicion){
 			    
 				int nuevaProf = prof+1;
 			    boolean  rnd=boolRandom();
 			    profundidad=prof;
 			    padre = pater;
 			    esHi = esHizq;
+			    posicion ++;
+			    pos = posicion;
 			    raiz = esRaiz;
 			    lista = new ArrayList<String>();
 			    admite_if = in_admite_if;
 			    if (padre == null) raiz = true;
-			    numNodos = 1;
+				numNodos = 1;
 			    if ((rnd) || (profundidad + 1 == hmax))
 			    {
 			      int intRand = aleatorioInt2(0,cjtoTerms.length);
@@ -138,10 +148,10 @@ public class Arbol {
 			      //int intRand2 = aleatorioInt2(0,cjtoFuns.length-1);	
 			      nombre = cjtoFuns[intRand2];
 			      if(nombre.equals("AND") || nombre.equals("OR")){
-				      hi = new Arbol(cjtoFuns, cjtoTerms, hmax, nuevaProf, this, true, false,admite_if);
+				      hi = new Arbol(cjtoFuns, cjtoTerms, hmax, nuevaProf, this, true, false,admite_if,pos);
 				      numNodos = numNodos + hi.getNumNodos();
 				      hc=null;
-				      hd = new Arbol(cjtoFuns, cjtoTerms, hmax, nuevaProf, this, false, false,admite_if);
+				      hd = new Arbol(cjtoFuns, cjtoTerms, hmax, nuevaProf, this, false, false,admite_if,hi.getNumNodos()+ pos);
 				      numNodos = numNodos + hd.getNumNodos();
 				      hoja = false;
 			      }
@@ -149,7 +159,7 @@ public class Arbol {
 			      {
 			    	  if(nombre.equals("NOT"))
 			    	  {
-			    		  hc = new Arbol(cjtoFuns, cjtoTerms, hmax, nuevaProf, this, true, false,admite_if);
+			    		  hc = new Arbol(cjtoFuns, cjtoTerms, hmax, nuevaProf, this, true, false,admite_if,pos);
 					      numNodos = numNodos + hc.getNumNodos();
 					      hoja=false;
 					      hd=null;
@@ -159,11 +169,11 @@ public class Arbol {
 			    	  {
 			    		  if(nombre.equals("IF"))
 			    	  	  {
-			    			  hi = new Arbol(cjtoFuns, cjtoTerms, hmax, nuevaProf, this, true, false,admite_if);
+			    			  hi = new Arbol(cjtoFuns, cjtoTerms, hmax, nuevaProf, this, true, false,admite_if,pos);
 						      numNodos = numNodos + hi.getNumNodos();
-						      hc = new Arbol(cjtoFuns, cjtoTerms, hmax, nuevaProf, this, true, false,admite_if);
+						      hc = new Arbol(cjtoFuns, cjtoTerms, hmax, nuevaProf, this, true, false,admite_if,hi.getNumNodos() + pos);
 						      numNodos = numNodos + hc.getNumNodos();
-						      hd = new Arbol(cjtoFuns, cjtoTerms, hmax, nuevaProf, this, false, false,admite_if);
+						      hd = new Arbol(cjtoFuns, cjtoTerms, hmax, nuevaProf, this, false, false,admite_if,hc.getNumNodos() +pos);
 						      numNodos = numNodos + hd.getNumNodos();
 						      hoja = false;
 			    		  
@@ -217,19 +227,45 @@ public class Arbol {
 		}
 	  }
 	}
-	private void tratar(Arbol a) {
-		
+	private void tratar(Arbol a) {	
 		lista.add(a.getNombre());
-		pos++;
+		//a.setPos(pos + 1);
 	}
-	
+	private Arbol GetArbolPosicion(Arbol a,int posicionbusqueda){
+		if (a != null) {
+			if(a.getPos() == posicionbusqueda){
+				return a;
+			}
+			else{
+				GetArbolPosicion(a.getHi(),posicionbusqueda);
+				GetArbolPosicion(a.getHc(),posicionbusqueda);
+				GetArbolPosicion(a.getHd(),posicionbusqueda);
+			}		
+		}
+		return a;
+	}
+	private void  SetNombrePosicion(Arbol a,int posicionbusqueda,String Nombre){
+		if (a != null) {
+			if(a.getPos() == posicionbusqueda){
+				a.setNombre(Nombre);
+			}
+			else{
+				SetNombrePosicion(a.getHi(),posicionbusqueda,Nombre);
+				SetNombrePosicion(a.getHc(),posicionbusqueda,Nombre);
+				SetNombrePosicion(a.getHd(),posicionbusqueda,Nombre);
+			}		
+		}
+	}
 	public ArrayList<String> dameExpresion()
 	{
-		pos=0;
+	//	pos=0;
 		preorden(this);
 		return lista;
 		
 	}
-
+	private Arbol ArbolAleatorio(){
+		int posicionbusqueda = this.aleatorioInt2(1, this.numNodos);
+		return GetArbolPosicion(this, posicionbusqueda);
+	}
 	
 }

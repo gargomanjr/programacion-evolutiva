@@ -140,7 +140,7 @@ public class Cromosoma implements Comparable {
 	      this.hmax = hmax;
 	      this.admite_if = if_valido;
 	      /*Hemos de crear un árbol de altura máxima hmax*/
-	      arbol = new Arbol(cjtoFunciones, cjtoTerminales, hmax, 0, null, true, true,this.isAdmite_if());
+	      arbol = new Arbol(cjtoFunciones, cjtoTerminales, hmax, 0, null, true, true,this.isAdmite_if(),0);
 
 	      /*Ahora hay que rellenar el campo aptitud. Para ello llamamos
 	      a la función adaptacion. Cuando creamos los individuos,
