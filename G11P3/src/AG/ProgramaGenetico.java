@@ -5,10 +5,6 @@ package AG;
 
 import java.util.ArrayList;
 
-
-
-
-
 public class ProgramaGenetico {
 	
 	private Cromosoma[] pob,pobIntermedia;
@@ -359,18 +355,49 @@ public class ProgramaGenetico {
 			mutacionTerminalSimple();
 		else 
 			if(metodomutacion==1)
-				mutaFuncionales();
+				mutacionFuncionalSimple();
 			else
-				mutaArbol();
+				mutacionArbol();
 		
 	}
 
-	private void mutaArbol() {
-		// TODO Auto-generated method stub
+	private void mutacionArbol() {
+		
+		
+		for(int i=0;i<tamañoPob;i++)
+		{
+			Cromosoma c=pob[i];
+			double numAle=Math.random()*100;
+			if(numAle<probMut)
+			{
+				Arbol nodo = getFuncionAleatorio(c);
+				nodo.borraArbol();
+				Arbol ar=new Arbol(c.getCjtoFunciones(),c.getCjtoTerminales(),nodo.getProfTotal(),nodo.getProfundidad(),nodo.getPadre(),nodo.isEsHi(),nodo.isRaiz(),nodo.isAdmite_if(),nodo.getPos());
+				
+				
+			}
+		}
 		
 		
 		
 	}
+
+	
+
+	private Arbol getNodoAleatorioSimple(Cromosoma c) {
+		
+		int numAle2	=	(int) (Math.random()*c.getArbol().getNumNodos());
+		IntHolder i= new IntHolder();
+		i.pos=0;
+		Arbol a=c.getArbol().preordenMut(c.getArbol(), i, numAle2);
+		while(a==null)
+		{
+			numAle2	=	(int) (Math.random()*c.getArbol().getNumNodos());
+			a=c.getArbol().preordenMut(c.getArbol(), i, numAle2);
+		}
+		return a;
+	}
+	
 
 	private void mutacionTerminalSimple() {
 		String[] cjtoTerminales={"A0","A1","D0","D1","D2","D3"};
@@ -381,7 +408,7 @@ public class ProgramaGenetico {
 			if(numAle<probMut)
 			{
 				int numAle2	=	(int) (Math.random()*cjtoTerminales.length);
-				Arbol nodo = getFuncionAleatorioSimple(c);
+				Arbol nodo = getTerminalAleatorioSimple(c);
 				if(nodo!=null&&!nodo.getNombre().equals("AND")&& !nodo.getNombre().equals("OR")
 						&& !nodo.getNombre().equals("NOT")&& !nodo.getNombre().equals("IF"))
 				{
@@ -393,14 +420,14 @@ public class ProgramaGenetico {
 		
 	}
 
-	private Arbol getFuncionAleatorioSimple(Cromosoma c) {
+	private Arbol getTerminalAleatorioSimple(Cromosoma c) {
 		
 		
 		int numAle2	=	(int) (Math.random()*c.getArbol().getNumNodos());
 		IntHolder i= new IntHolder();
 		i.pos=0;
 		Arbol a=c.getArbol().preordenMut(c.getArbol(), i, numAle2);
-		while(a==null&&(a.getNombre().equals("AND")||a.getNombre().equals("OR")||
+		while(a==null||(a.getNombre().equals("AND")||a.getNombre().equals("OR")||
 				a.getNombre().equals("IF")||a.getNombre().equals("NOT")))
 		{
 			numAle2	=	(int) (Math.random()*c.getArbol().getNumNodos());
@@ -853,7 +880,7 @@ public class ProgramaGenetico {
 			}
 			
 			
-			private void mutaFuncionales() {
+			private void mutacionFuncionalSimple() {
 				
 				String[] cjtoFunciones={"AND","OR","NOT","IF"};
 				for(int i=0;i<tamañoPob;i++)
