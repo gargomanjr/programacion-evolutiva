@@ -2,6 +2,7 @@ package AG;
 
 
 
+
 import java.util.ArrayList;
 
 
@@ -353,6 +354,23 @@ public class ProgramaGenetico {
 	}
 
 	private void muta() {
+
+		if(metodomutacion==0)
+			mutacionTerminalSimple();
+		else 
+			if(metodomutacion==1)
+				mutaFuncionales();
+			else
+				mutaArbol();
+		
+	}
+
+	private void mutaArbol() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void mutacionTerminalSimple() {
 		// TODO Auto-generated method stub
 		
 	}
@@ -800,6 +818,44 @@ public class ProgramaGenetico {
 				return medioAptitudNeta/(medioAptitudNeta-minimoAptitudNeta);
 			}
 			
+			
+			private void mutaFuncionales() {
+				
+				String[] cjtoFunciones={"AND","OR","NOT","IF"};
+				for(int i=0;i<tamañoPob;i++)
+				{
+					Cromosoma c=pob[i];
+					double numAle=Math.random()*100;
+					if(numAle<probMut)
+					{
+						int numAle2	=	(int) (Math.random()*2);
+						Arbol nodo = getFuncionAleatorio(c);
+						if(nodo.getNombre().equals("AND")||nodo.getNombre().equals("OR"))
+						{
+							nodo.setNombre(cjtoFunciones[numAle2]);
+						}
+						
+					}
+				}
+			}
+
+			private Arbol getFuncionAleatorio(Cromosoma c) {
+				
+				
+				int numAle2	=	(int) (Math.random()*c.getArbol().getNumNodos());
+				IntHolder i= new IntHolder();
+				i.pos=0;
+				Arbol a=c.getArbol().preordenMut(c.getArbol(), i, numAle2);
+				while(a.getNombre().equals("AND")||a.getNombre().equals("OR")||
+						a.getNombre().equals("IF")||a.getNombre().equals("NOT"))
+				{
+					numAle2	=	(int) (Math.random()*c.getArbol().getNumNodos());
+					a=c.getArbol().preordenMut(c.getArbol(), i, numAle2);
+				}
+				return a;
+				
+				
+			}
 			
 			
 			
