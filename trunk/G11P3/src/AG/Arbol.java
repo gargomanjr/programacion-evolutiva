@@ -28,6 +28,12 @@ public class Arbol {
 	 private boolean admite_if;
 
 	 
+	public boolean isAdmite_if() {
+		return admite_if;
+	}
+	public void setAdmite_if(boolean admite_if) {
+		this.admite_if = admite_if;
+	}
 	//Metodos Accesores y Mutadores 
 	public boolean getHoja(){
 		return hoja;
@@ -192,11 +198,6 @@ public class Arbol {
 	//----------------------------------------------------------------
 	
 	public Arbol (Arbol hd,Arbol hi){
-		
-		
-		
-		
-		
 	}
 	//----------------------------------------------------------------
 	private boolean boolRandom()
@@ -332,6 +333,15 @@ public class Arbol {
 			}			
 		}
 		return aux;
+	}
+	public void borraArbol() {
+		
+		numNodos=0;
+		hi=null;
+		hc=null;
+		hd=null;
+		profundidad=0;
+		
 	}
 	
 }
