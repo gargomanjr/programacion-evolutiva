@@ -189,7 +189,13 @@ public class Arbol {
 	
 	//----------------------------------------------------------------
 	
-	public Arbol (Arbol hd,Arbol hi){}
+	public Arbol (Arbol hd,Arbol hi){
+		
+		
+		
+		
+		
+	}
 	//----------------------------------------------------------------
 	private boolean boolRandom()
 	{
@@ -222,7 +228,7 @@ public class Arbol {
 		if(a.getHoja()== false){
 			lista.add("(");
 		}
-	    tratar(a);          //Realiza una operación en nodo
+	    tratar(a); //Realiza una operación en nodo
 	    preorden(a.getHi());
 	    preorden(a.getHc());
 	    preorden(a.getHd());
@@ -263,6 +269,7 @@ public class Arbol {
 	public ArrayList<String> dameExpresion()
 	{
 	//	pos=0;
+		this.lista.clear();
 		preorden(this);
 		return lista;
 		
@@ -270,6 +277,26 @@ public class Arbol {
 	public Arbol ArbolAleatorio(){
 		int posicionbusqueda = this.aleatorioInt2(1, this.numNodos);
 		return GetArbolPosicion(this, posicionbusqueda);
+	}
+	public Arbol ArbolAleatorioconProb(){
+		boolean selecccion = false;
+		int posicionbusqueda = this.aleatorioInt2(1, this.numNodos);
+		Arbol aux= GetArbolPosicion(this, posicionbusqueda);
+		while (selecccion==false){
+			if(aux.getHoja() && aleatorio() > 0.1){
+				selecccion = true;
+			}
+			else{
+				if(aleatorio() < 0.9){
+					selecccion = true;
+				}
+			}
+			if (selecccion==false){
+				 posicionbusqueda = this.aleatorioInt2(1, this.numNodos);
+				 aux= GetArbolPosicion(this, posicionbusqueda);	
+			}			
+		}
+		return aux;
 	}
 	
 }
