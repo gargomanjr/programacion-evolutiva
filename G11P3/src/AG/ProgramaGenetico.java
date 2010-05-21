@@ -599,8 +599,8 @@ public class ProgramaGenetico {
 			arbol2 = padre2.getArbol();
 			
 			while (!stop) {
-				nodo1 = arbol1.ArbolAleatorio(); //Hacer, comentado porque de momento no hace falta
-				nodo2 = arbol2.ArbolAleatorio();
+				nodo1 = arbol1.ArbolAleatorioconProb(); 
+				nodo2 = arbol2.ArbolAleatorioconProb();
 				nodo_aux1 = nodo1;
 				raiz1 = nodo1.isRaiz();
 				raiz2 = nodo2.isRaiz();
