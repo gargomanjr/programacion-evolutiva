@@ -6,7 +6,11 @@
 
 package GUI;
 
+import AG.*;
+//import ProgramaGenetico;
+
 import javax.swing.WindowConstants;
+
 import javax.swing.SwingUtilities;
 /**
  *
@@ -322,7 +326,14 @@ private void checkEliteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
 }//GEN-LAST:event_checkEliteActionPerformed
 
 private void btn_EjecutarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_EjecutarActionPerformed
-// TODO add your handling code here:
+
+	Double Elitismo = 0.0;
+	if (this.checkElite.isSelected()){
+		Elitismo = (Integer)this.sp_ProbElite.getValue() / 100.0;
+	}
+	ProgramaGenetico pg=new ProgramaGenetico((Integer)sp_Profund.getValue(),(Integer)sp_TamPob.getValue(),cBox_IF.isSelected(),(Integer)cBox_Muta.getSelectedIndex(),(Integer)sp_NumIter.getValue(),(Integer)sp_ProbCruce.getValue()/100.0,(Integer)sp_ProbMut.getValue()/100.0,Elitismo,cBox_Muta.getSelectedIndex());
+	pg.ejecuta();
+	
 }//GEN-LAST:event_btn_EjecutarActionPerformed
 
 private void btn_SalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_SalirActionPerformed

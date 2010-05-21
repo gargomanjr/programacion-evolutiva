@@ -1,3 +1,7 @@
+
+package AG;
+
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -263,7 +267,7 @@ public class Arbol {
 		return lista;
 		
 	}
-	private Arbol ArbolAleatorio(){
+	public Arbol ArbolAleatorio(){
 		int posicionbusqueda = this.aleatorioInt2(1, this.numNodos);
 		return GetArbolPosicion(this, posicionbusqueda);
 	}

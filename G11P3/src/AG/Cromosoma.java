@@ -1,4 +1,9 @@
+
+package AG;
+
+
 import java.util.ArrayList;
+
 
 
 public class Cromosoma implements Comparable {

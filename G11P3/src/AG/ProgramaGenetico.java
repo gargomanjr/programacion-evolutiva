@@ -1,3 +1,7 @@
+package AG;
+
+
+
 import java.util.ArrayList;
 
 
@@ -595,8 +599,8 @@ public class ProgramaGenetico {
 			arbol2 = padre2.getArbol();
 			
 			while (!stop) {
-				//nodo1 = arbol1.nodoAleatorio(); Hacer, comentado porque de momento no hace falta
-				//nodo2 = arbol2.nodoAleatorio();
+				nodo1 = arbol1.ArbolAleatorio(); //Hacer, comentado porque de momento no hace falta
+				nodo2 = arbol2.ArbolAleatorio();
 				nodo_aux1 = nodo1;
 				raiz1 = nodo1.isRaiz();
 				raiz2 = nodo2.isRaiz();
@@ -830,14 +834,5 @@ public class ProgramaGenetico {
 				}
 				
 			}*/
-	public static void main(String[] args) {
-		
-		//En properties-> run/debug->ProgramaGenetico( dobleclick) hay puedes cambiar 
-		// los parametros de entrada colocando con espacios los valores paran o tener  k usar interfaz de momento
-		//ProgramaGenetico pg=new ProgramaGenetico(Integer.parseInt(args[0]),Integer.parseInt(args[1]));
-		ProgramaGenetico pg=new ProgramaGenetico(4,50,true,2,300,0.5,0.2,0.02,1);
-		pg.ejecuta();
-
-	}
 
 }
