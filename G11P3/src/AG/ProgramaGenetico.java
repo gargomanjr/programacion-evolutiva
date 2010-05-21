@@ -373,8 +373,40 @@ public class ProgramaGenetico {
 	}
 
 	private void mutacionTerminalSimple() {
-		// TODO Auto-generated method stub
+		String[] cjtoTerminales={"A0","A1","D0","D1","D2","D3"};
+		for(int i=0;i<tamañoPob;i++)
+		{
+			Cromosoma c=pob[i];
+			double numAle=Math.random()*100;
+			if(numAle<probMut)
+			{
+				int numAle2	=	(int) (Math.random()*cjtoTerminales.length);
+				Arbol nodo = getFuncionAleatorioSimple(c);
+				if(nodo!=null&&!nodo.getNombre().equals("AND")&& !nodo.getNombre().equals("OR")
+						&& !nodo.getNombre().equals("NOT")&& !nodo.getNombre().equals("IF"))
+				{
+					nodo.setNombre(cjtoTerminales[numAle2]);
+				}
+				
+			}
+		}
 		
+	}
+
+	private Arbol getFuncionAleatorioSimple(Cromosoma c) {
+		
+		
+		int numAle2	=	(int) (Math.random()*c.getArbol().getNumNodos());
+		IntHolder i= new IntHolder();
+		i.pos=0;
+		Arbol a=c.getArbol().preordenMut(c.getArbol(), i, numAle2);
+		while(a==null&&(a.getNombre().equals("AND")||a.getNombre().equals("OR")||
+				a.getNombre().equals("IF")||a.getNombre().equals("NOT")))
+		{
+			numAle2	=	(int) (Math.random()*c.getArbol().getNumNodos());
+			a=c.getArbol().preordenMut(c.getArbol(), i, numAle2);
+		}
+		return a;
 	}
 
 	public void seleccionTorneo(){
@@ -832,7 +864,8 @@ public class ProgramaGenetico {
 					{
 						int numAle2	=	(int) (Math.random()*2);
 						Arbol nodo = getFuncionAleatorio(c);
-						if(nodo.getNombre().equals("AND")||nodo.getNombre().equals("OR"))
+						
+						if(nodo!=null&&(nodo.getNombre().equals("AND")||nodo.getNombre().equals("OR")))
 						{
 							nodo.setNombre(cjtoFunciones[numAle2]);
 						}
@@ -844,12 +877,14 @@ public class ProgramaGenetico {
 			private Arbol getFuncionAleatorio(Cromosoma c) {
 				
 				
+				if(c.getArbol().getNumNodos()==1)
+					return null;
 				int numAle2	=	(int) (Math.random()*c.getArbol().getNumNodos());
 				IntHolder i= new IntHolder();
 				i.pos=0;
 				Arbol a=c.getArbol().preordenMut(c.getArbol(), i, numAle2);
-				while(a.getNombre().equals("AND")||a.getNombre().equals("OR")||
-						a.getNombre().equals("IF")||a.getNombre().equals("NOT"))
+				while(a==null&&!a.getNombre().equals("AND")&&!a.getNombre().equals("OR")&&
+						!a.getNombre().equals("IF")&&!a.getNombre().equals("NOT"))
 				{
 					numAle2	=	(int) (Math.random()*c.getArbol().getNumNodos());
 					a=c.getArbol().preordenMut(c.getArbol(), i, numAle2);
@@ -858,6 +893,7 @@ public class ProgramaGenetico {
 				
 				
 			}
+
 			
 			
 			
