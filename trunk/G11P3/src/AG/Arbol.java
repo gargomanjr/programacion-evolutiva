@@ -2,6 +2,8 @@
 package AG;
 
 
+
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -240,6 +242,39 @@ public class Arbol {
 	private void tratar(Arbol a) {	
 		lista.add(a.getNombre());
 		//a.setPos(pos + 1);
+	}
+	public Arbol preordenMut(Arbol a,IntHolder posic,int aleat)
+	{
+		Arbol b,c,d;
+		b=c=d=null;
+		  if (a != null) {
+			
+			if(tratarMut(a,posic,aleat))
+			{
+				return a;
+			}
+			posic.pos++;
+		    b=preordenMut(a.getHi(),posic,aleat);
+		    c=preordenMut(a.getHc(),posic,aleat);
+		    d=preordenMut(a.getHd(),posic,aleat);
+			
+		  }
+		  if(b!=null)
+			  return b;
+		  else
+			  if(c!=null)
+				  return c;
+			  else
+				  if(d!=null)
+					  return d;
+				  else
+					  return null;
+	}
+	
+	private boolean tratarMut(Arbol a,IntHolder pos,int aleat) {
+		
+		return pos.pos==aleat;
+		
 	}
 	private Arbol GetArbolPosicion(Arbol a,int posicionbusqueda){
 		if (a != null) {
