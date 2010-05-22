@@ -160,7 +160,8 @@ public class Cromosoma implements Comparable {
 	      this.admite_if = cr.isAdmite_if();
 	      this.aptitud = cr.getAptitud();
 	      this.aptitud_neta = cr.getAptitud_neta();
-	      this.setArbol(cr.getArbol())  ;
+	      //this.setArbol(cr.getArbol())  ;
+	      this.setArbol( new Arbol(cr.getArbol())) ;
 	      this.evaluacion = cr.getEvaluacion();
 	      this.puntuacion = cr.getPuntuacion();
 	      this.puntuacion_acumulada = cr.getPunt_acu();
@@ -174,7 +175,8 @@ public class Cromosoma implements Comparable {
 	      this.admite_if = cr.isAdmite_if();
 	      this.aptitud = cr.getAptitud();
 	      this.aptitud_neta = cr.getAptitud_neta();
-	      this.setArbol(cr.getArbol())  ;
+	      //this.setArbol(cr.getArbol())  ;
+	      this.setArbol( new Arbol(cr.getArbol())) ;
 	      this.evaluacion = cr.getEvaluacion();
 	      this.puntuacion = cr.getPuntuacion();
 	      this.puntuacion_acumulada = cr.getPunt_acu();
@@ -188,7 +190,7 @@ public class Cromosoma implements Comparable {
 		
 
 
-public void cruce(Cromosoma padre2, Cromosoma hijo1, Cromosoma hijo2,
+/*public void cruce(Cromosoma padre2, Cromosoma hijo1, Cromosoma hijo2,
 			int alturaMax, int iter, int nmax) {
 		
 		Arbol arbol1, arbol2;
@@ -255,7 +257,7 @@ public void cruce(Cromosoma padre2, Cromosoma hijo1, Cromosoma hijo2,
 	}
 
 
-	
+	*/
 
 	public int evalua() 
 	{

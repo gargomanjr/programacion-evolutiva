@@ -353,12 +353,16 @@ public class ProgramaGenetico {
 
 		if(metodomutacion==0)
 			mutacionTerminalSimple();
-		else 
+		else {
 			if(metodomutacion==1)
 				mutacionFuncionalSimple();
 			else
 				mutacionArbol();
-		
+		}	
+		for(int i=0; i< tamañoPob; i++)
+		{
+			pob[i].copiaCromosoma(pobIntermedia[i]);
+		}
 	}
 
 	private void mutacionArbol() {
@@ -366,14 +370,15 @@ public class ProgramaGenetico {
 		
 		for(int i=0;i<tamañoPob;i++)
 		{
-			Cromosoma c=pob[i];
+			//Cromosoma c=pob[i];
 			double numAle=Math.random()*100;
 			if(numAle<probMut)
 			{
-				Arbol nodo = getFuncionAleatorio(c);
+				Arbol nodo = getFuncionAleatorio(pobIntermedia[i]);
 				nodo.borraArbol();
-				Arbol ar=new Arbol(c.getCjtoFunciones(),c.getCjtoTerminales(),nodo.getProfTotal(),nodo.getProfundidad(),nodo.getPadre(),nodo.isEsHi(),nodo.isRaiz(),nodo.isAdmite_if(),nodo.getPos());
+				Arbol ar=new Arbol(pobIntermedia[i].getCjtoFunciones(),pobIntermedia[i].getCjtoTerminales(),nodo.getProfTotal(),nodo.getProfundidad(),nodo.getPadre(),nodo.isEsHi(),nodo.isRaiz(),nodo.isAdmite_if(),nodo.getPos());
 				
+				pobIntermedia[i].setAptitud(pobIntermedia[i].evalua());
 				
 			}
 		}
@@ -403,18 +408,18 @@ public class ProgramaGenetico {
 		String[] cjtoTerminales={"A0","A1","D0","D1","D2","D3"};
 		for(int i=0;i<tamañoPob;i++)
 		{
-			Cromosoma c=pob[i];
+			//Cromosoma c=pob[i];
 			double numAle=Math.random()*100;
 			if(numAle<probMut)
 			{
 				int numAle2	=	(int) (Math.random()*cjtoTerminales.length);
-				Arbol nodo = getTerminalAleatorioSimple(c);
+				Arbol nodo = getTerminalAleatorioSimple(pobIntermedia[i]);
 				if(nodo!=null&&!nodo.getNombre().equals("AND")&& !nodo.getNombre().equals("OR")
 						&& !nodo.getNombre().equals("NOT")&& !nodo.getNombre().equals("IF"))
 				{
 					nodo.setNombre(cjtoTerminales[numAle2]);
 				}
-				
+				pobIntermedia[i].evalua();
 			}
 		}
 		
@@ -701,7 +706,8 @@ public class ProgramaGenetico {
 				stop = ((nAlt1 <= alturaMax) && (nAlt2 <= alturaMax));
 			}
 			if (raiz1)
-				arbol1 = new Arbol(nodo2, null);
+				//arbol1 = new Arbol(nodo2, null);
+				arbol1 = new Arbol(nodo2);
 			else {
 				if (esHi1)
 					pater1.setHi(nodo2);
@@ -710,7 +716,8 @@ public class ProgramaGenetico {
 			}
 			
 			if (raiz2)
-				arbol2 = new Arbol(nodo_aux1, null);
+			//	arbol2 = new Arbol(nodo_aux1, null);
+				arbol2 = new Arbol(nodo_aux1);
 			else {
 				if (esHi2)
 					pater2.setHi(nodo_aux1);
@@ -883,20 +890,20 @@ public class ProgramaGenetico {
 			private void mutacionFuncionalSimple() {
 				
 				String[] cjtoFunciones={"AND","OR","NOT","IF"};
-				for(int i=0;i<tamañoPob;i++)
+				for(int i=0;i<tamañoPob - this.getNum_pob_elite();i++)
 				{
-					Cromosoma c=pob[i];
+					//Cromosoma c=pob[i];
 					double numAle=Math.random()*100;
 					if(numAle<probMut)
 					{
 						int numAle2	=	(int) (Math.random()*2);
-						Arbol nodo = getFuncionAleatorio(c);
+						Arbol nodo = getFuncionAleatorio(pobIntermedia[i]);
 						
 						if(nodo!=null&&(nodo.getNombre().equals("AND")||nodo.getNombre().equals("OR")))
 						{
 							nodo.setNombre(cjtoFunciones[numAle2]);
 						}
-						
+						pobIntermedia[i].evalua();
 					}
 				}
 			}

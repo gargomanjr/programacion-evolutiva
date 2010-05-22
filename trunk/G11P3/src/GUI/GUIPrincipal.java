@@ -333,6 +333,13 @@ private void btn_EjecutarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
 	}
 	ProgramaGenetico pg=new ProgramaGenetico((Integer)sp_Profund.getValue(),(Integer)sp_TamPob.getValue(),cBox_IF.isSelected(),(Integer)cBox_Muta.getSelectedIndex(),(Integer)sp_NumIter.getValue(),(Integer)sp_ProbCruce.getValue()/100.0,(Integer)sp_ProbMut.getValue()/100.0,Elitismo,cBox_Muta.getSelectedIndex());
 	pg.ejecuta();
+	String str="";
+	pg.getElMejor().evalua();
+	for(int i=0;i< pg.getElMejor().getArbol().getLista().size();i++){
+		str=str+(pg.getElMejor().getArbol().getLista().get(i));
+	}
+	str = str +  "\n" + "Con Adaptacion :" +  pg.getElMejor().getAptitud();
+	this.txt_resultados.setText(str);
 	
 }//GEN-LAST:event_btn_EjecutarActionPerformed
 
