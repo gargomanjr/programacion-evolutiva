@@ -270,12 +270,7 @@ public class ProgramaGenetico {
 
 		while(!terminado())
 		{
-			/*for(int i=0; i< this.tamañoPob; i=i+2)
-			{
-				if(!(this.cromosomavalido(pob[i]))){
-					System.out.print("No VALIDO ");
-				}
-			}*/
+
 			IncrementoNumIter();
 			//METODO DE SELECCIÓN
 			switch(this.metodoseleccion)
@@ -295,7 +290,6 @@ public class ProgramaGenetico {
 			}
 
 			reproduccion();
-			//MÉTODO DE MUTACIÓN
 			muta();
 
 
@@ -303,7 +297,6 @@ public class ProgramaGenetico {
 
 			evaluarPoblacion();
 			escalado();
-			//listaElMejor.add(getElMejor().getAptitud());
 			listaElMejor.add(getElMejor().getAptitud());
 			listaMaximoAptitud.add(getMaximoAptitud());
 			listaMedioAptitud.add(getMedioAptitud());		
@@ -344,10 +337,7 @@ public class ProgramaGenetico {
 		numIter--;
 	}
 
-	private void selecciona() {
-		// TODO Auto-generated method stub
-		
-	}
+
 
 	private void muta() {
 

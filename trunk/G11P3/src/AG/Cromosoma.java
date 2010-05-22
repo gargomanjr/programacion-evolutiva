@@ -307,7 +307,7 @@ public class Cromosoma implements Comparable {
 					}	
 				}	
 			}
-			//this.aptitud = NumErrores;
+			this.aptitud = NumErrores;
 			
 			return NumErrores;
 			
