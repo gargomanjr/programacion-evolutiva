@@ -358,7 +358,7 @@ public class ProgramaGenetico {
 	private void mutacionArbol() {
 		
 		
-		for(int i=0;i<tamañoPob;i++)
+		for(int i=0;i<tamañoPob - this.getNum_pob_elite();i++)
 		{
 			//Cromosoma c=pob[i];
 			double numAle=Math.random()*100;
@@ -396,7 +396,7 @@ public class ProgramaGenetico {
 
 	private void mutacionTerminalSimple() {
 		String[] cjtoTerminales={"A0","A1","D0","D1","D2","D3"};
-		for(int i=0;i<tamañoPob;i++)
+		for(int i=0;i<tamañoPob - this.getNum_pob_elite();i++)
 		{
 			//Cromosoma c=pob[i];
 			double numAle=Math.random()*100;
