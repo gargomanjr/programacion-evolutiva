@@ -200,7 +200,7 @@ public class Arbol {
 	
 	//----------------------------------------------------------------
 	
- 	public Arbol (Arbol arbol){
+ 	/*public Arbol (Arbol arbol){
 
 	    this.setNombre(arbol.getNombre()) ;
 	    String ls_nombre = arbol.getNombre() ;
@@ -218,7 +218,6 @@ public class Arbol {
 	      if ( (ls_nombre.equals("OR")) || (ls_nombre.equals("AND"))) {
 	    	  this.setHi(new Arbol(arbol.getHi()));
 	    	  this.setHc(null);
-	    	 // hd = new Arbol(arbol.getHd(), this);
 	    	  this.setHd(new Arbol(arbol.getHd()));
 
 	      }	
@@ -237,7 +236,51 @@ public class Arbol {
 	      }
 	    }	
 		
+	}*/
+	public Arbol(Arbol arbol, Arbol pater)
+	{
+	    nombre = arbol.getNombre();
+	    pos = arbol.getPos();
+	    hoja = arbol.getHoja();
+	    if (pater==null)
+	      raiz = true;
+	    else
+	      raiz = false;
+	    numNodos = arbol.getNumNodos();
+	    profundidad = arbol.getProfundidad();
+	    padre = pater;
+	    esHi = arbol.isEsHi();
+	    if (!hoja)
+	    	if ( (nombre.equals("OR")) || (nombre.equals("AND"))) {
+		    	  this.setHi(new Arbol(arbol.getHi(),this));
+		    	  this.setHc(null);
+		    	  this.setHd(new Arbol(arbol.getHd(),this));
+
+		      }	
+			  if ( (nombre.equals("NOT")) ){
+			    	this.setHi(null);
+			        this.setHc(new Arbol(arbol.getHc(),this));
+			        this.setHd(null);
+			  }      
+			  if ( (nombre.equals("IF"))){
+			    	    this.setHi(new Arbol(arbol.getHi(),this));
+			    	    this.setHc(new Arbol(arbol.getHc(),this));
+			    	    this.setHd(new Arbol(arbol.getHd(),this));
+		      }	    
 	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	//----------------------------------------------------------------
 	private boolean boolRandom()
 	{
@@ -317,18 +360,34 @@ public class Arbol {
 		
 	}
 	private Arbol GetArbolPosicion(Arbol a,int posicionbusqueda){
-		if (a != null) {
-			if(a.getPos() == posicionbusqueda){
-				return a;
-			}
-			else{
-				GetArbolPosicion(a.getHi(),posicionbusqueda);
-				GetArbolPosicion(a.getHc(),posicionbusqueda);
-				GetArbolPosicion(a.getHd(),posicionbusqueda);
-			}		
-		}
-		return a;
+		    if (posicionbusqueda == 1 || a.getPos()== posicionbusqueda ){
+			    return a;
+			    }
+		    else {		
+		    	 if ( (a.getNombre().equals("OR")) || (a.getNombre().equals("AND"))) {
+		    		 if(posicionbusqueda <= a.getPos()+a.getHi().getNumNodos())
+		    			 return GetArbolPosicion(a.getHi(),posicionbusqueda);
+		    		 else
+		    			 return GetArbolPosicion(a.getHd(),posicionbusqueda);
+		    	 }
+		    	 if (a.getNombre().equals("IF")) {
+		    		 if(posicionbusqueda<= a.getPos()+a.getHi().getNumNodos())
+		    			 return GetArbolPosicion(a.getHi(),posicionbusqueda);
+		    		 if(posicionbusqueda<= a.getPos()+a.getHc().getNumNodos())
+		    			 return GetArbolPosicion(a.getHc(),posicionbusqueda);
+		    		 else
+		    			 return GetArbolPosicion(a.getHd(),posicionbusqueda);	 
+		    	 }
+		    	 if (a.getNombre().equals("NOT")) {
+					return GetArbolPosicion(a.getHc(),posicionbusqueda);
+					}
+		    	 else{
+		    		 System.out.println("Error al buscar el nodo");
+		    		 return a;
+		    	 }
+			}	
 	}
+		
 	private void  SetNombrePosicion(Arbol a,int posicionbusqueda,String Nombre){
 		if (a != null) {
 			if(a.getPos() == posicionbusqueda){
