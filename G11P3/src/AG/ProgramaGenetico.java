@@ -365,7 +365,7 @@ public class ProgramaGenetico {
 			if(numAle<probMut)
 			{
 				Arbol nodo = getFuncionAleatorio(pobIntermedia[i]);
-				nodo.borraArbol();
+			//	nodo.borraArbol();
 				Arbol ar=new Arbol(pobIntermedia[i].getCjtoFunciones(),pobIntermedia[i].getCjtoTerminales(),nodo.getProfTotal(),nodo.getProfundidad(),nodo.getPadre(),nodo.isEsHi(),nodo.isRaiz(),nodo.isAdmite_if(),nodo.getPos());
 				
 				pobIntermedia[i].setAptitud(pobIntermedia[i].evalua());
@@ -696,8 +696,8 @@ public class ProgramaGenetico {
 				stop = ((nAlt1 <= alturaMax) && (nAlt2 <= alturaMax));
 			}
 			if (raiz1)
-				//arbol1 = new Arbol(nodo2, null);
-				arbol1 = new Arbol(nodo2);
+				arbol1 = new Arbol(nodo2, null);
+				//arbol1 = new Arbol(nodo2);
 			else {
 				if (esHi1)
 					pater1.setHi(nodo2);
@@ -706,8 +706,8 @@ public class ProgramaGenetico {
 			}
 			
 			if (raiz2)
-			//	arbol2 = new Arbol(nodo_aux1, null);
-				arbol2 = new Arbol(nodo_aux1);
+				arbol2 = new Arbol(nodo_aux1, null);
+				//arbol2 = new Arbol(nodo_aux1);
 			else {
 				if (esHi2)
 					pater2.setHi(nodo_aux1);
@@ -897,13 +897,17 @@ public class ProgramaGenetico {
 					}
 				}
 			}
-
+			private int aleatorioInt2(int min, int max) {
+				// TODO Auto-generated method stub
+				return (int)(Math.random()*(max-min))+min;
+			}
 			private Arbol getFuncionAleatorio(Cromosoma c) {
 				
 				
 				if(c.getArbol().getNumNodos()==1)
 					return null;
-				int numAle2	=	(int) (Math.random()*c.getArbol().getNumNodos());
+				//int numAle2	=	(int) (Math.random()*c.getArbol().getNumNodos());
+				int numAle2	=	(int) this.aleatorioInt2(1, c.getArbol().getNumNodos());
 				IntHolder i= new IntHolder();
 				i.pos=0;
 				Arbol a=c.getArbol().preordenMut(c.getArbol(), i, numAle2);
