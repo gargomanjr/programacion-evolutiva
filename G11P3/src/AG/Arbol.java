@@ -16,9 +16,7 @@ public class Arbol {
 	 private Arbol hd;
 	 private Arbol padre;
 	 private int profundidad;
-
-
-	private int numNodos;
+	 private int numNodos;
 	 private boolean hoja;
 	 private boolean raiz;
 	 private boolean esHi;
@@ -27,7 +25,12 @@ public class Arbol {
 	 private int pos;
 	 private boolean admite_if;
 
-	 
+    public ArrayList<String> getLista() {
+			return lista;
+		}
+    public void setLista(ArrayList<String> lista) {
+			this.lista = lista;
+		}
 	public boolean isAdmite_if() {
 		return admite_if;
 	}
@@ -197,7 +200,43 @@ public class Arbol {
 	
 	//----------------------------------------------------------------
 	
-	public Arbol (Arbol hd,Arbol hi){
+ 	public Arbol (Arbol arbol){
+
+	    this.setNombre(arbol.getNombre()) ;
+	    String ls_nombre = arbol.getNombre() ;
+	    this.setPos(arbol.getPos());
+	    this.setHoja(arbol.getHoja());
+	    if (arbol.isRaiz())
+	    	this.setRaiz(true);    
+	    else
+	    	this.setRaiz(false);
+	    this.setNumNodos(arbol.getNumNodos());
+	    this.setProfundidad(arbol.getProfundidad());
+	    this.setEsHi(arbol.isEsHi());
+	    if (!arbol.getHoja())
+	    {
+	      if ( (ls_nombre.equals("OR")) || (ls_nombre.equals("AND"))) {
+	    	  this.setHi(new Arbol(arbol.getHi()));
+	    	  this.setHc(null);
+	    	 // hd = new Arbol(arbol.getHd(), this);
+	    	  this.setHd(new Arbol(arbol.getHd()));
+
+	      }	
+		  if ( (ls_nombre.equals("NOT")) ){
+		    	this.setHi(null);
+		        this.setHc(new Arbol(arbol.getHc()));
+		        this.setHd(null);
+		  }      
+		  if ( (ls_nombre.equals("IF"))){
+		    	  //  hi = new Arbol(arbol.getHi(), this);
+		    	    this.setHi(new Arbol(arbol.getHi()));
+		    	    this.setHc(new Arbol(arbol.getHc()));
+		    	    this.setHd(new Arbol(arbol.getHd()));
+	    	  //  hc = new Arbol(arbol.getHc(), this);
+		      //  hd = new Arbol(arbol.getHd(), this);
+	      }
+	    }	
+		
 	}
 	//----------------------------------------------------------------
 	private boolean boolRandom()
@@ -304,7 +343,10 @@ public class Arbol {
 	}
 	public ArrayList<String> dameExpresion()
 	{
-	//	pos=0;
+	//	pos=0; 
+		if (this.lista == null){
+			lista = new ArrayList<String>();
+		}
 		this.lista.clear();
 		preorden(this);
 		return lista;
