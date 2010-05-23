@@ -347,13 +347,11 @@ public class Arbol {
 
 	public void actualizar(int prof) {
 		 int nuevaProf = prof+1;
-
+		  if (isRaiz()) 
+			    pos = 1;
 		  setProfundidad(prof);
-		  if (isHoja()){ 
+		  if (isHoja()) 
 		    numNodos = 1;
-		    if (this.getPadre()!= null)
-		    	pos = getPadre().getPos()+1;
-		    } 
 		  else
 		  {
      
