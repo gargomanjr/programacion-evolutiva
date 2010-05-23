@@ -315,7 +315,7 @@ public class ProgramaGenetico {
 		{
 			pob[i] = new Cromosoma(ProfMaxima,this.admite_if);
 		    pobIntermedia[i] = new Cromosoma(ProfMaxima,this.admite_if);
-			pob[i].setAptitud(pob[i].evalua());	
+				
 		}
 		elMejor = new Cromosoma(ProfMaxima,this.admite_if);
 		hijo1=new Cromosoma(ProfMaxima,this.admite_if);
