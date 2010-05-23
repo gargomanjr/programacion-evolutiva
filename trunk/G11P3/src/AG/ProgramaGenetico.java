@@ -232,8 +232,8 @@ public class ProgramaGenetico {
 
 		this.numIter 			= ai_numIter;
 		this.probCruce 			= ad_prob_cruce;
-		//this.probMut 			= ad_prob_mut;
-		this.probMut 			= 0;
+		this.probMut 			= ad_prob_mut;
+		//this.probMut 			= 0;
 		this.maximoAptitud 		= 0;
 		this.medioAptitud		= 0;
 		this.listaElMejor      	=	new ArrayList<Double>();
@@ -368,7 +368,6 @@ public class ProgramaGenetico {
 				}else	{
 					Arbol ar=new Arbol(pobIntermedia[i].getCjtoFunciones(),pobIntermedia[i].getCjtoTerminales(),nodo.getProfTotal(),nodo.getProfundidad(),null,nodo.isEsHi(),nodo.isEsHc(),nodo.isRaiz(),nodo.isAdmite_if(),nodo.getPos());
 				}
-				pobIntermedia[i].setAptitud(pobIntermedia[i].evalua());
 				
 			}
 		}
@@ -402,6 +401,7 @@ public class ProgramaGenetico {
 			double numAle=Math.random()*100;
 			if(numAle<probMut)
 			{
+				System.out.println("entro");
 				int numAle2	=	(int) (Math.random()*cjtoTerminales.length);
 				Arbol nodo = getTerminalAleatorioSimple(pobIntermedia[i]);
 				if(nodo!=null&&!nodo.getNombre().equals("AND")&& !nodo.getNombre().equals("OR")
@@ -410,7 +410,8 @@ public class ProgramaGenetico {
 					nodo.setNombre(cjtoTerminales[numAle2]);
 					System.out.println(cjtoTerminales[numAle2]);
 				}
-				pobIntermedia[i].evalua();
+				System.out.println("salgo");
+				//pobIntermedia[i].evalua();
 			}
 		}
 		
@@ -421,13 +422,16 @@ public class ProgramaGenetico {
 		
 		int numAle2	=	(int) (Math.random()*c.getArbol().getNumNodos());
 		IntHolder i= new IntHolder();
-		i.pos=0;
-		Arbol a=c.getArbol().preordenMut(c.getArbol(), i, numAle2);
+		i.pos=0; 
+		//Arbol a=c.getArbol().preordenMut(c.getArbol(), i, numAle2);
+		Arbol a=c.getArbol().GetArbolPosicion(c.getArbol(), numAle2 + 1);
 		while(a==null||(a.getNombre().equals("AND")||a.getNombre().equals("OR")||
 				a.getNombre().equals("IF")||a.getNombre().equals("NOT")))
 		{
 			numAle2	=	(int) (Math.random()*c.getArbol().getNumNodos());
-			a=c.getArbol().preordenMut(c.getArbol(), i, numAle2);
+			//a=c.getArbol().preordenMut(c.getArbol(), i, numAle2);
+			a=c.getArbol().GetArbolPosicion(c.getArbol(), numAle2 + 1);
+
 		}
 		return a;
 	}
@@ -674,10 +678,10 @@ public class ProgramaGenetico {
 			arbol2 = padre2.getArbol();
 			
 			while (!stop) {
-				//nodo1 = arbol1.ArbolAleatorioconProb(); 
-				nodo1 = getTreeAleatorio(arbol1); 
-				//nodo2 = arbol2.ArbolAleatorioconProb();
-				nodo2 = getTreeAleatorio(arbol2);
+				nodo1 = arbol1.ArbolAleatorioconProb(); 
+				//nodo1 = getTreeAleatorio(arbol1); 
+				nodo2 = arbol2.ArbolAleatorioconProb();
+				// nodo2 = getTreeAleatorio(arbol2);
 				nodo_aux1 = nodo1;
 				raiz1 = nodo1.isRaiz();
 				raiz2 = nodo2.isRaiz();
@@ -762,7 +766,7 @@ public class ProgramaGenetico {
 			hijo2.evalua();
 		}
 		public  void reproduccion()
-		{
+		{ 
 			int[] seleccionCruce= new int[tamañoPob - this.getNum_pob_elite()];
 			int numSelecCruce=0;
 			double prob;
@@ -932,7 +936,6 @@ public class ProgramaGenetico {
 						{
 							nodo.setNombre(cjtoFunciones[numAle2]);
 						}
-						pobIntermedia[i].evalua();
 					}
 				}
 			}
