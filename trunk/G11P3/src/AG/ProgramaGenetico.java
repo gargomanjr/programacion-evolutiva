@@ -699,18 +699,30 @@ public class ProgramaGenetico {
 				nAlt2 = nAlt2 + nodo1.altura();
 				
 				stop = ((nAlt1 <= alturaMax) && (nAlt2 <= alturaMax));
-			}
+			}			
 			if (raiz1)
 				arbol1 = new Arbol(nodo2, null);
 				//arbol1 = new Arbol(nodo2);
 			else {
-				if (esHi1)
+				if (esHi1){
+					nodo2.setEsHi(true);
+					nodo2.setEsHc(false);
+					nodo2.setRaiz(false);		
 					pater1.setHi(nodo2);
+					}
 				else{
-					if (esHc1)
+					if (esHc1){
+						nodo2.setEsHi(false);
+						nodo2.setEsHc(true);
+						nodo2.setRaiz(false);	
 						pater1.setHc(nodo2);
-					else
+						}
+					else{
+						nodo2.setEsHi(false);
+						nodo2.setEsHc(false);
+						nodo2.setRaiz(false);	
 						pater1.setHd(nodo2);
+						}
 				}
 			//	pater2.setHi(nodo_aux1);
 			}
@@ -719,13 +731,26 @@ public class ProgramaGenetico {
 				arbol2 = new Arbol(nodo_aux1, null);
 				//arbol2 = new Arbol(nodo_aux1);
 			else {
-				if (esHi2)
+				if (esHi2){
+					nodo_aux1.setEsHi(true);
+					nodo_aux1.setEsHc(false);
+					nodo_aux1.setRaiz(false);	
 					pater2.setHi(nodo_aux1);
+					
+					}
 				else{
-					if (esHc2)
+					if (esHc2){
+						nodo_aux1.setEsHi(false);
+						nodo_aux1.setEsHc(true);
+						nodo_aux1.setRaiz(false);	
 						pater2.setHc(nodo_aux1);
-					else
+						}
+					else{
+						nodo_aux1.setEsHi(false);
+						nodo_aux1.setEsHc(false);
+						nodo_aux1.setRaiz(false);
 						pater2.setHd(nodo_aux1);
+						}
 				}
 			}
 			
