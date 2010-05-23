@@ -754,8 +754,8 @@ public class ProgramaGenetico {
 				}
 			}
 			
-			//arbol1.actualizar(arbol1.getProfundidad());
-		//	arbol2.actualizar(arbol2.getProfundidad());
+			arbol1.actualizar(arbol1.getProfundidad());
+			arbol2.actualizar(arbol2.getProfundidad());
 			hijo1.setArbol(arbol1);
 			hijo2.setArbol(arbol2);
 			hijo1.evalua();
