@@ -295,15 +295,74 @@ public class Arbol {
 		return  Math.random();
 	}
 	private int aleatorioInt2(int min, int max) {
-		// TODO Auto-generated method stub
+
 		return (int)(Math.random()*(max-min))+min;
 	}
 	public int altura() {
-		// TODO Auto-generated method stub
-		return 0;
+	    int alt = 0;
+	    int altHi = 0;
+	    int altHc = 0;
+	    int altHd = 0;
+
+	    if (!isHoja())
+	    {
+	    	if(getHi()!= null)
+	    		altHi = getHi().altura();
+	    	else
+	    		altHi = 0;
+	    	if(getHc()!= null)
+	    		altHc = getHc().altura();
+	    	else
+	    		altHc = 0;
+	    	if(getHd()!= null)
+	    		altHd = getHd().altura();
+	    	else
+	    		altHd = 0;
+	    	if(altHi > altHc)
+	    		if(altHi > altHd)
+	    			return altHi;
+	    		else
+	    			return altHd;	
+	    	else
+	    		if(altHc > altHd)
+	    			return altHc;
+	    		else
+	    			return altHd;	
+	    }
+	    else
+	      alt = 1;
+
+	    return alt;
 	}
-	public void actualizar(int profundidad2) {
-		// TODO Auto-generated method stub
+
+	public void actualizar(int prof) {
+		 int nuevaProf = prof+1;
+
+		  setProfundidad(prof);
+		  if (isHoja())
+		    numNodos = 1;
+		  else
+		  {
+    
+		    if ( (nombre.equals("OR")) || (nombre.equals("AND"))) {
+		    	hi.actualizar(nuevaProf);
+		    	numNodos = 1 + hi.getNumNodos();
+		    	hd.actualizar(nuevaProf);
+		    	numNodos = numNodos + hd.getNumNodos();
+		    }    
+		    if ( (nombre.equals("NOT")) ){
+		    	hc.actualizar(nuevaProf);
+		    	numNodos = 1 + hc.getNumNodos();
+		    }
+		    if ( (nombre.equals("IF"))){
+		    	hi.actualizar(nuevaProf);
+		    	numNodos = 1 + hi.getNumNodos();
+		    	hc.actualizar(nuevaProf);
+		    	numNodos = numNodos + hc.getNumNodos();
+		    	hd.actualizar(nuevaProf);
+		    	numNodos = numNodos + hd.getNumNodos();
+		    }
+		  }
 		
 	}
 	
