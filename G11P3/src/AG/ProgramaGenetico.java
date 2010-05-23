@@ -710,7 +710,7 @@ public class ProgramaGenetico {
 					else
 						pater1.setHd(nodo2);
 				}
-					pater1.setHd(nodo2);
+			//	pater2.setHi(nodo_aux1);
 			}
 			
 			if (raiz2)
