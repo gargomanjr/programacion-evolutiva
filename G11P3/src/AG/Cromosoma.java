@@ -83,8 +83,8 @@ public class Cromosoma implements Comparable {
 	}
 
 	public void setArbol(Arbol arbol) {
+		arbol.setPadre(this.arbol.getPadre());
 		this.arbol = arbol;
-		//this.arbol= new Arbol(cr,null);
 	}
 
 
