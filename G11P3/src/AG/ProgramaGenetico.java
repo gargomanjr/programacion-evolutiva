@@ -729,8 +729,8 @@ public class ProgramaGenetico {
 				}
 			}
 			
-			arbol1.actualizar(arbol1.getProfundidad());
-			arbol2.actualizar(arbol2.getProfundidad());
+			//arbol1.actualizar(arbol1.getProfundidad());
+		//	arbol2.actualizar(arbol2.getProfundidad());
 			hijo1.setArbol(arbol1);
 			hijo2.setArbol(arbol2);
 			hijo1.evalua();
@@ -936,16 +936,16 @@ public class ProgramaGenetico {
 				
 			}
 			
-private Arbol getTreeAleatorio(Arbol c) {
+private Arbol getTreeAleatorio(Arbol a) {
 				
 				
-				int numAle2	=	(int) (Math.random()*c.getNumNodos());
-				//int numAle2	=	(int) this.aleatorioInt2(1, c.getArbol().getNumNodos());
+				int numAle2	=	(int) (Math.random()*a.getNumNodos());
+				//int numAle2	=	(int) this.aleatorioInt2(1, a.getArbol().getNumNodos());
 				IntHolder i= new IntHolder();
 				i.pos=0;
-				Arbol a=c.preordenMut(c, i, numAle2);
+				Arbol ar=a.preordenMut(a, i, numAle2);
 				
-				return a;
+				return ar;
 				
 				
 			}

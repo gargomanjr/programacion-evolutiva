@@ -341,11 +341,12 @@ private void btn_EjecutarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
 	str = str +  "\n" + "Con Adaptacion :" +  pg.getElMejor().getAptitud();
 	this.txt_resultados.setText(str);
 	
-}//GEN-LAST:event_btn_EjecutarActionPerformed
+}
 
 private void btn_SalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_SalirActionPerformed
 // TODO add your handling code here:
-}//GEN-LAST:event_btn_SalirActionPerformed
+	this.dispose();
+}
 
     /**
     * @param args the command line arguments
