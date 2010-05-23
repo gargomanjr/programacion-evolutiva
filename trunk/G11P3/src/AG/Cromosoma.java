@@ -84,6 +84,7 @@ public class Cromosoma implements Comparable {
 
 	public void setArbol(Arbol arbol) {
 		this.arbol = arbol;
+		//this.arbol= new Arbol(cr,null);
 	}
 
 
@@ -145,7 +146,7 @@ public class Cromosoma implements Comparable {
 	      this.hmax = hmax;
 	      this.admite_if = if_valido;
 	      /*Hemos de crear un árbol de altura máxima hmax*/
-	      arbol = new Arbol(cjtoFunciones, cjtoTerminales, hmax, 0, null, true, true,this.isAdmite_if(),0);
+	      arbol = new Arbol(cjtoFunciones, cjtoTerminales, hmax, 0, null, false,false, true,this.isAdmite_if(),0);
 
 	      /*Ahora hay que rellenar el campo aptitud. Para ello llamamos
 	      a la función adaptacion. Cuando creamos los individuos,
@@ -268,11 +269,11 @@ public class Cromosoma implements Comparable {
 			//Obtiene en un arraylist, la expresion en forma prefija
 			//es decir ... if (A0 OR(A0 D0) NOT A1)
 			ArrayList<String> expresion=getArbol().dameExpresion();
-			for(int i=0;i<expresion.size();i++)
+			/*for(int i=0;i<expresion.size();i++)
 			{
 				System.out.print(expresion.get(i)+ " ");
-			}
-			System.out.println();
+			}*/
+			//System.out.println();
 			int NumErrores = 0;
 			for(int a1=0;a1<2;a1++){
 				for(int a0=0;a0<2;a0++){

@@ -20,11 +20,18 @@ public class Arbol {
 	 private boolean hoja;
 	 private boolean raiz;
 	 private boolean esHi;
+	 private boolean esHc;
 	 private int profTotal;
 	 private ArrayList<String> lista;
 	 private int pos;
 	 private boolean admite_if;
-
+	 
+	 public boolean isEsHc() {
+			return esHc;
+		}
+		public void setEsHc(boolean esHc) {
+			this.esHc = esHc;
+		}
     public ArrayList<String> getLista() {
 			return lista;
 		}
@@ -125,19 +132,21 @@ public class Arbol {
 		hoja = false;
 		raiz = true;
 		esHi = false;
+		esHc = false;
 		lista = new ArrayList<String>();
 		this.admite_if = in_admite_if;
 	}
 	//----------------------------------------------------------------
 
 	public Arbol(String[] cjtoFuns,  String[] cjtoTerms,
-			  int hmax, int prof, Arbol pater, boolean esHizq, boolean esRaiz,boolean in_admite_if,int posicion){
+			  int hmax, int prof, Arbol pater, boolean esHizq, boolean esHCentral,boolean esRaiz,boolean in_admite_if,int posicion){
 			    
 				int nuevaProf = prof+1;
 			    boolean  rnd=boolRandom();
 			    profundidad=prof;
 			    padre = pater;
 			    esHi = esHizq;
+			    esHc = esHCentral;
 			    posicion ++;
 			    pos = posicion;
 			    raiz = esRaiz;
@@ -163,10 +172,10 @@ public class Arbol {
 			      //int intRand2 = aleatorioInt2(0,cjtoFuns.length-1);	
 			      nombre = cjtoFuns[intRand2];
 			      if(nombre.equals("AND") || nombre.equals("OR")){
-				      hi = new Arbol(cjtoFuns, cjtoTerms, hmax, nuevaProf, this, true, false,admite_if,pos);
+				      hi = new Arbol(cjtoFuns, cjtoTerms, hmax, nuevaProf, this, true,false, false,admite_if,pos);
 				      numNodos = numNodos + hi.getNumNodos();
 				      hc=null;
-				      hd = new Arbol(cjtoFuns, cjtoTerms, hmax, nuevaProf, this, false, false,admite_if,hi.getNumNodos()+ pos);
+				      hd = new Arbol(cjtoFuns, cjtoTerms, hmax, nuevaProf, this, false,false,false,admite_if,hi.getNumNodos()+ pos);
 				      numNodos = numNodos + hd.getNumNodos();
 				      hoja = false;
 			      }
@@ -174,7 +183,7 @@ public class Arbol {
 			      {
 			    	  if(nombre.equals("NOT"))
 			    	  {
-			    		  hc = new Arbol(cjtoFuns, cjtoTerms, hmax, nuevaProf, this, true, false,admite_if,pos);
+			    		  hc = new Arbol(cjtoFuns, cjtoTerms, hmax, nuevaProf, this, false,true, false,admite_if,pos);
 					      numNodos = numNodos + hc.getNumNodos();
 					      hoja=false;
 					      hd=null;
@@ -184,11 +193,11 @@ public class Arbol {
 			    	  {
 			    		  if(nombre.equals("IF"))
 			    	  	  {
-			    			  hi = new Arbol(cjtoFuns, cjtoTerms, hmax, nuevaProf, this, true, false,admite_if,pos);
+			    			  hi = new Arbol(cjtoFuns, cjtoTerms, hmax, nuevaProf, this, true,false, false,admite_if,pos);
 						      numNodos = numNodos + hi.getNumNodos();
-						      hc = new Arbol(cjtoFuns, cjtoTerms, hmax, nuevaProf, this, true, false,admite_if,hi.getNumNodos() + pos);
+						      hc = new Arbol(cjtoFuns, cjtoTerms, hmax, nuevaProf, this, false,true, false,admite_if,hi.getNumNodos() + pos);
 						      numNodos = numNodos + hc.getNumNodos();
-						      hd = new Arbol(cjtoFuns, cjtoTerms, hmax, nuevaProf, this, false, false,admite_if,hc.getNumNodos() +pos);
+						      hd = new Arbol(cjtoFuns, cjtoTerms, hmax, nuevaProf, this, false,false, false,admite_if,hc.getNumNodos() +pos);
 						      numNodos = numNodos + hd.getNumNodos();
 						      hoja = false;
 			    		  
