@@ -232,8 +232,8 @@ public class ProgramaGenetico {
 
 		this.numIter 			= ai_numIter;
 		this.probCruce 			= ad_prob_cruce;
-		this.probMut 			= ad_prob_mut;
-
+		//this.probMut 			= ad_prob_mut;
+		this.probMut 			= 0;
 		this.maximoAptitud 		= 0;
 		this.medioAptitud		= 0;
 		this.listaElMejor      	=	new ArrayList<Double>();
@@ -311,10 +311,6 @@ public class ProgramaGenetico {
 	// Unario toma hc y hd=hi=null
 	private void inicializa() {
 	
-		for (int i=0;i<tamañoPob;i++)
-		{
-			pob[i]=new Cromosoma(ProfMaxima,this.admite_if);			
-		}
 		for (int i = 0; i < tamañoPob; i++) 
 		{
 			pob[i] = new Cromosoma(ProfMaxima,this.admite_if);
@@ -352,6 +348,7 @@ public class ProgramaGenetico {
 		for(int i=0; i< tamañoPob; i++)
 		{
 			pob[i].copiaCromosoma(pobIntermedia[i]);
+			pob[i].evalua();
 		}
 	}
 
@@ -366,8 +363,11 @@ public class ProgramaGenetico {
 			{
 				Arbol nodo = getFuncionAleatorio(pobIntermedia[i]);
 			//	nodo.borraArbol();
-				Arbol ar=new Arbol(pobIntermedia[i].getCjtoFunciones(),pobIntermedia[i].getCjtoTerminales(),nodo.getProfTotal(),nodo.getProfundidad(),nodo.getPadre(),nodo.isEsHi(),nodo.isRaiz(),nodo.isAdmite_if(),nodo.getPos());
-				
+				if(nodo.isRaiz()){
+					Arbol ar=new Arbol(pobIntermedia[i].getCjtoFunciones(),pobIntermedia[i].getCjtoTerminales(),nodo.getProfTotal(),nodo.getProfundidad(),nodo.getPadre(),nodo.isEsHi(),nodo.isEsHc(),nodo.isRaiz(),nodo.isAdmite_if(),nodo.getPos());				
+				}else	{
+					Arbol ar=new Arbol(pobIntermedia[i].getCjtoFunciones(),pobIntermedia[i].getCjtoTerminales(),nodo.getProfTotal(),nodo.getProfundidad(),null,nodo.isEsHi(),nodo.isEsHc(),nodo.isRaiz(),nodo.isAdmite_if(),nodo.getPos());
+				}
 				pobIntermedia[i].setAptitud(pobIntermedia[i].evalua());
 				
 			}
@@ -408,6 +408,7 @@ public class ProgramaGenetico {
 						&& !nodo.getNombre().equals("NOT")&& !nodo.getNombre().equals("IF"))
 				{
 					nodo.setNombre(cjtoTerminales[numAle2]);
+					System.out.println(cjtoTerminales[numAle2]);
 				}
 				pobIntermedia[i].evalua();
 			}
@@ -648,7 +649,6 @@ public class ProgramaGenetico {
 			return  Math.random();
 		}
 		private int aleatorioPCruce(int min, int max) {
-			// TODO Auto-generated method stub
 			return (int)(Math.random()*(max-min))+min;
 		}
 		
@@ -660,6 +660,7 @@ public class ProgramaGenetico {
 			
 			Arbol arbol1, arbol2;
 			boolean esHi1 = false, esHi2 = false, raiz1 = false, raiz2 = false;
+			boolean esHc1 = false, esHc2 = false;
 			Arbol nodo1 = null;
 			Arbol nodo2 = null;
 			Arbol nodo_aux1 = null;
@@ -680,6 +681,8 @@ public class ProgramaGenetico {
 				raiz2 = nodo2.isRaiz();
 				esHi1 = nodo1.isEsHi();
 				esHi2 = nodo2.isEsHi();
+				esHc1 = nodo1.isEsHc();
+				esHc2 = nodo2.isEsHc();
 				if (!raiz1) {
 					pater1 = nodo1.getPadre();
 					nAlt1 = pater1.getProfundidad() + 1;
@@ -701,7 +704,12 @@ public class ProgramaGenetico {
 			else {
 				if (esHi1)
 					pater1.setHi(nodo2);
-				else
+				else{
+					if (esHc1)
+						pater1.setHc(nodo2);
+					else
+						pater1.setHd(nodo2);
+				}
 					pater1.setHd(nodo2);
 			}
 			
@@ -711,8 +719,12 @@ public class ProgramaGenetico {
 			else {
 				if (esHi2)
 					pater2.setHi(nodo_aux1);
-				else
-					pater2.setHd(nodo_aux1);
+				else{
+					if (esHc2)
+						pater2.setHc(nodo_aux1);
+					else
+						pater2.setHd(nodo_aux1);
+				}
 			}
 			
 			arbol1.actualizar(arbol1.getProfundidad());
