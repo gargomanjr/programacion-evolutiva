@@ -331,7 +331,7 @@ private void btn_EjecutarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
 	if (this.checkElite.isSelected()){
 		Elitismo = (Integer)this.sp_ProbElite.getValue() / 100.0;
 	}
-	ProgramaGenetico pg=new ProgramaGenetico((Integer)sp_Profund.getValue(),(Integer)sp_TamPob.getValue(),cBox_IF.isSelected(),(Integer)cBox_Muta.getSelectedIndex(),(Integer)sp_NumIter.getValue(),(Integer)sp_ProbCruce.getValue()/100.0,(Integer)sp_ProbMut.getValue()/100.0,Elitismo,cBox_Muta.getSelectedIndex());
+	ProgramaGenetico pg=new ProgramaGenetico((Integer)sp_Profund.getValue(),(Integer)sp_TamPob.getValue(),cBox_IF.isSelected(),(Integer)cBox_Muta.getSelectedIndex(),(Integer)sp_NumIter.getValue(),(Integer)sp_ProbCruce.getValue(),(Integer)sp_ProbMut.getValue(),Elitismo,cBox_Muta.getSelectedIndex());
 	pg.ejecuta();
 	String str="";
 	pg.getElMejor().evalua();

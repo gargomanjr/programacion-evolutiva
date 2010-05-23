@@ -435,7 +435,7 @@ public class Arbol {
 		return pos.pos==aleat;
 		
 	}
-	private Arbol GetArbolPosicion(Arbol a,int posicionbusqueda){
+	public Arbol GetArbolPosicion(Arbol a,int posicionbusqueda){
 		    if (posicionbusqueda == 1 || a.getPos()== posicionbusqueda ){
 			    return a;
 			    }
