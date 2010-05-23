@@ -674,8 +674,10 @@ public class ProgramaGenetico {
 			arbol2 = padre2.getArbol();
 			
 			while (!stop) {
-				nodo1 = arbol1.ArbolAleatorioconProb(); 
-				nodo2 = arbol2.ArbolAleatorioconProb();
+				//nodo1 = arbol1.ArbolAleatorioconProb(); 
+				nodo1 = getTreeAleatorio(arbol1); 
+				//nodo2 = arbol2.ArbolAleatorioconProb();
+				nodo2 = getTreeAleatorio(arbol2);
 				nodo_aux1 = nodo1;
 				raiz1 = nodo1.isRaiz();
 				raiz2 = nodo2.isRaiz();
@@ -929,6 +931,20 @@ public class ProgramaGenetico {
 					numAle2	=	(int) (Math.random()*c.getArbol().getNumNodos());
 					a=c.getArbol().preordenMut(c.getArbol(), i, numAle2);
 				}
+				return a;
+				
+				
+			}
+			
+private Arbol getTreeAleatorio(Arbol c) {
+				
+				
+				int numAle2	=	(int) (Math.random()*c.getNumNodos());
+				//int numAle2	=	(int) this.aleatorioInt2(1, c.getArbol().getNumNodos());
+				IntHolder i= new IntHolder();
+				i.pos=0;
+				Arbol a=c.preordenMut(c, i, numAle2);
+				
 				return a;
 				
 				
