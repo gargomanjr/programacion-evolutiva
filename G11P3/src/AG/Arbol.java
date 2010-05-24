@@ -221,7 +221,7 @@ public class Arbol {
 						      numNodos = numNodos + hi.getNumNodos();
 						      hc = new Arbol(cjtoFuns, cjtoTerms, hmax, nuevaProf, this, false,true, false,admite_if,hi.getNumNodos() + pos);
 						      numNodos = numNodos + hc.getNumNodos();
-						      hd = new Arbol(cjtoFuns, cjtoTerms, hmax, nuevaProf, this, false,false, false,admite_if,hc.getNumNodos() +pos);
+						      hd = new Arbol(cjtoFuns, cjtoTerms, hmax, nuevaProf, this, false,false, false,admite_if,hi.getNumNodos() + hc.getNumNodos() +pos);
 						      numNodos = numNodos + hd.getNumNodos();
 						      hoja = false;
 			    		  
@@ -490,12 +490,15 @@ public class Arbol {
 		    			 return GetArbolPosicion(a.getHd(),posicionbusqueda);
 		    	 }
 		    	 if (a.getNombre().equals("IF")) {
-		    		 if(posicionbusqueda<= a.getPos()+a.getHi().getNumNodos())
+		    		 if(posicionbusqueda<= a.getPos()+a.getHi().getNumNodos()){
 		    			 return GetArbolPosicion(a.getHi(),posicionbusqueda);
-		    		 if(posicionbusqueda<= a.getPos()+a.getHc().getNumNodos())
-		    			 return GetArbolPosicion(a.getHc(),posicionbusqueda);
-		    		 else
-		    			 return GetArbolPosicion(a.getHd(),posicionbusqueda);	 
+		    			 }
+		    		 else{
+			    		 if(posicionbusqueda<= a.getPos()+a.getHc().getNumNodos()+a.getHi().getNumNodos())
+			    			 return GetArbolPosicion(a.getHc(),posicionbusqueda);
+			    		 else
+			    			 return GetArbolPosicion(a.getHd(),posicionbusqueda);	
+		    		 }
 		    	 }
 		    	 if (a.getNombre().equals("NOT")) {
 					return GetArbolPosicion(a.getHc(),posicionbusqueda);
