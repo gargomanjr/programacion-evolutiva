@@ -335,7 +335,7 @@ private void btn_EjecutarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
 	pg.ejecuta();
 	String str="";
 	pg.getElMejor().evalua();
-	for(int i=0;i< pg.getListaElMejor().size();i++){
+	for(int i=pg.getListaElMejor().size()-1;i>=0 ;i--){
 		str = str + i;
 		for(int j=0;j< pg.getListaElMejor().get(i).getArbol().getLista().size();j++){
 			str=str+(pg.getListaElMejor().get(i).getArbol().getLista().get(j));

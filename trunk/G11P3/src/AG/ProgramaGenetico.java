@@ -298,7 +298,7 @@ public class ProgramaGenetico {
 
 			evaluarPoblacion();
 			escalado();
-			listaElMejor.add(getElMejor());
+		//	listaElMejor.add(getElMejor());
 			listaMaximoAptitud.add(getMaximoAptitud());
 			listaMedioAptitud.add(getMedioAptitud());		
 		}
@@ -346,13 +346,20 @@ public class ProgramaGenetico {
 			else
 				mutacionArbol();
 		}	
+		Double aptitudMenor = 100.0;
+		int pos = 0;
 		for(int i=0; i< tamañoPob; i++)
 		{
 			pob[i].copiaCromosoma(pobIntermedia[i]);
 			pob[i].evalua();
+			if(pob[i].getAptitud()< aptitudMenor){
+				pos = i;
+				aptitudMenor = pob[i].getAptitud();
+			}
 		//	System.out.println(pob[i].getAptitud());
 		}
-		//System.out.println(pob[0].getAptitud());
+		System.out.println("Iteracion :"+numIter+ "     "+aptitudMenor);
+		listaElMejor.add(pob[pos]);
 	}
 
 	private void mutacionArbol() {
@@ -722,7 +729,7 @@ public class ProgramaGenetico {
 						pater1.setHd(nodo2);
 						}
 				}
-				arbol1 = new Arbol(pater1, null);
+			//	arbol1 = new Arbol(pater1, null);
 			//	pater2.setHi(nodo_aux1);
 			}
 			
@@ -742,19 +749,19 @@ public class ProgramaGenetico {
 						pater2.setHd(nodo_aux1);
 						}
 				}
-				arbol2 = new Arbol(pater2, null);
+				//arbol2 = new Arbol(pater2, null);
 			}
-			//
-			//arbol1.actualizar(arbol1.getProfundidad());
-			//arbol2.actualizar(arbol2.getProfundidad());
-			//arbol1.actualizar(0);
-		//	arbol2.actualizar(0);
 			hijo1.setArbol(arbol1);
 			hijo2.setArbol(arbol2);
 			hijo1.getArbol().actualizarArbol(0);
 			hijo2.getArbol().actualizarArbol(0);
 			hijo1.evalua();
 			hijo2.evalua();
+			/*System.out.println(padre1.getArbol().dameExpresion());
+			System.out.println(padre2.getArbol().dameExpresion());
+			System.out.println(hijo1.getArbol().dameExpresion());
+			System.out.println(hijo2.getArbol().dameExpresion());*/
+
 		}
 		public  void reproduccion()
 		{ 
