@@ -350,7 +350,9 @@ public class ProgramaGenetico {
 		{
 			pob[i].copiaCromosoma(pobIntermedia[i]);
 			pob[i].evalua();
+		//	System.out.println(pob[i].getAptitud());
 		}
+		//System.out.println(pob[0].getAptitud());
 	}
 
 	private void mutacionArbol() {
@@ -367,6 +369,7 @@ public class ProgramaGenetico {
 				if(nodo!=null){
 					Arbol ar=new Arbol(pobIntermedia[i].getCjtoFunciones(),pobIntermedia[i].getCjtoTerminales(),nodo.getProfTotal(),nodo.getProfundidad(),nodo.getPadre(),nodo.isEsHi(),nodo.isEsHc(),nodo.isRaiz(),nodo.isAdmite_if(),nodo.getPos());				
 					pobIntermedia[i].getArbol().actualizarArbol(0);
+					pobIntermedia[i].evalua();
 				}
 				
 			}
@@ -411,7 +414,7 @@ public class ProgramaGenetico {
 				//	System.out.println(cjtoTerminales[numAle2]);
 				}
 				//System.out.println("salgo");
-				//pobIntermedia[i].evalua();
+				pobIntermedia[i].evalua();
 			}
 		}
 		
@@ -923,6 +926,7 @@ public class ProgramaGenetico {
 						if(nodo!=null&&(nodo.getNombre().equals("AND")||nodo.getNombre().equals("OR")))
 						{
 							nodo.setNombre(cjtoFunciones[numAle2]);
+							pobIntermedia[i].evalua();
 						}
 					}
 				}
