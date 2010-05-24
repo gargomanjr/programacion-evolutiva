@@ -63,20 +63,44 @@ public class Arbol {
 	public Arbol getHd() {
 		return hd;
 	}
-	public void setHd(Arbol hd) {
-		this.hd = hd;
+	public void setHd(Arbol hd_in) {
+		//this.hd = hd;
+		if (hd_in!= null){
+			hd = new Arbol(hd_in,this);
+			this.setEsHi(false);
+			this.setEsHc(false);
+			this.setHoja(false);
+		}
+		else
+			hd = null;
 	}
 	public Arbol getHc() {
 		return hc;
 	}
-	public void setHc(Arbol hc) {
-		this.hc = hc;
+	public void setHc(Arbol hc_in) {
+		//this.hc = hc;
+		if (hc_in!= null){
+			hc = new Arbol(hc_in,this);
+			this.setEsHi(false);
+			this.setEsHc(true);
+			this.setHoja(false);
+		}
+		else
+			hc = null;
 	}
 	public Arbol getHi() {
 		return hi;
 	}
-	public void setHi(Arbol hi) {
-		this.hi = hi;
+	public void setHi(Arbol hi_in) {
+		//this.hi = hi;
+		if (hi_in!= null){
+			hi = new Arbol(hi_in,this);
+			this.setEsHi(true);
+			this.setEsHc(false);
+			this.setHoja(false);
+		}
+		else
+			hi = null;
 	}
 	public Arbol getPadre() {
 		return padre;
