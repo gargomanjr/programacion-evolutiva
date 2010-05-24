@@ -681,7 +681,7 @@ public class ProgramaGenetico {
 				nodo1 = arbol1.ArbolAleatorioconProb(); 
 				//nodo1 = getTreeAleatorio(arbol1); 
 				nodo2 = arbol2.ArbolAleatorioconProb();
-				 //nodo2 = getTreeAleatorio(arbol2);
+				//nodo2 = getTreeAleatorio(arbol2);
 				nodo_aux1 = nodo1;
 				raiz1 = nodo1.isRaiz();
 				raiz2 = nodo2.isRaiz();
@@ -758,11 +758,11 @@ public class ProgramaGenetico {
 				}
 			}
 			//
-			arbol1.actualizar(arbol1.getProfundidad());
-			arbol2.actualizar(arbol2.getProfundidad());
+			//arbol1.actualizar(arbol1.getProfundidad());
+			//arbol2.actualizar(arbol2.getProfundidad());
 			hijo1.setArbol(arbol1);
 			hijo2.setArbol(arbol2);
-			//hijo1.getArbol().actualizar(0);
+			///hijo1.getArbol().actualizar(0);
 			//hijo2.getArbol().actualizar(0);
 			hijo1.evalua();
 			hijo2.evalua();

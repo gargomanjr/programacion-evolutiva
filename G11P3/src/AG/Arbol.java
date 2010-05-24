@@ -350,11 +350,14 @@ public class Arbol {
 		  if (isRaiz()) 
 			    pos = 1;
 		  setProfundidad(prof);
-		  if (isHoja()) 
+		  if (isHoja()) {
 		    numNodos = 1;
+		    if (getPadre()!=null)
+		    	pos = getPadre().getPos() +1 ;
+		    }
 		  else
 		  {
-     
+			
 		    if ( (nombre.equals("OR")) || (nombre.equals("AND"))) {
 		    	hi.actualizar(nuevaProf);
 		    	numNodos = 1 + hi.getNumNodos();
@@ -377,8 +380,24 @@ public class Arbol {
 		    	numNodos = numNodos + hd.getNumNodos();
 		    	hi.setPos(pos + 1);
 		    	hc.setPos( hi.getNumNodos()+pos+1);
-		    	hd.setPos( hc.getNumNodos()+hi.getNumNodos()+pos+1);		    	
+		    	hd.setPos( hc.getNumNodos()+hi.getNumNodos()+pos+1);	    	
 		    }
+		   /* if(!(isRaiz()) && isEsHi()){
+		    	pos = getPadre().getPos()+1;
+		    }
+		    if(!(isRaiz()) && isEsHc()){
+		    	if (getPadre().getHi() != null)
+		    		pos = getPadre().getHi().getNumNodos()+ getPadre().getPos()+1;
+		    	else
+		    		pos = getPadre().getPos()+1;
+		    }
+		    if(!(isRaiz()) && !isEsHi() && !isEsHc()){
+		    	if (getPadre().getHc() != null)
+		    		pos = getPadre().getHi().getNumNodos()+ getPadre().getHc().getNumNodos()+getPadre().getPos()+1;
+		    	else
+		    		pos = getPadre().getHi().getNumNodos()+ getPadre().getPos()+1;
+		    }
+		    */
 		  }
 		
 	}
