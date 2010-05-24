@@ -83,8 +83,9 @@ public class Cromosoma implements Comparable {
 	}
 
 	public void setArbol(Arbol arbol1) {
-		arbol1.setPadre(this.arbol.getPadre());
-		this.arbol = arbol1;
+		//arbol1.setPadre(this.arbol.getPadre());
+		this.arbol= new Arbol(arbol1,this.arbol.getPadre()) ;
+	//	this.arbol = arbol1;
 	}
 
 
@@ -163,7 +164,7 @@ public class Cromosoma implements Comparable {
 	      this.aptitud_neta = cr.getAptitud_neta();
 	      //this.setArbol(cr.getArbol())  ;
 	      //this.setArbol( new Arbol(cr.getArbol())) ;
-	      this.setArbol( new Arbol(cr.getArbol(),null)) ;
+	      this.setArbol( new Arbol(cr.getArbol(),this.getArbol().getPadre())) ;
 	      this.evaluacion = cr.getEvaluacion();
 	      this.puntuacion = cr.getPuntuacion();
 	      this.puntuacion_acumulada = cr.getPunt_acu();
@@ -179,7 +180,8 @@ public class Cromosoma implements Comparable {
 	      this.aptitud_neta = cr.getAptitud_neta();
 	      //this.setArbol(cr.getArbol())  ;
 	      //this.setArbol( new Arbol(cr.getArbol())) ;
-	      this.setArbol( new Arbol(cr.getArbol(),null)) ;
+	      //this.setArbol( new Arbol(cr.getArbol(),null)) ;
+	      this.setArbol( new Arbol(cr.getArbol(),this.getArbol().getPadre())) ;
 	      this.evaluacion = cr.getEvaluacion();
 	      this.puntuacion = cr.getPuntuacion();
 	      this.puntuacion_acumulada = cr.getPunt_acu();
@@ -265,7 +267,7 @@ public class Cromosoma implements Comparable {
 	public int evalua() 
 	{
 		
-		    getArbol().actualizar(0);
+		    //getArbol().actualizar(0);
 			//Obtiene en un arraylist, la expresion en forma prefija
 			//es decir ... if (A0 OR(A0 D0) NOT A1)
 			ArrayList<String> expresion=getArbol().dameExpresion();
