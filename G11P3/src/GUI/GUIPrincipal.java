@@ -335,10 +335,15 @@ private void btn_EjecutarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
 	pg.ejecuta();
 	String str="";
 	pg.getElMejor().evalua();
-	for(int i=0;i< pg.getElMejor().getArbol().getLista().size();i++){
-		str=str+(pg.getElMejor().getArbol().getLista().get(i));
+	for(int i=0;i< pg.getListaElMejor().size();i++){
+		str = str + i;
+		for(int j=0;j< pg.getListaElMejor().get(i).getArbol().getLista().size();j++){
+			str=str+(pg.getListaElMejor().get(i).getArbol().getLista().get(j));
+		}
+		str = str +  "\n" + "Con Adaptacion :" +  pg.getListaElMejor().get(i).getAptitud();
+		str = str + "\n";
 	}
-	str = str +  "\n" + "Con Adaptacion :" +  pg.getElMejor().getAptitud();
+	//str = str +  "\n" + "Con Adaptacion :" +  pg.getElMejor().getAptitud();
 	this.txt_resultados.setText(str);
 	
 }
