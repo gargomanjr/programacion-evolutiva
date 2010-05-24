@@ -26,7 +26,7 @@ public class ProgramaGenetico {
 	private double elitismo;
 	private boolean admite_if;
 	private int num_pob_elite;
-	private ArrayList<Double> listaElMejor;
+	private ArrayList<Cromosoma> listaElMejor;
 	private ArrayList<Double> listaMedioAptitud;
 	private ArrayList<Double> listaMaximoAptitud;
 	private double medioAptitudNeta;
@@ -171,11 +171,11 @@ public class ProgramaGenetico {
 		this.num_pob_elite = num_pob_elite;
 	}
 
-	public ArrayList<Double> getListaElMejor() {
+	public ArrayList<Cromosoma> getListaElMejor() {
 		return listaElMejor;
 	}
 
-	public void setListaElMejor(ArrayList<Double> listaElMejor) {
+	public void setListaElMejor(ArrayList<Cromosoma> listaElMejor) {
 		this.listaElMejor = listaElMejor;
 	}
 
@@ -237,7 +237,7 @@ public class ProgramaGenetico {
 		//this.probMut 			= 100;
 		this.maximoAptitud 		= 0;
 		this.medioAptitud		= 0;
-		this.listaElMejor      	=	new ArrayList<Double>();
+		this.listaElMejor      	=	new ArrayList<Cromosoma>();
     	this.listaMaximoAptitud	=	new ArrayList<Double>();
     	this.listaMedioAptitud	=	new ArrayList<Double>();
     	
@@ -264,7 +264,7 @@ public class ProgramaGenetico {
 		inicializa();
 		revisar_adaptacion_minimiza();
 		evaluarPoblacion();
-		listaElMejor.add(getElMejor().getAptitud());
+		listaElMejor.add(getElMejor());
 		listaMaximoAptitud.add(getMaximoAptitud());
 		listaMedioAptitud.add(getMedioAptitud());
 		escalado();
@@ -298,7 +298,7 @@ public class ProgramaGenetico {
 
 			evaluarPoblacion();
 			escalado();
-			listaElMejor.add(getElMejor().getAptitud());
+			listaElMejor.add(getElMejor());
 			listaMaximoAptitud.add(getMaximoAptitud());
 			listaMedioAptitud.add(getMedioAptitud());		
 		}
@@ -366,7 +366,7 @@ public class ProgramaGenetico {
 			//	nodo.borraArbol();
 				if(nodo!=null){
 					Arbol ar=new Arbol(pobIntermedia[i].getCjtoFunciones(),pobIntermedia[i].getCjtoTerminales(),nodo.getProfTotal(),nodo.getProfundidad(),nodo.getPadre(),nodo.isEsHi(),nodo.isEsHc(),nodo.isRaiz(),nodo.isAdmite_if(),nodo.getPos());				
-					pobIntermedia[i].getArbol().actualizar(0);
+					pobIntermedia[i].getArbol().actualizarArbol(0);
 				}
 				
 			}

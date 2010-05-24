@@ -461,16 +461,16 @@ public class Arbol {
 	private void preorden(Arbol a)
 	{
 	  if (a != null) {
-		if(a.getHoja()== false){
+		//if(a.getHoja()== false){
 			lista.add("(");
-		}
+		//}
 	    tratar(a); //Realiza una operación en nodo
 	    preorden(a.getHi());
 	    preorden(a.getHc());
 	    preorden(a.getHd());
-		if(a.getHoja()== false){
+		//if(a.getHoja()== false){
 			lista.add(")");
-		}
+		//}
 	  }
 	}
 	private void tratar(Arbol a) {	
