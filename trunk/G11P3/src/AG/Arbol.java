@@ -67,9 +67,9 @@ public class Arbol {
 		//this.hd = hd;
 		if (hd_in!= null){
 			hd = new Arbol(hd_in,this);
-			this.setEsHi(false);
-			this.setEsHc(false);
-			this.setHoja(false);
+			hd.setEsHi(false);
+			hd.setEsHc(false);
+			setHoja(false);
 		}
 		else
 			hd = null;
@@ -81,9 +81,9 @@ public class Arbol {
 		//this.hc = hc;
 		if (hc_in!= null){
 			hc = new Arbol(hc_in,this);
-			this.setEsHi(false);
-			this.setEsHc(true);
-			this.setHoja(false);
+			hc.setEsHi(false);
+			hc.setEsHc(true);
+			setHoja(false);
 		}
 		else
 			hc = null;
@@ -95,9 +95,9 @@ public class Arbol {
 		//this.hi = hi;
 		if (hi_in!= null){
 			hi = new Arbol(hi_in,this);
-			this.setEsHi(true);
-			this.setEsHc(false);
-			this.setHoja(false);
+			hi.setEsHi(true);
+			hi.setEsHc(false);
+			setHoja(false);
 		}
 		else
 			hi = null;
@@ -275,15 +275,21 @@ public class Arbol {
 	    nombre = arbol.getNombre();
 	    pos = arbol.getPos();
 	    hoja = arbol.getHoja();
-	    if (pater==null)
+	    if (pater==null){
 	      raiz = true;
-	    else
+		  esHi = false;
+		  esHc = false;
+	    }
+	    else{
 	      raiz = false;
+		  esHi = arbol.isEsHi();
+		  esHc = arbol.isEsHc();
+	    }
 	    numNodos = arbol.getNumNodos();
 	    profundidad = arbol.getProfundidad();
 	    padre = pater;
-	    esHi = arbol.isEsHi();
-	    esHc = arbol.isEsHc();
+	//    esHi = arbol.isEsHi();
+	//    esHc = arbol.isEsHc();
 	    if (!hoja)
 	    	if ( (nombre.equals("OR")) || (nombre.equals("AND"))) {
 		    	  this.setHi(new Arbol(arbol.getHi(),this));
@@ -368,7 +374,10 @@ public class Arbol {
 
 	    return alt;
 	}
-
+	public void actualizarArbol(int prof) {
+		actualizar(prof);
+		actualizarPosicion();
+	}
 	public void actualizar(int prof) {
 		 int nuevaProf = prof+1;
 		  if (isRaiz()) 
@@ -376,9 +385,9 @@ public class Arbol {
 		  setProfundidad(prof);
 		  if (isHoja()) {
 		    numNodos = 1;
-		    if (getPadre()!=null)
+	/*	    if (getPadre()!=null)
 		    	pos = getPadre().getPos() +1 ;
-		    }
+		    */}
 		  else
 		  {
 			
@@ -387,13 +396,13 @@ public class Arbol {
 		    	numNodos = 1 + hi.getNumNodos();
 		    	hd.actualizar(nuevaProf);
 		    	numNodos = numNodos + hd.getNumNodos();
-		    	hi.setPos(pos + 1);
-		    	hd.setPos( hi.getNumNodos()+pos+1);
+		    	/*hi.setPos(pos + 1);
+		    	hd.setPos( hi.getNumNodos()+pos+1);*/
 		    }    
 		    if ( (nombre.equals("NOT")) ){
 		    	hc.actualizar(nuevaProf);
 		    	numNodos = 1 + hc.getNumNodos();
-		    	hc.setPos(pos + 1);
+		    	//hc.setPos(pos + 1);
 		    }
 		    if ( (nombre.equals("IF"))){
 		    	hi.actualizar(nuevaProf);
@@ -402,9 +411,9 @@ public class Arbol {
 		    	numNodos = numNodos + hc.getNumNodos();
 		    	hd.actualizar(nuevaProf);
 		    	numNodos = numNodos + hd.getNumNodos();
-		    	hi.setPos(pos + 1);
+		    	/*hi.setPos(pos + 1);
 		    	hc.setPos( hi.getNumNodos()+pos+1);
-		    	hd.setPos( hc.getNumNodos()+hi.getNumNodos()+pos+1);	    	
+		    	hd.setPos( hc.getNumNodos()+hi.getNumNodos()+pos+1);	    	*/
 		    }
 		   /* if(!(isRaiz()) && isEsHi()){
 		    	pos = getPadre().getPos()+1;
@@ -425,7 +434,30 @@ public class Arbol {
 		  }
 		
 	}
-	
+	public void actualizarPosicion() {
+		  if (isRaiz()) 
+			    pos = 1;
+		  if (!isHoja()) {
+		    if ( (nombre.equals("OR")) || (nombre.equals("AND"))) {
+		    	hi.setPos(pos + 1);
+		    	hd.setPos( hi.getNumNodos()+pos+1);
+		    	hi.actualizarPosicion();
+		    	hd.actualizarPosicion();
+		    }    
+		    if ( (nombre.equals("NOT")) ){
+		    	hc.setPos(pos + 1);
+		    	hc.actualizarPosicion();
+		    }
+		    if ( (nombre.equals("IF"))){
+		    	hi.setPos(pos + 1);
+		    	hc.setPos( hi.getNumNodos()+pos+1);
+		    	hd.setPos( hc.getNumNodos()+hi.getNumNodos()+pos+1);	
+		    	hi.actualizarPosicion();
+		    	hc.actualizarPosicion();
+		    	hd.actualizarPosicion();
+		    }
+		  }
+	}
 	private void preorden(Arbol a)
 	{
 	  if (a != null) {
@@ -541,16 +573,18 @@ public class Arbol {
 		boolean selecccion = false;
 		int posicionbusqueda = this.aleatorioInt2(1, this.numNodos);
 		Arbol aux= GetArbolPosicion(this, posicionbusqueda);
+		double aleatorio = aleatorio();
 		while (selecccion==false){
-			if(aux.getHoja() && aleatorio() > 0.1){
+			if(aux.getHoja() && aleatorio > 0.1){
 				selecccion = true;
 			}
 			else{
-				if(aleatorio() < 0.9){
+				if(aleatorio < 0.9){
 					selecccion = true;
 				}
 			}
 			if (selecccion==false){
+				aleatorio = aleatorio();
 				 posicionbusqueda = this.aleatorioInt2(1, this.numNodos);
 				 aux= GetArbolPosicion(this, posicionbusqueda);	
 			}			

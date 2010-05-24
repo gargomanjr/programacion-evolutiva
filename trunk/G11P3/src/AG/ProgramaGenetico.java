@@ -232,9 +232,9 @@ public class ProgramaGenetico {
 
 		this.numIter 			= ai_numIter;
 		this.probCruce 			= ad_prob_cruce;
-	//	this.probCruce 			= 0;
+		//this.probCruce 			= 0;
 		this.probMut 			= ad_prob_mut;
-//		this.probMut 			= 0;
+		//this.probMut 			= 100;
 		this.maximoAptitud 		= 0;
 		this.medioAptitud		= 0;
 		this.listaElMejor      	=	new ArrayList<Double>();
@@ -719,6 +719,7 @@ public class ProgramaGenetico {
 						pater1.setHd(nodo2);
 						}
 				}
+				arbol1 = new Arbol(pater1, null);
 			//	pater2.setHi(nodo_aux1);
 			}
 			
@@ -738,16 +739,17 @@ public class ProgramaGenetico {
 						pater2.setHd(nodo_aux1);
 						}
 				}
+				arbol2 = new Arbol(pater2, null);
 			}
 			//
 			//arbol1.actualizar(arbol1.getProfundidad());
 			//arbol2.actualizar(arbol2.getProfundidad());
-			arbol1.actualizar(0);
-			arbol2.actualizar(0);
+			//arbol1.actualizar(0);
+		//	arbol2.actualizar(0);
 			hijo1.setArbol(arbol1);
 			hijo2.setArbol(arbol2);
-			//hijo1.getArbol().actualizar(0);
-			//hijo2.getArbol().actualizar(0);
+			hijo1.getArbol().actualizarArbol(0);
+			hijo2.getArbol().actualizarArbol(0);
 			hijo1.evalua();
 			hijo2.evalua();
 		}
