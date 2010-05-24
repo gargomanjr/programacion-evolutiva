@@ -232,7 +232,7 @@ public class ProgramaGenetico {
 
 		this.numIter 			= ai_numIter;
 		this.probCruce 			= ad_prob_cruce;
-		this.probCruce 			= 0;
+	//	this.probCruce 			= 0;
 		this.probMut 			= ad_prob_mut;
 //		this.probMut 			= 0;
 		this.maximoAptitud 		= 0;
@@ -366,6 +366,7 @@ public class ProgramaGenetico {
 			//	nodo.borraArbol();
 				if(nodo!=null){
 					Arbol ar=new Arbol(pobIntermedia[i].getCjtoFunciones(),pobIntermedia[i].getCjtoTerminales(),nodo.getProfTotal(),nodo.getProfundidad(),nodo.getPadre(),nodo.isEsHi(),nodo.isEsHc(),nodo.isRaiz(),nodo.isAdmite_if(),nodo.getPos());				
+					pobIntermedia[i].getArbol().actualizar(0);
 				}
 				
 			}
